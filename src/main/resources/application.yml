@@ -1,0 +1,4 @@
+JWT:
+    config:
+        interval: horas
+        number: 5
