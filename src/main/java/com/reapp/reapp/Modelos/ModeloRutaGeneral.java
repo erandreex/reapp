@@ -9,6 +9,7 @@ public class ModeloRutaGeneral {
     private String icon;
     private String color_1;
     private String color_2;
+    private String componente;
 
     public String getId() {
         return id;
@@ -64,6 +65,14 @@ public class ModeloRutaGeneral {
 
     public void setFk_categoria(String fk_categoria) {
         this.fk_categoria = fk_categoria;
+    }
+
+    public String getComponente() {
+        return componente;
+    }
+
+    public void setComponente(String componente) {
+        this.componente = componente;
     }
 
 }

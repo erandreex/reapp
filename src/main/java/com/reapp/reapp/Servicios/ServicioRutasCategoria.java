@@ -22,7 +22,7 @@ public class ServicioRutasCategoria {
 
     public Boolean crear(ModeloRutaCategoria ruta, String id) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?)}";
+        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -36,6 +36,7 @@ public class ServicioRutasCategoria {
             cst.setString(6, ruta.getIcon());
             cst.setString(7, ruta.getColor_1());
             cst.setString(8, ruta.getColor_2());
+            cst.setString(9, ruta.getOrder());
             cst.execute();
             respuesta = true;
 
@@ -77,7 +78,7 @@ public class ServicioRutasCategoria {
 
     public ModeloRutaCategoria obtenerPorId(String ruta_id) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?)}";
+        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
         ModeloRutaCategoria ruta = new ModeloRutaCategoria();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -91,6 +92,7 @@ public class ServicioRutasCategoria {
             cst.setString(6, null);
             cst.setString(7, null);
             cst.setString(8, null);
+            cst.setString(9, null);
 
             ResultSet rs = cst.executeQuery();
 
@@ -101,6 +103,7 @@ public class ServicioRutasCategoria {
                 ruta.setIcon(rs.getString("ru_icon"));
                 ruta.setColor_1(rs.getString("ru_color_1"));
                 ruta.setColor_2(rs.getString("ru_color_2"));
+                ruta.setOrder(rs.getString("ru_order"));
             }
 
         } catch (SQLException e) {
@@ -142,7 +145,7 @@ public class ServicioRutasCategoria {
 
     public Boolean actualizar(ModeloRutaCategoria ruta) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?)}";
+        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -156,6 +159,8 @@ public class ServicioRutasCategoria {
             cst.setString(6, ruta.getIcon());
             cst.setString(7, ruta.getColor_1());
             cst.setString(8, ruta.getColor_2());
+            cst.setString(9, ruta.getOrder());
+
             cst.execute();
             respuesta = true;
 
@@ -197,7 +202,7 @@ public class ServicioRutasCategoria {
 
     public Boolean remover(ModeloRutaCategoria ruta) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?)}";
+        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -206,11 +211,12 @@ public class ServicioRutasCategoria {
             cst.setString(1, "D");
             cst.setString(2, "DRCID");
             cst.setString(3, ruta.getId());
-            cst.setString(4, ruta.getTitulo());
-            cst.setString(5, ruta.getRuta());
-            cst.setString(6, ruta.getIcon());
-            cst.setString(7, ruta.getColor_1());
-            cst.setString(8, ruta.getColor_2());
+            cst.setString(4, null);
+            cst.setString(5, null);
+            cst.setString(6, null);
+            cst.setString(7, null);
+            cst.setString(8, null);
+            cst.setString(9, null);
 
             cst.execute();
             respuesta = true;
@@ -254,7 +260,7 @@ public class ServicioRutasCategoria {
 
     public List<ModeloRutaCategoria> lista() throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?)}";
+        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
         List<ModeloRutaCategoria> lista = new ArrayList<>();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -268,6 +274,7 @@ public class ServicioRutasCategoria {
             cst.setString(6, null);
             cst.setString(7, null);
             cst.setString(8, null);
+            cst.setString(9, null);
 
             ResultSet rs = cst.executeQuery();
 
@@ -279,6 +286,8 @@ public class ServicioRutasCategoria {
                 pro.setIcon(rs.getString("ru_icon"));
                 pro.setColor_1(rs.getString("ru_color_1"));
                 pro.setColor_2(rs.getString("ru_color_2"));
+                pro.setOrder(rs.getString("ru_order"));
+
                 lista.add(pro);
             }
 

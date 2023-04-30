@@ -15,6 +15,7 @@ public class ModeloRuta {
     private String general_icon;
     private String general_color_1;
     private String general_color_2;
+    private String general_componente;
 
     public String getCategoria_id() {
         return categoria_id;
@@ -110,6 +111,14 @@ public class ModeloRuta {
 
     public void setGeneral_color_2(String general_color_2) {
         this.general_color_2 = general_color_2;
+    }
+
+    public String getGeneral_componente() {
+        return general_componente;
+    }
+
+    public void setGeneral_componente(String general_componente) {
+        this.general_componente = general_componente;
     }
 
 }

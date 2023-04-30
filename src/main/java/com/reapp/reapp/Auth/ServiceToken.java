@@ -15,7 +15,10 @@ import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ServiceToken {
 
     @Value("${JWT.config.interval}")
@@ -52,6 +55,7 @@ public class ServiceToken {
                 tokenDB.setTokenType(rs.getString("to_type"));
                 tokenDB.setRevoked(rs.getString("to_revoked"));
                 tokenDB.setToken(rs.getString("to_token"));
+                System.out.println(rs.getString("to_token"));
             }
 
         } catch (SQLException e) {
@@ -91,30 +95,72 @@ public class ServiceToken {
         return tokenDB;
     }
 
-    public Boolean registerToken(ModeloUser user, String token, String token_id) {
+    public void crearActualizarToken(String user_id, String token, String token_id) {
 
         String query = "{CALL auth.sp_tokens(?,?,?,?,?,?,?,?,?,?)}";
-        Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(query);) {
 
-            cst.setString(1, "I");
-            cst.setString(2, "INT");
+            cst.setString(1, "CU");
+            cst.setString(2, "CUT");
             cst.setString(3, token_id);
             cst.setString(4, token);
             cst.setString(5, "BEARER");
             cst.setString(6, "F");
-            cst.setString(7, user.getId());
+            cst.setString(7, user_id);
             cst.setString(8, null);
-            cst.setString(9, null);
-            cst.setString(10, null);
-
-            respuesta = cst.execute();
+            cst.setString(9, intervalConfig);
+            cst.setInt(10, numberConfig);
+            cst.execute();
 
         } catch (Exception e) {
-            respuesta = false;
             System.out.println("Error 2: " + e.getMessage());
+        }
+    }
+
+    public void actualizarToken(Boolean control, ModeloClaims claims, String token) {
+
+        String query = "{CALL auth.sp_tokens(?,?,?,?,?,?,?,?,?,?)}";
+
+        if (control) {
+            try (Connection mariaDB = ConexionMariaDB.getConexion();
+                    CallableStatement cst = mariaDB.prepareCall(query);) {
+
+                cst.setString(1, "CU");
+                cst.setString(2, "CUT");
+                cst.setString(3, claims.getToken_id());
+                cst.setString(4, token);
+                cst.setString(5, "BEARER");
+                cst.setString(6, "F");
+                cst.setString(7, claims.getId());
+                cst.setString(8, null);
+                cst.setString(9, intervalConfig);
+                cst.setInt(10, numberConfig);
+                cst.execute();
+
+            } catch (Exception e) {
+                System.out.println("Error 2: " + e.getMessage());
+            }
+        }
+    }
+
+    public Boolean validarTiempo(ModeloClaims claims) throws CustomException {
+
+        Boolean respuesta = false;
+        try {
+            Long dateNow = System.currentTimeMillis();
+            Long dateIat = claims.getIat();
+            Long dateExp = claims.getExp();
+            Long difference = dateExp - dateIat;
+            Long limit = (difference * 3) / 4;
+
+            if (dateNow >= limit) {
+                respuesta = true;
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
         }
         return respuesta;
     }

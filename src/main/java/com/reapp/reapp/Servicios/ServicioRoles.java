@@ -22,7 +22,7 @@ public class ServicioRoles {
 
     public Boolean crear(ModeloRol rol, String id) throws CustomException {
 
-        String query = "{CALL auth.sp_rol_usuarios(?,?,?,?)}";
+        String query = "{CALL auth.sp_usuarios_rol(?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -73,7 +73,7 @@ public class ServicioRoles {
 
     public ModeloRol obtenerPorId(String ruta_id) throws CustomException {
 
-        String query = "{CALL auth.sp_rol_usuarios(?,?,?,?)}";
+        String query = "{CALL auth.sp_usuarios_rol(?,?,?,?)}";
         ModeloRol ruta = new ModeloRol();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -130,7 +130,7 @@ public class ServicioRoles {
 
     public List<ModeloRol> lista() throws CustomException {
 
-        String query = "{CALL auth.sp_rol_usuarios(?,?,?,?)}";
+        String query = "{CALL auth.sp_usuarios_rol(?,?,?,?)}";
         List<ModeloRol> lista = new ArrayList<>();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -188,7 +188,7 @@ public class ServicioRoles {
 
     public Boolean actualizar(ModeloRol rol) throws CustomException {
 
-        String query = "{CALL auth.sp_rol_usuarios(?,?,?,?)}";
+        String query = "{CALL auth.sp_usuarios_rol(?,?,?,?)}";
 
         Boolean respuesta = false;
 
@@ -240,7 +240,7 @@ public class ServicioRoles {
 
     public Boolean remover(ModeloRol rol) throws CustomException {
 
-        String query = "{CALL auth.sp_rol_usuarios(?,?,?,?)}";
+        String query = "{CALL auth.sp_usuarios_rol(?,?,?,?)}";
 
         Boolean respuesta = false;
 

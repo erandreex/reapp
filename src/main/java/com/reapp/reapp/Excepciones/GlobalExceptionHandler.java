@@ -28,4 +28,5 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(ex.getErrorGeneral().getCode()).body(respuesta);
     }
+
 }

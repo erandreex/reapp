@@ -37,8 +37,8 @@ public class ControladorRoles {
         try {
             respuesta.put("rutas", servicioRoles.lista());
             resp.setOk(true);
-            resp.setCode(HttpStatus.CREATED.value());
-            resp.setStatus(HttpStatus.CREATED);
+            resp.setCode(HttpStatus.OK.value());
+            resp.setStatus(HttpStatus.OK);
             resp.setMensaje("Se ha obtenido los roles exitosamente!");
             resp.setRespuesta(respuesta);
 
@@ -47,12 +47,12 @@ public class ControladorRoles {
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
             errorControlador.setClase("ControladorRoles");
-            errorControlador.setEndpoint("/api/v1/roles");
+            errorControlador.setEndpoint("/api/v1/roles/listar");
 
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+        return ResponseEntity.status(HttpStatus.OK).body(resp);
     }
 
     @PostMapping("/crear")
@@ -74,10 +74,8 @@ public class ControladorRoles {
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
-
             errorControlador.setClase("ControladorRoles");
-            errorControlador.setEndpoint("/api/v1/roles");
-
+            errorControlador.setEndpoint("/api/v1/roles/crear");
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
 
@@ -96,22 +94,20 @@ public class ControladorRoles {
             servicioRoles.actualizar(ruta);
             respuesta.put("rol", servicioRoles.obtenerPorId(ruta.getId()));
             resp.setOk(true);
-            resp.setCode(HttpStatus.CREATED.value());
-            resp.setStatus(HttpStatus.CREATED);
+            resp.setCode(HttpStatus.OK.value());
+            resp.setStatus(HttpStatus.OK);
             resp.setMensaje("Se ha actualizado el rol exitosamente!");
             resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
-
             errorControlador.setClase("ControladorRoles");
-            errorControlador.setEndpoint("/api/v1/roles");
-
+            errorControlador.setEndpoint("/api/v1/roles/actualizar");
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+        return ResponseEntity.status(HttpStatus.OK).body(resp);
 
     }
 
@@ -126,22 +122,20 @@ public class ControladorRoles {
             servicioRoles.remover(ruta);
             respuesta.put("rol", servicioRoles.obtenerPorId(ruta.getId()));
             resp.setOk(true);
-            resp.setCode(HttpStatus.CREATED.value());
-            resp.setStatus(HttpStatus.CREATED);
+            resp.setCode(HttpStatus.OK.value());
+            resp.setStatus(HttpStatus.OK);
             resp.setMensaje("Se ha removido el rol exitosamente!");
             resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
-
             errorControlador.setClase("ControladorRoles");
-            errorControlador.setEndpoint("/api/v1/roles");
-
+            errorControlador.setEndpoint("/api/v1/roles/remover");
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+        return ResponseEntity.status(HttpStatus.OK).body(resp);
 
     }
 

@@ -40,7 +40,7 @@ public class ControladorPermisoRolesRuta {
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
-            resp.setMensaje("Se ha creado la ruta exitosamente!");
+            resp.setMensaje("Se ha creado el permiso-ruta exitosamente!");
             resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {
@@ -48,7 +48,7 @@ public class ControladorPermisoRolesRuta {
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
             errorControlador.setClase("ControladorPermisoRolesRuta");
-            errorControlador.setEndpoint("/api/v1/roles/crear");
+            errorControlador.setEndpoint("api/v1/permisos/rolesrutas/crear");
 
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }

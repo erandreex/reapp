@@ -46,8 +46,8 @@ public class ControladorRutasCategoria {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
-            errorControlador.setClase("AuthenticationController");
-            errorControlador.setEndpoint("/api/v1/auth/register");
+            errorControlador.setClase("ControladorRutasCategoria");
+            errorControlador.setEndpoint("api/v1/rutas/categoria/listar");
 
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
@@ -75,8 +75,8 @@ public class ControladorRutasCategoria {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
-            errorControlador.setClase("AuthenticationController");
-            errorControlador.setEndpoint("/api/v1/auth/register");
+            errorControlador.setClase("ControladorRutasCategoria");
+            errorControlador.setEndpoint("api/v1/rutas/categoria/crear");
 
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
@@ -105,8 +105,8 @@ public class ControladorRutasCategoria {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
-            errorControlador.setClase("AuthenticationController");
-            errorControlador.setEndpoint("/api/v1/auth/register");
+            errorControlador.setClase("ControladorRutasCategoria");
+            errorControlador.setEndpoint("api/v1/rutas/categoria/actualizar");
 
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
@@ -119,24 +119,21 @@ public class ControladorRutasCategoria {
     public ResponseEntity<RespuestaGeneral> remover(@RequestBody ModeloRutaCategoria ruta) {
 
         RespuestaGeneral resp = new RespuestaGeneral();
-        Map<String, Object> respuesta = new HashMap<>();
 
         try {
 
             servicioRutasCategoria.remover(ruta);
-            // respuesta.put("ruta 2", servicioRutasCategoria.obtenerPorId(ruta.getId()));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
             resp.setMensaje("Se ha removido la ruta exitosamente!");
-            resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
-            errorControlador.setClase("AuthenticationController");
-            errorControlador.setEndpoint("/api/v1/auth/register");
+            errorControlador.setClase("ControladorRutasCategoria");
+            errorControlador.setEndpoint("api/v1/rutas/categoria/remover");
 
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }

@@ -21,23 +21,17 @@ import com.reapp.reapp.Modelos.ModeloRutaGeneral;
 @Service
 public class ServicioRutasGeneral {
 
-    public List<ModeloRuta> listar() throws CustomException {
+    public List<ModeloRuta> listarxRol(String rol_id) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_general(?,?,?,?,?,?,?,?,?)}";
+        String query = "{CALL auth.sp_rutas_consultas(?,?,?)}";
         List<ModeloRuta> lista = new ArrayList<>();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(query);) {
 
             cst.setString(1, "Q");
-            cst.setString(2, "QRGCT");
-            cst.setString(3, null);
-            cst.setString(4, null);
-            cst.setString(5, null);
-            cst.setString(6, null);
-            cst.setString(7, null);
-            cst.setString(8, null);
-            cst.setString(9, null);
+            cst.setString(2, "QRXR");
+            cst.setString(3, rol_id);
 
             ResultSet rs = cst.executeQuery();
 
@@ -57,6 +51,87 @@ public class ServicioRutasGeneral {
                 pro.setGeneral_icon(rs.getString("rug_icon"));
                 pro.setGeneral_color_1(rs.getString("rug_color_1"));
                 pro.setGeneral_color_2(rs.getString("rug_color_2"));
+                pro.setGeneral_componente(rs.getString("rug_componente"));
+
+                lista.add(pro);
+            }
+
+        } catch (SQLException e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt("No se han podido obtener las rutas según el rol");
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo("Servicio");
+            errorGeneral.setClase("ServicioRutasGeneral");
+            errorGeneral.setMetodo("listarxRol");
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorGeneral.setTipo("Servicio");
+            errorGeneral.setClase("ServicioRutasGeneral");
+            errorGeneral.setMetodo("listarxRol");
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        }
+        return lista;
+    }
+
+    public List<ModeloRuta> listar() throws CustomException {
+
+        String query = "{CALL auth.sp_rutas_general(?,?,?,?,?,?,?,?,?,?)}";
+        List<ModeloRuta> lista = new ArrayList<>();
+
+        try (Connection mariaDB = ConexionMariaDB.getConexion();
+                CallableStatement cst = mariaDB.prepareCall(query);) {
+
+            cst.setString(1, "Q");
+            cst.setString(2, "QRGCT");
+            cst.setString(3, null);
+            cst.setString(4, null);
+            cst.setString(5, null);
+            cst.setString(6, null);
+            cst.setString(7, null);
+            cst.setString(8, null);
+            cst.setString(9, null);
+            cst.setString(10, null);
+
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+                ModeloRuta pro = new ModeloRuta();
+
+                pro.setCategoria_id(rs.getString("ru_id"));
+                pro.setCategoria_titulo(rs.getString("ru_titulo"));
+                pro.setCategoria_ruta(rs.getString("ru_ruta"));
+                pro.setCategoria_icon(rs.getString("ru_icon"));
+                pro.setCategoria_color_1(rs.getString("ru_color_1"));
+                pro.setCategoria_color_2(rs.getString("ru_color_2"));
+
+                pro.setGeneral_id(rs.getString("rug_id"));
+                pro.setGeneral_titulo(rs.getString("rug_titulo"));
+                pro.setGeneral_ruta(rs.getString("rug_ruta"));
+                pro.setGeneral_icon(rs.getString("rug_icon"));
+                pro.setGeneral_color_1(rs.getString("rug_color_1"));
+                pro.setGeneral_color_2(rs.getString("rug_color_2"));
+                pro.setGeneral_componente(rs.getString("rug_componente"));
+
                 lista.add(pro);
             }
 
@@ -99,7 +174,7 @@ public class ServicioRutasGeneral {
 
     public Boolean crear(ModeloRutaGeneral ruta, String id) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_general(?,?,?,?,?,?,?,?,?)}";
+        String query = "{CALL auth.sp_rutas_general(?,?,?,?,?,?,?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -114,6 +189,8 @@ public class ServicioRutasGeneral {
             cst.setString(7, ruta.getIcon());
             cst.setString(8, ruta.getColor_1());
             cst.setString(9, ruta.getColor_2());
+            cst.setString(10, ruta.getComponente());
+
             cst.execute();
             respuesta = true;
 
@@ -156,7 +233,7 @@ public class ServicioRutasGeneral {
 
     public Boolean actualizar(ModeloRutaGeneral ruta) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_general(?,?,?,?,?,?,?,?,?)}";
+        String query = "{CALL auth.sp_rutas_general(?,?,?,?,?,?,?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -171,6 +248,8 @@ public class ServicioRutasGeneral {
             cst.setString(7, ruta.getIcon());
             cst.setString(8, ruta.getColor_1());
             cst.setString(9, ruta.getColor_2());
+            cst.setString(10, ruta.getComponente());
+
             cst.execute();
             respuesta = true;
 
@@ -215,7 +294,7 @@ public class ServicioRutasGeneral {
 
     public Boolean remover(ModeloRutaGeneral ruta) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_general(?,?,?,?,?,?,?,?,?)}";
+        String query = "{CALL auth.sp_rutas_general(?,?,?,?,?,?,?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -230,6 +309,8 @@ public class ServicioRutasGeneral {
             cst.setString(7, null);
             cst.setString(8, null);
             cst.setString(9, null);
+            cst.setString(10, null);
+
             cst.execute();
             respuesta = true;
 
@@ -274,7 +355,7 @@ public class ServicioRutasGeneral {
 
     public ModeloRuta obtenerPorId(String id) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_general(?,?,?,?,?,?,?,?,?)}";
+        String query = "{CALL auth.sp_rutas_general(?,?,?,?,?,?,?,?,?,?)}";
         ModeloRuta ruta = new ModeloRuta();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
@@ -289,6 +370,7 @@ public class ServicioRutasGeneral {
             cst.setString(7, null);
             cst.setString(8, null);
             cst.setString(9, null);
+            cst.setString(10, null);
 
             ResultSet rs = cst.executeQuery();
 
@@ -306,6 +388,8 @@ public class ServicioRutasGeneral {
                 ruta.setGeneral_icon(rs.getString("rug_icon"));
                 ruta.setGeneral_color_1(rs.getString("rug_color_1"));
                 ruta.setGeneral_color_2(rs.getString("rug_color_2"));
+                ruta.setGeneral_componente(rs.getString("rug_componente"));
+
             }
 
         } catch (SQLException e) {

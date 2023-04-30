@@ -9,7 +9,8 @@ public class ModeloUser {
     private String correo_lower;
     private String pass_key;
     private String estado;
-    private String id_rol;
+    private String rol_id;
+    private String rol_nombre;
 
     public String getId() {
         return id;
@@ -67,12 +68,28 @@ public class ModeloUser {
         this.estado = estado;
     }
 
-    public String getId_rol() {
-        return id_rol;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setId_rol(String id_rol) {
-        this.id_rol = id_rol;
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getRol_nombre() {
+        return rol_nombre;
+    }
+
+    public void setRol_nombre(String rol_nombre) {
+        this.rol_nombre = rol_nombre;
+    }
+
+    public String getRol_id() {
+        return rol_id;
+    }
+
+    public void setRol_id(String rol_id) {
+        this.rol_id = rol_id;
     }
 
 }

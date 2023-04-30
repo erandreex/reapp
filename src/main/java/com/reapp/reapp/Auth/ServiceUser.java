@@ -27,7 +27,7 @@ public class ServiceUser {
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(query);) {
 
-            cst.setString(1, "Qwd");
+            cst.setString(1, "Q");
             cst.setString(2, "VUE");
             cst.setString(3, user_email);
             exist = cst.execute();
@@ -49,11 +49,11 @@ public class ServiceUser {
                 usuario.setPassword(rs.getString("password"));
                 usuario.setPass_key(rs.getString("pass_key"));
                 usuario.setEstado(rs.getString("estado"));
-                usuario.setId_rol(rs.getString("FK_rol"));
+                usuario.setRol_id(rs.getString("FK_rol"));
             }
 
         } catch (SQLException e) {
-
+            System.out.println(e.getMessage());
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -105,11 +105,12 @@ public class ServiceUser {
             cst.setString(6, user.getPassword());
             cst.setString(7, user.getCorreo_lower());
             cst.setString(8, user.getPass_key());
-            cst.setString(9, user.getId_rol());
+            cst.setString(9, user.getRol_id());
             cst.execute();
             resp = true;
 
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
@@ -127,6 +128,8 @@ public class ServiceUser {
             throw new CustomException("", errorGeneral, ex);
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -198,14 +201,15 @@ public class ServiceUser {
                 usuario.setId(rs.getString("id"));
                 usuario.setUsername(rs.getString("correo"));
                 usuario.setNombre(rs.getString("nombre"));
-                usuario.setPassword(rs.getString("password"));
-                usuario.setCorreo_lower(rs.getString("correo_lower"));
                 usuario.setPass_key(rs.getString("pass_key"));
                 usuario.setEstado(rs.getString("estado"));
-                usuario.setId_rol(rs.getString("FK_rol"));
+                usuario.setRol_id(rs.getString("rol_id"));
+                usuario.setRol_nombre(rs.getString("rol_nombre"));
+
             }
 
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -222,6 +226,7 @@ public class ServiceUser {
             throw new CustomException("", errorGeneral, ex);
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -263,6 +268,7 @@ public class ServiceUser {
             cst.execute();
 
         } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -279,6 +285,7 @@ public class ServiceUser {
             throw new CustomException("", errorGeneral, ex);
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
             errorGeneral.setId(UUID.randomUUID().toString());

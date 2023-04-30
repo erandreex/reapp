@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -46,10 +47,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         final String authHeader = request.getHeader("Authorization");
-        final String jwt;
         final ModeloClaims claims;
         final ModeloUser userDB;
         final ModeloToken tokenDB;
+        final String jwt;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -64,12 +65,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             authService.validarClaims(claims);
             authService.validarSecurityContextHolder();
             userDB = this.userService.obtenerPorId(claims.getId());
-            tokenDB = tokenService.findByToken(userDB, claims.getPass_key());
-            authService.validarTokenUserClaims(userDB, tokenDB, claims);
+            authService.validarUserClaims(userDB, claims);
+            tokenDB = tokenService.findByToken(userDB, claims.getToken_id());
+            // TODO: Validaciones del tokenDB
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     userDB,
-                    null,
+                    claims,
                     null);
 
             authToken.setDetails(

@@ -8,6 +8,7 @@ public class ModeloRutaCategoria {
     private String icon;
     private String color_1;
     private String color_2;
+    private String order;
 
     public String getId() {
         return id;
@@ -55,6 +56,14 @@ public class ModeloRutaCategoria {
 
     public void setColor_2(String color_2) {
         this.color_2 = color_2;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
     }
 
 }
