@@ -27,4 +27,5 @@ public class ConexionMariaDB {
             return con;
         }
     }
+
 }

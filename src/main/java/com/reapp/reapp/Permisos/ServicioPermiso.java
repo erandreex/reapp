@@ -45,7 +45,6 @@ public class ServicioPermiso {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -61,7 +60,6 @@ public class ServicioPermiso {
 
             throw new CustomException("", errorGeneral, e);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 

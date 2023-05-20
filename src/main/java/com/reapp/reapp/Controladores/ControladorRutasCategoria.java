@@ -22,32 +22,41 @@ import com.reapp.reapp.Servicios.ServicioRutasCategoria;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/v1/rutas/categoria")
+@RequestMapping("api/v1/rutas/categoria/")
 @RequiredArgsConstructor
 public class ControladorRutasCategoria {
 
     private final ServicioRutasCategoria servicioRutasCategoria;
+    private static final String clase = "ControladorRutasCategoria";
+    private static final String tipo = "Controlador";
 
-    @GetMapping("/listar")
+    // Metodos
+    private static final String listar = "listar";
+    private static final String crear = "crear";
+    private static final String actualizar = "actualizar";
+    private static final String remover = "remover";
+
+    @GetMapping(listar)
     public ResponseEntity<RespuestaGeneral> listar() {
 
         RespuestaGeneral resp = new RespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-            respuesta.put("rutas", servicioRutasCategoria.lista());
+            respuesta.put("rutas", servicioRutasCategoria.listar());
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
-            resp.setMensaje("Se ha obtenido las rutas exitosamente!");
+            resp.setMensaje("Se ha obtenido las categorias de rutas exitosamente!");
             resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
-            errorControlador.setClase("ControladorRutasCategoria");
-            errorControlador.setEndpoint("api/v1/rutas/categoria/listar");
+            errorControlador.setTipo(tipo);
+            errorControlador.setClase(clase);
+            errorControlador.setMetodo(listar);
 
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
@@ -55,7 +64,7 @@ public class ControladorRutasCategoria {
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
-    @PostMapping("/crear")
+    @PostMapping(crear)
     public ResponseEntity<RespuestaGeneral> crear(@RequestBody ModeloRutaCategoria ruta) {
 
         RespuestaGeneral resp = new RespuestaGeneral();
@@ -68,15 +77,16 @@ public class ControladorRutasCategoria {
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
-            resp.setMensaje("Se ha creado la ruta exitosamente!");
+            resp.setMensaje("Se ha creado la categoria de ruta exitosamente!");
             resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
-            errorControlador.setClase("ControladorRutasCategoria");
-            errorControlador.setEndpoint("api/v1/rutas/categoria/crear");
+            errorControlador.setTipo(tipo);
+            errorControlador.setClase(clase);
+            errorControlador.setMetodo(crear);
 
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
@@ -85,7 +95,7 @@ public class ControladorRutasCategoria {
 
     }
 
-    @PostMapping("/actualizar")
+    @PostMapping(actualizar)
     public ResponseEntity<RespuestaGeneral> actualizar(@RequestBody ModeloRutaCategoria ruta) {
 
         RespuestaGeneral resp = new RespuestaGeneral();
@@ -98,15 +108,16 @@ public class ControladorRutasCategoria {
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
-            resp.setMensaje("Se ha actualizado la ruta exitosamente!");
+            resp.setMensaje("Se ha actualizado la categoria de ruta exitosamente!");
             resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
-            errorControlador.setClase("ControladorRutasCategoria");
-            errorControlador.setEndpoint("api/v1/rutas/categoria/actualizar");
+            errorControlador.setTipo(tipo);
+            errorControlador.setClase(clase);
+            errorControlador.setMetodo(actualizar);
 
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
@@ -115,7 +126,7 @@ public class ControladorRutasCategoria {
 
     }
 
-    @PostMapping("/remover")
+    @PostMapping(remover)
     public ResponseEntity<RespuestaGeneral> remover(@RequestBody ModeloRutaCategoria ruta) {
 
         RespuestaGeneral resp = new RespuestaGeneral();
@@ -126,15 +137,14 @@ public class ControladorRutasCategoria {
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
-            resp.setMensaje("Se ha removido la ruta exitosamente!");
+            resp.setMensaje("Se ha removido la categoria de ruta exitosamente!");
 
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
-
-            errorControlador.setClase("ControladorRutasCategoria");
-            errorControlador.setEndpoint("api/v1/rutas/categoria/remover");
-
+            errorControlador.setTipo(tipo);
+            errorControlador.setClase(clase);
+            errorControlador.setMetodo(remover);
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
 

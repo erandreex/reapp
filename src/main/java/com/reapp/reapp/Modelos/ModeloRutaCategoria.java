@@ -5,10 +5,10 @@ public class ModeloRutaCategoria {
     private String id;
     private String titulo;
     private String ruta;
-    private String icon;
+    private String icono;
     private String color_1;
     private String color_2;
-    private String order;
+    private String orden;
 
     public String getId() {
         return id;
@@ -34,12 +34,12 @@ public class ModeloRutaCategoria {
         this.ruta = ruta;
     }
 
-    public String getIcon() {
-        return icon;
+    public String getIcono() {
+        return icono;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setIcono(String icono) {
+        this.icono = icono;
     }
 
     public String getColor_1() {
@@ -58,12 +58,12 @@ public class ModeloRutaCategoria {
         this.color_2 = color_2;
     }
 
-    public String getOrder() {
-        return order;
+    public String getOrden() {
+        return orden;
     }
 
-    public void setOrder(String order) {
-        this.order = order;
+    public void setOrden(String orden) {
+        this.orden = orden;
     }
 
 }

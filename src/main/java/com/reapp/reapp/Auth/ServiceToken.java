@@ -55,7 +55,6 @@ public class ServiceToken {
                 tokenDB.setTokenType(rs.getString("to_type"));
                 tokenDB.setRevoked(rs.getString("to_revoked"));
                 tokenDB.setToken(rs.getString("to_token"));
-                System.out.println(rs.getString("to_token"));
             }
 
         } catch (SQLException e) {
@@ -75,7 +74,6 @@ public class ServiceToken {
 
             throw new CustomException("", errorGeneral, e);
         } catch (Exception e) {
-            System.out.println(e);
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 

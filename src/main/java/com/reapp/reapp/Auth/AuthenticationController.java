@@ -2,8 +2,6 @@ package com.reapp.reapp.Auth;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -39,7 +37,6 @@ public class AuthenticationController {
         ModeloUser user = new ModeloUser();
         ModeloUser userDB = new ModeloUser();
         RespuestaGeneral resp = new RespuestaGeneral();
-        Map<String, Object> respuesta = new HashMap<>();
 
         String user_id = UUID.randomUUID().toString();
         String pass_key = UUID.randomUUID().toString();

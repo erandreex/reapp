@@ -20,13 +20,21 @@ import com.reapp.reapp.Modelos.ModeloRol;
 @Service
 public class ServicioRoles {
 
+    private final String clase = "ServicioRoles";
+    private final String sp = "{CALL admin.sp_admin_usuarios_roles(?,?,?,?)}";
+
+    private final String m_crear = "crear";
+    private final String m_obtenerPorId = "obtenerPorId";
+    private final String m_lista = "listar";
+    private final String m_actualizar = "actualizar";
+    private final String m_remover = "remover";
+
     public Boolean crear(ModeloRol rol, String id) throws CustomException {
 
-        String query = "{CALL auth.sp_usuarios_rol(?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(query);) {
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "I");
             cst.setString(2, "INR");
@@ -46,11 +54,12 @@ public class ServicioRoles {
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRoles");
-            errorGeneral.setMetodo("crear");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_crear);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
+
         } catch (Exception e) {
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
@@ -58,12 +67,12 @@ public class ServicioRoles {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
             errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRoles");
-            errorGeneral.setMetodo("crear");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_crear);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -73,11 +82,10 @@ public class ServicioRoles {
 
     public ModeloRol obtenerPorId(String ruta_id) throws CustomException {
 
-        String query = "{CALL auth.sp_usuarios_rol(?,?,?,?)}";
         ModeloRol ruta = new ModeloRol();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(query);) {
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "Q");
             cst.setString(2, "QRID");
@@ -92,7 +100,7 @@ public class ServicioRoles {
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
+
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -102,25 +110,24 @@ public class ServicioRoles {
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRoles");
-            errorGeneral.setMetodo("obtenerPorId");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_obtenerPorId);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
         } catch (Exception e) {
-            System.out.println(e);
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
             errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRoles");
-            errorGeneral.setMetodo("obtenerPorId");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_obtenerPorId);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -128,14 +135,12 @@ public class ServicioRoles {
         return ruta;
     }
 
-    public List<ModeloRol> lista() throws CustomException {
+    public List<ModeloRol> listar() throws CustomException {
 
-        String query = "{CALL auth.sp_usuarios_rol(?,?,?,?)}";
         List<ModeloRol> lista = new ArrayList<>();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(query);) {
-
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
             cst.setString(1, "Q");
             cst.setString(2, "QTR");
             cst.setString(3, null);
@@ -157,12 +162,12 @@ public class ServicioRoles {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("No se ha podido ingresar la ruta");
+            errorGeneral.setMessageExt("No se ha podido obtener los roles");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRoles");
-            errorGeneral.setMetodo("lista");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_lista);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -173,12 +178,12 @@ public class ServicioRoles {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
             errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRoles");
-            errorGeneral.setMetodo("lista");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_lista);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -188,15 +193,13 @@ public class ServicioRoles {
 
     public Boolean actualizar(ModeloRol rol) throws CustomException {
 
-        String query = "{CALL auth.sp_usuarios_rol(?,?,?,?)}";
-
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(query);) {
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "U");
-            cst.setString(2, "URCID");
+            cst.setString(2, "URID");
             cst.setString(3, rol.getId());
             cst.setString(4, rol.getNombre());
             cst.execute();
@@ -209,12 +212,12 @@ public class ServicioRoles {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("No se ha podido ingresar la ruta");
+            errorGeneral.setMessageExt("No se ha podido actualizar el rol.");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRoles");
-            errorGeneral.setMetodo("actualizar");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_actualizar);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -225,12 +228,12 @@ public class ServicioRoles {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
             errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRoles");
-            errorGeneral.setMetodo("actualizar");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_actualizar);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -240,15 +243,13 @@ public class ServicioRoles {
 
     public Boolean remover(ModeloRol rol) throws CustomException {
 
-        String query = "{CALL auth.sp_usuarios_rol(?,?,?,?)}";
-
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(query);) {
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "D");
-            cst.setString(2, "DRCID");
+            cst.setString(2, "DRID");
             cst.setString(3, rol.getId());
             cst.setString(4, null);
             cst.execute();
@@ -262,12 +263,12 @@ public class ServicioRoles {
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
             errorGeneral.setMessageExt(
-                    "No se ha podido remover, asegurese que ninguna ruta general dependa de la categoria!");
+                    "No se ha podido remover, asegurese que ningun otro componente dependa del rol!");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRoles");
-            errorGeneral.setMetodo("remover");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_remover);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -278,12 +279,12 @@ public class ServicioRoles {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
             errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRoles");
-            errorGeneral.setMetodo("remover");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_remover);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);

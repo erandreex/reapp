@@ -20,72 +20,78 @@ import com.reapp.reapp.Modelos.ModeloRutaCategoria;
 @Service
 public class ServicioRutasCategoria {
 
+    private final String tipo = "Servicio";
+    private final String clase = "ServicioRutasCategoria";
+    private final String sp = "{CALL admin.sp_admin_rutas_categorias(?,?,?,?)}";
+
+    private final String m_crear = "crear";
+    private final String m_obtenerPorId = "obtenerPorId";
+    private final String m_listar = "listar";
+    private final String m_actualizar = "actualizar";
+    private final String m_remover = "remover";
+
     public Boolean crear(ModeloRutaCategoria ruta, String id) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(query);) {
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "I");
             cst.setString(2, "INR");
             cst.setString(3, id);
-            cst.setString(4, ruta.getTitulo());
-            cst.setString(5, ruta.getRuta());
-            cst.setString(6, ruta.getIcon());
-            cst.setString(7, ruta.getColor_1());
-            cst.setString(8, ruta.getColor_2());
-            cst.setString(9, ruta.getOrder());
+            cst.setString(4, ruta.getOrden());
+            cst.setString(5, ruta.getTitulo());
+            cst.setString(6, ruta.getRuta());
+            cst.setString(7, ruta.getIcono());
+            cst.setString(8, ruta.getColor_1());
+            cst.setString(9, ruta.getColor_2());
             cst.execute();
             respuesta = true;
 
         } catch (SQLException e) {
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
-
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("No se ha podido ingresar la ruta");
+            errorGeneral.setMessageExt("No se ha podido crear la categoria de ruta");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRutasNivel1");
-            errorGeneral.setMetodo("crear");
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_crear);
             errorGeneral.setError(e);
-
             throw new CustomException("", errorGeneral, e);
+
         } catch (Exception e) {
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
-
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRutasNivel1");
-            errorGeneral.setMetodo("crear");
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_crear);
             errorGeneral.setError(e);
-
             throw new CustomException("", errorGeneral, e);
         }
+
         return respuesta;
     }
 
     public ModeloRutaCategoria obtenerPorId(String ruta_id) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
         ModeloRutaCategoria ruta = new ModeloRutaCategoria();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(query);) {
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "Q");
-            cst.setString(2, "QRID");
+            cst.setString(2, "QRCID");
             cst.setString(3, ruta_id);
             cst.setString(4, null);
             cst.setString(5, null);
@@ -97,45 +103,43 @@ public class ServicioRutasCategoria {
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
-                ruta.setId(rs.getString("ru_id"));
-                ruta.setTitulo(rs.getString("ru_titulo"));
-                ruta.setRuta(rs.getString("ru_ruta"));
-                ruta.setIcon(rs.getString("ru_icon"));
-                ruta.setColor_1(rs.getString("ru_color_1"));
-                ruta.setColor_2(rs.getString("ru_color_2"));
-                ruta.setOrder(rs.getString("ru_order"));
+                ruta.setId(rs.getString("arc_id"));
+                ruta.setOrden(rs.getString("arc_orden"));
+                ruta.setTitulo(rs.getString("arc_titulo"));
+                ruta.setRuta(rs.getString("arc_ruta"));
+                ruta.setIcono(rs.getString("arc_icono"));
+                ruta.setColor_1(rs.getString("arc_color_1"));
+                ruta.setColor_2(rs.getString("arc_color_2"));
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("No se ha podido obtener la ruta!");
+            errorGeneral.setMessageExt("No se ha podido obtener la categoria de ruta!");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRutasNivel1");
-            errorGeneral.setMetodo("obtenerPorId");
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_obtenerPorId);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
         } catch (Exception e) {
-            System.out.println(e);
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRutasNivel1");
-            errorGeneral.setMetodo("obtenerPorId");
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_obtenerPorId);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -145,22 +149,20 @@ public class ServicioRutasCategoria {
 
     public Boolean actualizar(ModeloRutaCategoria ruta) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(query);) {
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "U");
             cst.setString(2, "URCID");
             cst.setString(3, ruta.getId());
-            cst.setString(4, ruta.getTitulo());
-            cst.setString(5, ruta.getRuta());
-            cst.setString(6, ruta.getIcon());
-            cst.setString(7, ruta.getColor_1());
-            cst.setString(8, ruta.getColor_2());
-            cst.setString(9, ruta.getOrder());
-
+            cst.setString(4, ruta.getOrden());
+            cst.setString(5, ruta.getTitulo());
+            cst.setString(6, ruta.getRuta());
+            cst.setString(7, ruta.getIcono());
+            cst.setString(8, ruta.getColor_1());
+            cst.setString(9, ruta.getColor_2());
             cst.execute();
             respuesta = true;
 
@@ -171,12 +173,12 @@ public class ServicioRutasCategoria {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("No se ha podido ingresar la ruta");
+            errorGeneral.setMessageExt("No se ha podido actualizar la categoria de ruta");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRutasNivel1");
-            errorGeneral.setMetodo("actualizar");
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_actualizar);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -187,12 +189,12 @@ public class ServicioRutasCategoria {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRutasNivel1");
-            errorGeneral.setMetodo("actualizar");
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_actualizar);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -202,11 +204,10 @@ public class ServicioRutasCategoria {
 
     public Boolean remover(ModeloRutaCategoria ruta) throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
         Boolean respuesta = false;
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(query);) {
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "D");
             cst.setString(2, "DRCID");
@@ -217,7 +218,6 @@ public class ServicioRutasCategoria {
             cst.setString(7, null);
             cst.setString(8, null);
             cst.setString(9, null);
-
             cst.execute();
             respuesta = true;
 
@@ -228,13 +228,12 @@ public class ServicioRutasCategoria {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt(
-                    "No se ha podido remover, asegurese que ninguna ruta general dependa de la categoria!");
+            errorGeneral.setMessageExt("No se ha podido remover, asegurese que no dependa nada de la categoria!");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRutasNivel1");
-            errorGeneral.setMetodo("remover");
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_remover);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -245,12 +244,12 @@ public class ServicioRutasCategoria {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRutasNivel1");
-            errorGeneral.setMetodo("remover");
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_remover);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -258,13 +257,12 @@ public class ServicioRutasCategoria {
         return respuesta;
     }
 
-    public List<ModeloRutaCategoria> lista() throws CustomException {
+    public List<ModeloRutaCategoria> listar() throws CustomException {
 
-        String query = "{CALL auth.sp_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
         List<ModeloRutaCategoria> lista = new ArrayList<>();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(query);) {
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "Q");
             cst.setString(2, "QTRC");
@@ -279,16 +277,18 @@ public class ServicioRutasCategoria {
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
-                ModeloRutaCategoria pro = new ModeloRutaCategoria();
-                pro.setId(rs.getString("ru_id"));
-                pro.setTitulo(rs.getString("ru_titulo"));
-                pro.setRuta(rs.getString("ru_ruta"));
-                pro.setIcon(rs.getString("ru_icon"));
-                pro.setColor_1(rs.getString("ru_color_1"));
-                pro.setColor_2(rs.getString("ru_color_2"));
-                pro.setOrder(rs.getString("ru_order"));
 
-                lista.add(pro);
+                ModeloRutaCategoria ruta = new ModeloRutaCategoria();
+
+                ruta.setId(rs.getString("arc_id"));
+                ruta.setOrden(rs.getString("arc_orden"));
+                ruta.setTitulo(rs.getString("arc_titulo"));
+                ruta.setRuta(rs.getString("arc_ruta"));
+                ruta.setIcono(rs.getString("arc_icono"));
+                ruta.setColor_1(rs.getString("arc_color_1"));
+                ruta.setColor_2(rs.getString("arc_color_2"));
+
+                lista.add(ruta);
             }
 
         } catch (SQLException e) {
@@ -298,12 +298,12 @@ public class ServicioRutasCategoria {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("No se ha podido ingresar la ruta");
+            errorGeneral.setMessageExt("No se ha podido obtener las categorias de rutas!");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRutasNivel1");
-            errorGeneral.setMetodo("remover");
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_listar);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -314,12 +314,12 @@ public class ServicioRutasCategoria {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("ServicioRutasNivel1");
-            errorGeneral.setMetodo("remover");
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_listar);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);

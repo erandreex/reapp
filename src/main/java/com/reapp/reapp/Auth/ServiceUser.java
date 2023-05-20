@@ -53,7 +53,6 @@ public class ServiceUser {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -70,7 +69,6 @@ public class ServiceUser {
             throw new CustomException("", errorGeneral, e);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -110,7 +108,6 @@ public class ServiceUser {
             resp = true;
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
@@ -128,7 +125,6 @@ public class ServiceUser {
             throw new CustomException("", errorGeneral, ex);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
@@ -209,7 +205,6 @@ public class ServiceUser {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -226,7 +221,6 @@ public class ServiceUser {
             throw new CustomException("", errorGeneral, ex);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -268,7 +262,6 @@ public class ServiceUser {
             cst.execute();
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -285,7 +278,6 @@ public class ServiceUser {
             throw new CustomException("", errorGeneral, ex);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
             errorGeneral.setId(UUID.randomUUID().toString());

@@ -97,7 +97,6 @@ public class ServicioPermisoRolesRutas {
             }
 
         } catch (SQLException e) {
-            System.out.println(e);
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -113,7 +112,6 @@ public class ServicioPermisoRolesRutas {
 
             throw new CustomException("", errorGeneral, e);
         } catch (Exception e) {
-            System.out.println(e);
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 

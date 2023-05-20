@@ -36,19 +36,20 @@ public class ServicioRutasGeneral {
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
+
                 ModeloRuta pro = new ModeloRuta();
 
                 pro.setCategoria_id(rs.getString("ru_id"));
                 pro.setCategoria_titulo(rs.getString("ru_titulo"));
                 pro.setCategoria_ruta(rs.getString("ru_ruta"));
-                pro.setCategoria_icon(rs.getString("ru_icon"));
+                pro.setCategoria_icono(rs.getString("ru_icon"));
                 pro.setCategoria_color_1(rs.getString("ru_color_1"));
                 pro.setCategoria_color_2(rs.getString("ru_color_2"));
 
                 pro.setGeneral_id(rs.getString("rug_id"));
                 pro.setGeneral_titulo(rs.getString("rug_titulo"));
                 pro.setGeneral_ruta(rs.getString("rug_ruta"));
-                pro.setGeneral_icon(rs.getString("rug_icon"));
+                pro.setGeneral_icono(rs.getString("rug_icon"));
                 pro.setGeneral_color_1(rs.getString("rug_color_1"));
                 pro.setGeneral_color_2(rs.getString("rug_color_2"));
                 pro.setGeneral_componente(rs.getString("rug_componente"));
@@ -120,14 +121,14 @@ public class ServicioRutasGeneral {
                 pro.setCategoria_id(rs.getString("ru_id"));
                 pro.setCategoria_titulo(rs.getString("ru_titulo"));
                 pro.setCategoria_ruta(rs.getString("ru_ruta"));
-                pro.setCategoria_icon(rs.getString("ru_icon"));
+                pro.setCategoria_icono(rs.getString("ru_icon"));
                 pro.setCategoria_color_1(rs.getString("ru_color_1"));
                 pro.setCategoria_color_2(rs.getString("ru_color_2"));
 
                 pro.setGeneral_id(rs.getString("rug_id"));
                 pro.setGeneral_titulo(rs.getString("rug_titulo"));
                 pro.setGeneral_ruta(rs.getString("rug_ruta"));
-                pro.setGeneral_icon(rs.getString("rug_icon"));
+                pro.setGeneral_icono(rs.getString("rug_icon"));
                 pro.setGeneral_color_1(rs.getString("rug_color_1"));
                 pro.setGeneral_color_2(rs.getString("rug_color_2"));
                 pro.setGeneral_componente(rs.getString("rug_componente"));
@@ -378,14 +379,14 @@ public class ServicioRutasGeneral {
                 ruta.setCategoria_id(rs.getString("ru_id"));
                 ruta.setCategoria_titulo(rs.getString("ru_titulo"));
                 ruta.setCategoria_ruta(rs.getString("ru_ruta"));
-                ruta.setCategoria_icon(rs.getString("ru_icon"));
+                ruta.setCategoria_icono(rs.getString("ru_icon"));
                 ruta.setCategoria_color_1(rs.getString("ru_color_1"));
                 ruta.setCategoria_color_2(rs.getString("ru_color_2"));
 
                 ruta.setGeneral_id(rs.getString("rug_id"));
                 ruta.setGeneral_titulo(rs.getString("rug_titulo"));
                 ruta.setGeneral_ruta(rs.getString("rug_ruta"));
-                ruta.setGeneral_icon(rs.getString("rug_icon"));
+                ruta.setGeneral_icono(rs.getString("rug_icon"));
                 ruta.setGeneral_color_1(rs.getString("rug_color_1"));
                 ruta.setGeneral_color_2(rs.getString("rug_color_2"));
                 ruta.setGeneral_componente(rs.getString("rug_componente"));

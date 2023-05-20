@@ -22,20 +22,27 @@ import com.reapp.reapp.Servicios.ServicioRoles;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/v1/roles")
+@RequestMapping("api/v1/roles/")
 @RequiredArgsConstructor
 public class ControladorRoles {
 
     private final ServicioRoles servicioRoles;
+    private static final String clase = "ControladorRoles";
 
-    @GetMapping("/listar")
+    private static final String listar = "listar";
+    private static final String crear = "crear";
+    private static final String actualizar = "actualizar";
+    private static final String remover = "remover";
+
+    @GetMapping(listar)
     public ResponseEntity<RespuestaGeneral> listar() {
 
         RespuestaGeneral resp = new RespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-            respuesta.put("rutas", servicioRoles.lista());
+
+            respuesta.put("rutas", servicioRoles.listar());
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);
@@ -46,16 +53,16 @@ public class ControladorRoles {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
-            errorControlador.setClase("ControladorRoles");
-            errorControlador.setEndpoint("/api/v1/roles/listar");
+            errorControlador.setClase(clase);
+            errorControlador.setMetodo(listar);
 
-            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
+            throw new HandlerAllException("Error", e.getErrorGeneral(), errorControlador, e);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(resp);
     }
 
-    @PostMapping("/crear")
+    @PostMapping(crear)
     public ResponseEntity<RespuestaGeneral> crear(@RequestBody ModeloRol rol) {
 
         RespuestaGeneral resp = new RespuestaGeneral();
@@ -68,22 +75,22 @@ public class ControladorRoles {
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
-            resp.setMensaje("Se ha creado la ruta exitosamente!");
+            resp.setMensaje("Se ha creado el rol exitosamente!");
             resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
-            errorControlador.setClase("ControladorRoles");
-            errorControlador.setEndpoint("/api/v1/roles/crear");
-            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
+            errorControlador.setClase(clase);
+            errorControlador.setMetodo(crear);
+            throw new HandlerAllException("Error", e.getErrorGeneral(), errorControlador, e);
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
 
     }
 
-    @PostMapping("/actualizar")
+    @PostMapping(actualizar)
     public ResponseEntity<RespuestaGeneral> actualizar(@RequestBody ModeloRol ruta) {
 
         RespuestaGeneral resp = new RespuestaGeneral();
@@ -102,16 +109,16 @@ public class ControladorRoles {
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
-            errorControlador.setClase("ControladorRoles");
-            errorControlador.setEndpoint("/api/v1/roles/actualizar");
-            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
+            errorControlador.setClase(clase);
+            errorControlador.setMetodo(actualizar);
+            throw new HandlerAllException("Error", e.getErrorGeneral(), errorControlador, e);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(resp);
 
     }
 
-    @PostMapping("/remover")
+    @PostMapping(remover)
     public ResponseEntity<RespuestaGeneral> remover(@RequestBody ModeloRol ruta) {
 
         RespuestaGeneral resp = new RespuestaGeneral();
@@ -130,9 +137,9 @@ public class ControladorRoles {
         } catch (CustomException e) {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
-            errorControlador.setClase("ControladorRoles");
-            errorControlador.setEndpoint("/api/v1/roles/remover");
-            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
+            errorControlador.setClase(clase);
+            errorControlador.setMetodo(remover);
+            throw new HandlerAllException("Error", e.getErrorGeneral(), errorControlador, e);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(resp);

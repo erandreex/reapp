@@ -119,8 +119,6 @@ public class ServiceAuth {
         Long dateExp = claims.getExp();
         Long difference = dateExp - dateIat;
         int limit = calcularExpiration();
-        System.out.println("limit " + limit);
-        System.out.println("difference " + difference);
 
         if (difference != limit) {
 
