@@ -19,6 +19,7 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final LogoutHandler logoutHandler;
+    private final NotFound notFound;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -28,7 +29,7 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**")
+                .requestMatchers("/api/v1/auth/login")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -40,7 +41,10 @@ public class SecurityConfiguration {
                 .logout()
                 .logoutUrl("/api/v1/auth/logout")
                 .addLogoutHandler(logoutHandler)
-                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
+                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(notFound);
         return http.build();
     }
 
