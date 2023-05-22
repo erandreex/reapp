@@ -58,6 +58,8 @@ public class ControladorAuth {
 
             String jwtToken = jwtService.generateToken(userDB.getId(), token_id, pass_key, token_intervalo,
                     token_valor);
+
+            System.out.println(jwtToken);
             servicioUsuarios.ingreso(userDB, pass_key);
             tokenService.crear(userDB.getId(), jwtToken, token_id);
             resp.setToken(jwtToken);

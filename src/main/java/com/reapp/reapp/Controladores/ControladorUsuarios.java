@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.reapp.reapp.Auth.ServicioUsuariosAuth;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
@@ -30,6 +31,7 @@ public class ControladorUsuarios {
 
     private final PasswordEncoder passwordEncoder;
     private final ServicioUsuarios servicioUsuario;
+    private final ServicioUsuariosAuth servicioUsuariosAuth;
 
     @PostMapping("/registro")
     public ResponseEntity<ModeloRespuestaGeneral> registro(
@@ -56,7 +58,7 @@ public class ControladorUsuarios {
         try {
 
             servicioUsuario.registro(usuario);
-            respuesta.put("usuario", servicioUsuario.obtenerPorId(usuario_id));
+            respuesta.put("usuario", servicioUsuariosAuth.obtenerPorId(usuario_id));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);

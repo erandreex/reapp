@@ -51,15 +51,17 @@ public class ControladorAcesso {
         String token_valor = "";
 
         try {
+
             ModeloUsuario usuario = servicioAuth.usuarioRequest();
             ModeloClaims claims = servicioAuth.claimsRequest();
             jwt = claims.getToken();
             control = servicioValidacionesAuth.consultaRenovacionToken(claims);
+
             if (control) {
                 token_intervalo = servicioParametros.buscarParametro(EnumParametros.TOKEN_EXPIRACION_INTERVALO);
                 token_valor = servicioParametros.buscarParametro(EnumParametros.TOKEN_EXPIRACION_VALOR);
                 jwt = servicioJwt.renovarToken(claims, token_intervalo, token_valor);
-                servicioToken.actualizar(control, claims, jwt);
+                servicioToken.actualizar(claims, jwt);
             }
 
             servicioAccesos.ruta(componente, usuario.getRol_id());

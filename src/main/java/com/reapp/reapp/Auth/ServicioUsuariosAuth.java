@@ -49,7 +49,7 @@ public class ServicioUsuariosAuth {
                 usuario.setCorreo_lower(rs.getString("au_correo_lower"));
                 usuario.setPass_key(rs.getString("au_pass_key"));
                 usuario.setEstado(rs.getString("au_estado"));
-                usuario.setRol_id(rs.getString("au_fk_rol"));
+                usuario.setRol_id(rs.getString("au_fk_aur_id"));
             }
 
             if (usuario.getId().equals("1")) {
@@ -117,7 +117,7 @@ public class ServicioUsuariosAuth {
                 usuario.setCorreo_lower(rs.getString("au_correo_lower"));
                 usuario.setPass_key(rs.getString("au_pass_key"));
                 usuario.setEstado(rs.getString("au_estado"));
-                usuario.setRol_id(rs.getString("au_fk_rol"));
+                usuario.setRol_id(rs.getString("au_fk_aur_id"));
             }
 
             if (usuario.getId().equals("1")) {
@@ -185,7 +185,7 @@ public class ServicioUsuariosAuth {
                 usuario.setCorreo_lower(rs.getString("au_correo_lower"));
                 usuario.setPass_key(rs.getString("au_pass_key"));
                 usuario.setEstado(rs.getString("au_estado"));
-                usuario.setRol_id(rs.getString("au_fk_rol"));
+                usuario.setRol_id(rs.getString("au_fk_aur_id"));
             }
 
             if (usuario.getId().equals("1")) {
@@ -227,6 +227,60 @@ public class ServicioUsuariosAuth {
             throw new CustomException("", errorGeneral, e);
         }
 
+        return usuario;
+    }
+
+    public ModeloUsuario obtenerPorId(String id) throws CustomException {
+
+        ModeloUsuario usuario = new ModeloUsuario();
+
+        try (Connection mariaDB = ConexionMariaDB.getConexion();
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
+
+            cst.setString(1, "Q");
+            cst.setString(2, "CUID");
+            cst.setString(3, id);
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+                usuario.setId(rs.getString("au_id"));
+                usuario.setNombre("au_nombre");
+                usuario.setApellido("au_apellido");
+                usuario.setUsername(rs.getString("au_username"));
+                usuario.setPassword(rs.getString("au_password"));
+                usuario.setCorreo(rs.getString("au_correo"));
+                usuario.setCorreo_lower(rs.getString("au_correo_lower"));
+                usuario.setPass_key(rs.getString("au_pass_key"));
+                usuario.setEstado(rs.getString("au_estado"));
+                usuario.setRol_id(rs.getString("au_fk_aur_id"));
+            }
+        } catch (SQLException ex) {
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt("Error Mensaje interno");
+            errorGeneral.setMessageExt("Error Consulta SQL");
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo("Servicio");
+            errorGeneral.setClase("UserService");
+            errorGeneral.setMetodo("obtenerPorId");
+            errorGeneral.setError(ex);
+            throw new CustomException("", errorGeneral, ex);
+        } catch (Exception e) {
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt("Error Mensaje interno");
+            errorGeneral.setMessageExt("Error interno. De persitir contactar a un administrador");
+            errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorGeneral.setTipo("Servicio");
+            errorGeneral.setClase("UserService");
+            errorGeneral.setMetodo("obtenerPorId");
+            errorGeneral.setError(e);
+            throw new CustomException("", errorGeneral, e);
+        }
         return usuario;
     }
 

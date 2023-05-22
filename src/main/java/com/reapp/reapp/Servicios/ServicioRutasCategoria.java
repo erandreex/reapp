@@ -22,7 +22,7 @@ public class ServicioRutasCategoria {
 
     private final String tipo = "Servicio";
     private final String clase = "ServicioRutasCategoria";
-    private final String sp = "{CALL admin.sp_admin_rutas_categorias(?,?,?,?)}";
+    private final String sp = "{CALL admin.sp_admin_rutas_categorias(?,?,?,?,?,?,?,?,?)}";
 
     private final String m_crear = "crear";
     private final String m_obtenerPorId = "obtenerPorId";

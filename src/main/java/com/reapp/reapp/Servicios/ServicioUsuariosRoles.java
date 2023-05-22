@@ -95,12 +95,12 @@ public class ServicioUsuariosRoles {
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
-                ruta.setId(rs.getString("rol_id"));
-                ruta.setNombre(rs.getString("rol_nombre"));
+                ruta.setId(rs.getString("aur_id"));
+                ruta.setNombre(rs.getString("aur_nombre"));
             }
 
         } catch (SQLException e) {
-
+            System.out.println(e);
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -116,6 +116,7 @@ public class ServicioUsuariosRoles {
 
             throw new CustomException("", errorGeneral, e);
         } catch (Exception e) {
+            System.out.println(e);
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
@@ -150,8 +151,8 @@ public class ServicioUsuariosRoles {
 
             while (rs.next()) {
                 ModeloRol pro = new ModeloRol();
-                pro.setId(rs.getString("rol_id"));
-                pro.setNombre(rs.getString("rol_nombre"));
+                pro.setId(rs.getString("aur_id"));
+                pro.setNombre(rs.getString("aur_nombre"));
                 lista.add(pro);
             }
 

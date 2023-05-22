@@ -2,12 +2,12 @@ package com.reapp.reapp.Auth;
 
 public class ModeloToken {
 
-    public String id = "1";
-    public String fecha = "1";
-    public String aut_tipo = "1";
-    public String aut_estado = "1";
-    public String aut_token = "1";
-    public String usuario_id = "1";
+    public String id;
+    public String fecha;
+    public String tipo;
+    public String estado;
+    public String token;
+    public String usuario_id;
 
     public String getId() {
         return id;
@@ -25,28 +25,28 @@ public class ModeloToken {
         this.fecha = fecha;
     }
 
-    public String getAut_tipo() {
-        return aut_tipo;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setAut_tipo(String aut_tipo) {
-        this.aut_tipo = aut_tipo;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public String getAut_estado() {
-        return aut_estado;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setAut_estado(String aut_estado) {
-        this.aut_estado = aut_estado;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
-    public String getAut_token() {
-        return aut_token;
+    public String getToken() {
+        return token;
     }
 
-    public void setAut_token(String aut_token) {
-        this.aut_token = aut_token;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getUsuario_id() {

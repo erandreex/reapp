@@ -1,6 +1,8 @@
 package com.reapp.reapp.Config;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,12 +25,19 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.reapp.reapp.Auth.ServicioJwt;
 import com.reapp.reapp.Auth.ServicioToken;
+import com.reapp.reapp.Auth.ServicioUsuariosAuth;
 import com.reapp.reapp.Auth.ServicioValidacionesAuth;
+import com.reapp.reapp.Enum.EnumParametros;
 import com.reapp.reapp.Auth.ModeloClaims;
 import com.reapp.reapp.Auth.ModeloToken;
 import com.reapp.reapp.Excepciones.CustomException;
+import com.reapp.reapp.Excepciones.ModeloErrorCliente;
+import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Modelos.ModeloUsuario;
+import com.reapp.reapp.Servicios.ServicioParametros;
 import com.reapp.reapp.Servicios.ServicioUsuarios;
+
+import ch.qos.logback.core.pattern.parser.Parser;
 
 @Component
 @RequiredArgsConstructor
@@ -37,8 +46,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final ServicioJwt servicioJwt;
     private final ServicioToken tokenService;
-    private final ServicioUsuarios servicioUsuario;
+    private final ServicioUsuariosAuth servicioUsuariosAuth;
     private final ServicioValidacionesAuth servicioValidacionesAuth;
+    private final ServicioParametros servicioParametros;
 
     @Override
     protected void doFilterInternal(
@@ -51,6 +61,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final ModeloUsuario usuarioDB;
         final ModeloToken tokenDB;
         final String jwt;
+        final String token_intervalo;
+        final String token_valor;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -64,8 +76,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             claims = servicioJwt.extractAll(jwt);
             servicioValidacionesAuth.validarClaims(claims);
             servicioValidacionesAuth.validarSecurityContextHolder();
-            // TODO: Validar si el tiempo de expiracion concuerda con el de la DB
-            usuarioDB = servicioUsuario.obtenerPorId(claims.getUsuario_id());
+            token_intervalo = servicioParametros.buscarParametro(EnumParametros.TOKEN_EXPIRACION_INTERVALO);
+            token_valor = servicioParametros.buscarParametro(EnumParametros.TOKEN_EXPIRACION_VALOR);
+            servicioValidacionesAuth.validarExpiracionActual(claims, token_intervalo, Integer.parseInt(token_valor));
+            usuarioDB = servicioUsuariosAuth.obtenerPorId(claims.getUsuario_id());
             servicioValidacionesAuth.validarUsuariorClaims(usuarioDB, claims);
             tokenDB = tokenService.obtenerPorId(usuarioDB, claims.getToken_id());
             // TODO: Validaciones del tokenDB
@@ -80,21 +94,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authToken);
 
         } catch (CustomException e) {
-
             ObjectNode responseBody = JsonNodeFactory.instance.objectNode();
-            responseBody.put("id", e.getErrorGeneral().getId());
-            responseBody.put("date", e.getErrorGeneral().getDate().toString());
-            responseBody.put("messageExt", e.getErrorGeneral().getMessageExt());
+            responseBody.put("ok", false);
             responseBody.put("code", e.getErrorGeneral().getCode());
-
+            responseBody.put("status", e.getErrorGeneral().getStatus().toString());
+            responseBody.put("mensaje", e.getErrorGeneral().getMessageExt());
+            responseBody.put("token", "");
+            responseBody.put("respuesta", "");
+            responseBody.put("error", "");
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.getWriter().write(responseBody.toString());
             response.flushBuffer();
             return;
-
         }
-
         filterChain.doFilter(request, response);
     }
 
