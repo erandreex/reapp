@@ -15,9 +15,9 @@ import com.reapp.reapp.Conexiones.ConexionMariaDB;
 
 @Service
 @RequiredArgsConstructor
-public class ServiceLogout implements LogoutHandler {
+public class ServicioLogout implements LogoutHandler {
 
-    private final ServiceToken tokenService;
+    private final ServicioToken tokenService;
 
     @Override
     public void logout(

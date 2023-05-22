@@ -1,16 +1,17 @@
-package com.reapp.reapp.Auth;
+package com.reapp.reapp.Modelos;
 
-public class ModeloUser {
+public class ModeloUsuario {
 
     private String id;
-    private String correo;
     private String nombre;
+    private String apellido;
+    private String username;
     private String password;
+    private String correo;
     private String correo_lower;
     private String pass_key;
     private String estado;
     private String rol_id;
-    private String rol_nombre;
 
     public String getId() {
         return id;
@@ -18,14 +19,6 @@ public class ModeloUser {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return correo;
-    }
-
-    public void setUsername(String correo) {
-        this.correo = correo;
     }
 
     public String getNombre() {
@@ -36,12 +29,36 @@ public class ModeloUser {
         this.nombre = nombre;
     }
 
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public String getCorreo_lower() {
@@ -66,22 +83,6 @@ public class ModeloUser {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
-
-    public String getRol_nombre() {
-        return rol_nombre;
-    }
-
-    public void setRol_nombre(String rol_nombre) {
-        this.rol_nombre = rol_nombre;
     }
 
     public String getRol_id() {

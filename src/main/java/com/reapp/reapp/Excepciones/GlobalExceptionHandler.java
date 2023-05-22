@@ -4,15 +4,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.reapp.reapp.Respuestas.RespuestaGeneral;
+import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(HandlerAllException.class)
-    public ResponseEntity<RespuestaGeneral> handleException(CustomException ex) {
+    public ResponseEntity<ModeloRespuestaGeneral> handleException(CustomException ex) {
 
-        RespuestaGeneral respuesta = new RespuestaGeneral();
+        ModeloRespuestaGeneral respuesta = new ModeloRespuestaGeneral();
         ModeloErrorCliente error = new ModeloErrorCliente();
 
         error.setId(ex.getErrorGeneral().getId());

@@ -1,4 +1,4 @@
-package com.reapp.reapp.config;
+package com.reapp.reapp.Config;
 
 import java.io.IOException;
 
@@ -21,24 +21,24 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.reapp.reapp.Auth.ServiceJwt;
-import com.reapp.reapp.Auth.ServiceToken;
-import com.reapp.reapp.Auth.ServiceUser;
+import com.reapp.reapp.Auth.ServicioJwt;
+import com.reapp.reapp.Auth.ServicioToken;
+import com.reapp.reapp.Auth.ServicioValidacionesAuth;
 import com.reapp.reapp.Auth.ModeloClaims;
 import com.reapp.reapp.Auth.ModeloToken;
-import com.reapp.reapp.Auth.ModeloUser;
-import com.reapp.reapp.Auth.ServiceAuth;
 import com.reapp.reapp.Excepciones.CustomException;
+import com.reapp.reapp.Modelos.ModeloUsuario;
+import com.reapp.reapp.Servicios.ServicioUsuarios;
 
 @Component
 @RequiredArgsConstructor
 @Order(1)
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final ServiceJwt jwtService;
-    private final ServiceToken tokenService;
-    private final ServiceUser userService;
-    private final ServiceAuth authService;
+    private final ServicioJwt servicioJwt;
+    private final ServicioToken tokenService;
+    private final ServicioUsuarios servicioUsuario;
+    private final ServicioValidacionesAuth servicioValidacionesAuth;
 
     @Override
     protected void doFilterInternal(
@@ -48,7 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         final String authHeader = request.getHeader("Authorization");
         final ModeloClaims claims;
-        final ModeloUser userDB;
+        final ModeloUsuario usuarioDB;
         final ModeloToken tokenDB;
         final String jwt;
 
@@ -60,17 +60,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
 
             jwt = authHeader.substring(7);
-            jwtService.valiteToken(jwt);
-            claims = jwtService.extractAll(jwt);
-            authService.validarClaims(claims);
-            authService.validarSecurityContextHolder();
-            userDB = this.userService.obtenerPorId(claims.getId());
-            authService.validarUserClaims(userDB, claims);
-            tokenDB = tokenService.findByToken(userDB, claims.getToken_id());
+            servicioJwt.validarToken(jwt);
+            claims = servicioJwt.extractAll(jwt);
+            servicioValidacionesAuth.validarClaims(claims);
+            servicioValidacionesAuth.validarSecurityContextHolder();
+            // TODO: Validar si el tiempo de expiracion concuerda con el de la DB
+            usuarioDB = servicioUsuario.obtenerPorId(claims.getUsuario_id());
+            servicioValidacionesAuth.validarUsuariorClaims(usuarioDB, claims);
+            tokenDB = tokenService.obtenerPorId(usuarioDB, claims.getToken_id());
             // TODO: Validaciones del tokenDB
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    userDB,
+                    usuarioDB,
                     claims,
                     null);
 

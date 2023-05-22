@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.reapp.reapp.Auth.ModeloUser;
-import com.reapp.reapp.Auth.ServiceAuth;
+import com.reapp.reapp.Auth.ServicioAuth;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
-import com.reapp.reapp.Respuestas.RespuestaGeneral;
+import com.reapp.reapp.Modelos.ModeloUsuario;
+import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Servicios.ServicioPermisosConsultas;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ControladorPermisosConsultas {
 
-    private final ServiceAuth serviceAuth;
+    private final ServicioAuth servicioAuth;
     private final ServicioPermisosConsultas servicioPermisosConsultas;
 
     private static final String clase = "ControladorPermisosConsultas";
@@ -33,13 +33,13 @@ public class ControladorPermisosConsultas {
     private static final String tipo = "Controlador";
 
     @GetMapping(rutas)
-    public ResponseEntity<RespuestaGeneral> rutas() {
+    public ResponseEntity<ModeloRespuestaGeneral> rutas() {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-            ModeloUser user = serviceAuth.usuarioRequest();
+            ModeloUsuario user = servicioAuth.usuarioRequest();
             respuesta.put("rutas", servicioPermisosConsultas.rutas(user.getRol_id()));
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());

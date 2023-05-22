@@ -18,9 +18,9 @@ import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
 import com.reapp.reapp.Modelos.ModeloRol;
 
 @Service
-public class ServicioRoles {
+public class ServicioUsuariosRoles {
 
-    private final String clase = "ServicioRoles";
+    private final String clase = "ServicioUsuariosRoles";
     private final String sp = "{CALL admin.sp_admin_usuarios_roles(?,?,?,?)}";
 
     private final String m_crear = "crear";

@@ -15,7 +15,7 @@ import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloPermisoRolRuta;
-import com.reapp.reapp.Respuestas.RespuestaGeneral;
+import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Servicios.ServicioPermisoRolesRutas;
 
 import lombok.RequiredArgsConstructor;
@@ -28,9 +28,9 @@ public class ControladorPermisoRolesRuta {
     private final ServicioPermisoRolesRutas servicioPermisoRolesRutas;
 
     @PostMapping("/crear")
-    public ResponseEntity<RespuestaGeneral> crear(@RequestBody ModeloPermisoRolRuta permiso) {
+    public ResponseEntity<ModeloRespuestaGeneral> crear(@RequestBody ModeloPermisoRolRuta permiso) {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
         String id = UUID.randomUUID().toString();
 

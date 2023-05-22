@@ -19,7 +19,7 @@ import com.reapp.reapp.Modelos.ModeloRuta;
 import com.reapp.reapp.Modelos.ModeloRutaGeneral;
 
 @Service
-public class ServicioRutasGeneral {
+public class ServicioRutas {
 
     public List<ModeloRuta> listarxRol(String rol_id) throws CustomException {
 

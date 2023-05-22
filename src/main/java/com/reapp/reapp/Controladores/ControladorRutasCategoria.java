@@ -16,7 +16,7 @@ import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloRutaCategoria;
-import com.reapp.reapp.Respuestas.RespuestaGeneral;
+import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Servicios.ServicioRutasCategoria;
 
 import lombok.RequiredArgsConstructor;
@@ -37,9 +37,9 @@ public class ControladorRutasCategoria {
     private static final String remover = "remover";
 
     @GetMapping(listar)
-    public ResponseEntity<RespuestaGeneral> listar() {
+    public ResponseEntity<ModeloRespuestaGeneral> listar() {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
@@ -65,9 +65,9 @@ public class ControladorRutasCategoria {
     }
 
     @PostMapping(crear)
-    public ResponseEntity<RespuestaGeneral> crear(@RequestBody ModeloRutaCategoria ruta) {
+    public ResponseEntity<ModeloRespuestaGeneral> crear(@RequestBody ModeloRutaCategoria ruta) {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
         String id = UUID.randomUUID().toString();
 
@@ -96,9 +96,9 @@ public class ControladorRutasCategoria {
     }
 
     @PostMapping(actualizar)
-    public ResponseEntity<RespuestaGeneral> actualizar(@RequestBody ModeloRutaCategoria ruta) {
+    public ResponseEntity<ModeloRespuestaGeneral> actualizar(@RequestBody ModeloRutaCategoria ruta) {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
@@ -127,9 +127,9 @@ public class ControladorRutasCategoria {
     }
 
     @PostMapping(remover)
-    public ResponseEntity<RespuestaGeneral> remover(@RequestBody ModeloRutaCategoria ruta) {
+    public ResponseEntity<ModeloRespuestaGeneral> remover(@RequestBody ModeloRutaCategoria ruta) {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
 
         try {
 

@@ -16,18 +16,18 @@ import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloRol;
-import com.reapp.reapp.Respuestas.RespuestaGeneral;
-import com.reapp.reapp.Servicios.ServicioRoles;
+import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
+import com.reapp.reapp.Servicios.ServicioUsuariosRoles;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("api/v1/roles/")
 @RequiredArgsConstructor
-public class ControladorRoles {
+public class ControladorUsuariosRoles {
 
-    private final ServicioRoles servicioRoles;
-    private static final String clase = "ControladorRoles";
+    private final ServicioUsuariosRoles servicioRoles;
+    private static final String clase = "ControladorUsuariosRoles";
 
     private static final String listar = "listar";
     private static final String crear = "crear";
@@ -35,9 +35,9 @@ public class ControladorRoles {
     private static final String remover = "remover";
 
     @GetMapping(listar)
-    public ResponseEntity<RespuestaGeneral> listar() {
+    public ResponseEntity<ModeloRespuestaGeneral> listar() {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
@@ -63,9 +63,9 @@ public class ControladorRoles {
     }
 
     @PostMapping(crear)
-    public ResponseEntity<RespuestaGeneral> crear(@RequestBody ModeloRol rol) {
+    public ResponseEntity<ModeloRespuestaGeneral> crear(@RequestBody ModeloRol rol) {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
         String id = UUID.randomUUID().toString();
 
@@ -91,9 +91,9 @@ public class ControladorRoles {
     }
 
     @PostMapping(actualizar)
-    public ResponseEntity<RespuestaGeneral> actualizar(@RequestBody ModeloRol ruta) {
+    public ResponseEntity<ModeloRespuestaGeneral> actualizar(@RequestBody ModeloRol ruta) {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
@@ -119,9 +119,9 @@ public class ControladorRoles {
     }
 
     @PostMapping(remover)
-    public ResponseEntity<RespuestaGeneral> remover(@RequestBody ModeloRol ruta) {
+    public ResponseEntity<ModeloRespuestaGeneral> remover(@RequestBody ModeloRol ruta) {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {

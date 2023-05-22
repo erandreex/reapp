@@ -1,4 +1,4 @@
-package com.reapp.reapp.Respuestas;
+package com.reapp.reapp.Modelos;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 
 import com.reapp.reapp.Excepciones.ModeloErrorCliente;
 
-public class RespuestaGeneral {
+public class ModeloRespuestaGeneral {
 
     private boolean ok;
     private int code;

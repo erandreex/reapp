@@ -16,8 +16,8 @@ import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloRutaGeneral;
-import com.reapp.reapp.Respuestas.RespuestaGeneral;
-import com.reapp.reapp.Servicios.ServicioRutasGeneral;
+import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
+import com.reapp.reapp.Servicios.ServicioRutas;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ControladorRutas {
 
-    private final ServicioRutasGeneral servicioRutasGeneral;
+    private final ServicioRutas servicioRutasGeneral;
     private static final String clase = "ControladorRutas";
     private static final String tipo = "Controlador";
 
@@ -37,38 +37,30 @@ public class ControladorRutas {
     private static final String remover = "remover";
 
     @GetMapping(listar)
-    public ResponseEntity<RespuestaGeneral> listar() {
-
-        RespuestaGeneral resp = new RespuestaGeneral();
+    public ResponseEntity<ModeloRespuestaGeneral> listar() {
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
-
         try {
-
             respuesta.put("rutas", servicioRutasGeneral.listar());
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);
             resp.setMensaje("Se han obtenido las rutas exitosamente!");
             resp.setRespuesta(respuesta);
-
         } catch (CustomException e) {
-
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
-
             errorControlador.setTipo(tipo);
             errorControlador.setClase(clase);
             errorControlador.setMetodo(listar);
-
             throw new HandlerAllException("Error", e.getErrorGeneral(), errorControlador, e);
         }
-
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @PostMapping(crear)
-    public ResponseEntity<RespuestaGeneral> crear(@RequestBody ModeloRutaGeneral ruta) {
+    public ResponseEntity<ModeloRespuestaGeneral> crear(@RequestBody ModeloRutaGeneral ruta) {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
         String id = UUID.randomUUID().toString();
 
@@ -98,9 +90,9 @@ public class ControladorRutas {
     }
 
     @PostMapping(actualizar)
-    public ResponseEntity<RespuestaGeneral> actualizar(@RequestBody ModeloRutaGeneral ruta) {
+    public ResponseEntity<ModeloRespuestaGeneral> actualizar(@RequestBody ModeloRutaGeneral ruta) {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
@@ -129,9 +121,9 @@ public class ControladorRutas {
     }
 
     @PostMapping(remover)
-    public ResponseEntity<RespuestaGeneral> remover(@RequestBody ModeloRutaGeneral ruta) {
+    public ResponseEntity<ModeloRespuestaGeneral> remover(@RequestBody ModeloRutaGeneral ruta) {
 
-        RespuestaGeneral resp = new RespuestaGeneral();
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {

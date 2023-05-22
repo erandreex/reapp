@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,7 +21,7 @@ import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
 
 @Service
-public class ServiceJwt {
+public class ServicioJwt {
 
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
 
@@ -44,17 +43,18 @@ public class ServiceJwt {
         return modeloClaims;
     }
 
-    public String generateToken(String user_id, String token_id, String pass_key) {
-        return generateToken(new HashMap<>(), user_id, token_id, pass_key);
+    public String generateToken(String usuario_id, String token_id, String pass_key, String intervalo, String valor) {
+        return generateToken(new HashMap<>(), usuario_id, token_id, pass_key, intervalo, valor);
     }
 
     public String generateToken(
             Map<String, Object> extraClaims,
-            String user_id,
+            String usuario_id,
             String token_id,
-            String pass_key) {
+            String pass_key,
+            String intervalo, String valor) {
 
-        extraClaims.put("id", user_id);
+        extraClaims.put("usuario_id", usuario_id);
         extraClaims.put("token_id", token_id);
         extraClaims.put("pass_key", pass_key);
 
@@ -63,7 +63,8 @@ public class ServiceJwt {
                 .setHeaderParam("typ", Header.JWT_TYPE)
                 .setClaims(extraClaims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + calcularExpiration()))
+                .setExpiration(
+                        new Date(System.currentTimeMillis() + calcularExpiration(intervalo, Integer.parseInt(valor))))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -73,7 +74,7 @@ public class ServiceJwt {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public Boolean valiteToken(String token) throws CustomException {
+    public Boolean validarToken(String token) throws CustomException {
         Boolean resp = false;
         try {
             Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getBody();
@@ -120,57 +121,14 @@ public class ServiceJwt {
         return resp;
     }
 
-    public Boolean validarTiempo(ModeloClaims claims) throws CustomException {
-
-        Boolean respuesta = false;
-
-        try {
-            Long dateNow = System.currentTimeMillis();
-            Long dateIat = claims.getIat();
-            Long dateExp = claims.getExp();
-            Long total = dateExp - dateIat;
-            Long time = dateNow - dateIat;
-            Long limit = (total * 3) / 4;
-
-            if (time >= limit) {
-                respuesta = true;
-            }
-
-        } catch (Exception ex) {
-
-            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
-
-            errorGeneral.setId(UUID.randomUUID().toString());
-            errorGeneral.setDate(new Date());
-            errorGeneral.setMessageInt(ex.getMessage());
-            errorGeneral.setMessageExt("Token no valido. Favor ingresar nuevamente!");
-            errorGeneral.setStatus(HttpStatus.UNAUTHORIZED);
-            errorGeneral.setCode(HttpStatus.UNAUTHORIZED.value());
-            errorGeneral.setTipo("Servicio");
-            errorGeneral.setClase("JwtService");
-            errorGeneral.setMetodo("validarTiempo");
-            errorGeneral.setError(ex);
-
-            throw new CustomException("", errorGeneral, ex);
-        }
-
-        return respuesta;
-
-    }
-
-    public String check(Boolean control, ModeloClaims claims) throws CustomException {
-
+    public String renovarToken(ModeloClaims claims, String intervalo, String valor)
+            throws CustomException {
         String jwt = claims.getToken();
-
         try {
-            if (control) {
-                jwt = generateToken(claims.getId(), claims.getToken_id(), claims.getPass_key());
-            }
-
+            jwt = generateToken(claims.getUsuario_id(), claims.getToken_id(), claims.getPass_key(), intervalo,
+                    valor);
         } catch (Exception ex) {
-
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
-
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(ex.getMessage());
@@ -181,31 +139,32 @@ public class ServiceJwt {
             errorGeneral.setClase("JwtService");
             errorGeneral.setMetodo("validarTiempo");
             errorGeneral.setError(ex);
-
             throw new CustomException("", errorGeneral, ex);
         }
         return jwt;
     }
 
-    private int calcularExpiration() {
+    private int calcularExpiration(String intervalo, int valor) {
         int resp = 0;
-        switch (intervalConfig) {
+
+        switch (intervalo) {
             case "segundos":
-                resp = 1000 * numberConfig;
+                resp = 1000 * valor;
                 break;
             case "minutos":
-                resp = 1000 * 60 * numberConfig;
+                resp = 1000 * 60 * valor;
                 break;
             case "horas":
-                resp = 1000 * 60 * 60 * numberConfig;
+                resp = 1000 * 60 * 60 * valor;
                 break;
             case "dias":
-                resp = 1000 * 60 * 60 * 24 * numberConfig;
+                resp = 1000 * 60 * 60 * 24 * valor;
                 break;
             default:
-                resp = 1000 * numberConfig;
+                resp = 1000 * valor;
                 break;
         }
+
         return resp;
     }
 

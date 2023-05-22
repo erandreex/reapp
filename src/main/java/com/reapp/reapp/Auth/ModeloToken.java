@@ -3,12 +3,11 @@ package com.reapp.reapp.Auth;
 public class ModeloToken {
 
     public String id = "1";
-    public String token = "1";
-    public String tokenType = "1";
-    public String revoked = "1";
-    public String expired = "1";
-    public String user_id = "1";
-    public String date = "1";
+    public String fecha = "1";
+    public String aut_tipo = "1";
+    public String aut_estado = "1";
+    public String aut_token = "1";
+    public String usuario_id = "1";
 
     public String getId() {
         return id;
@@ -18,52 +17,44 @@ public class ModeloToken {
         this.id = id;
     }
 
-    public String getToken() {
-        return token;
+    public String getFecha() {
+        return fecha;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
-    public String getTokenType() {
-        return tokenType;
+    public String getAut_tipo() {
+        return aut_tipo;
     }
 
-    public void setTokenType(String tokenType) {
-        this.tokenType = tokenType;
+    public void setAut_tipo(String aut_tipo) {
+        this.aut_tipo = aut_tipo;
     }
 
-    public String getRevoked() {
-        return revoked;
+    public String getAut_estado() {
+        return aut_estado;
     }
 
-    public void setRevoked(String revoked) {
-        this.revoked = revoked;
+    public void setAut_estado(String aut_estado) {
+        this.aut_estado = aut_estado;
     }
 
-    public String getExpired() {
-        return expired;
+    public String getAut_token() {
+        return aut_token;
     }
 
-    public void setExpired(String expired) {
-        this.expired = expired;
+    public void setAut_token(String aut_token) {
+        this.aut_token = aut_token;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public String getUsuario_id() {
+        return usuario_id;
     }
 
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public void setUsuario_id(String usuario_id) {
+        this.usuario_id = usuario_id;
     }
 
 }
