@@ -1,8 +1,6 @@
 package com.reapp.reapp.Config;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -15,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -31,13 +28,8 @@ import com.reapp.reapp.Enum.EnumParametros;
 import com.reapp.reapp.Auth.ModeloClaims;
 import com.reapp.reapp.Auth.ModeloToken;
 import com.reapp.reapp.Excepciones.CustomException;
-import com.reapp.reapp.Excepciones.ModeloErrorCliente;
-import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Modelos.ModeloUsuario;
 import com.reapp.reapp.Servicios.ServicioParametros;
-import com.reapp.reapp.Servicios.ServicioUsuarios;
-
-import ch.qos.logback.core.pattern.parser.Parser;
 
 @Component
 @RequiredArgsConstructor

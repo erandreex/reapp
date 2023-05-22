@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
 import com.reapp.reapp.Modelos.ModeloUsuario;
+import com.reapp.reapp.Utilidades.UtilidadesGenerales;
 
 @Service
 public class ServicioValidacionesAuth {
@@ -80,7 +81,7 @@ public class ServicioValidacionesAuth {
         Long dateIat = claims.getIat();
         Long dateExp = claims.getExp();
         Long difference = dateExp - dateIat;
-        int limit = calcularExpiration(intervalo, valor);
+        int limit = UtilidadesGenerales.calcularExpiracionToken(intervalo, valor);
 
         if (difference != limit) {
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
@@ -165,30 +166,6 @@ public class ServicioValidacionesAuth {
             errorGeneral.setMetodo("validarClaims");
             throw new CustomException("", errorGeneral, null);
         }
-    }
-
-    private int calcularExpiration(String intervalo, int valor) {
-        int resp = 0;
-
-        switch (intervalo) {
-            case "segundos":
-                resp = 1000 * valor;
-                break;
-            case "minutos":
-                resp = 1000 * 60 * valor;
-                break;
-            case "horas":
-                resp = 1000 * 60 * 60 * valor;
-                break;
-            case "dias":
-                resp = 1000 * 60 * 60 * 24 * valor;
-                break;
-            default:
-                resp = 1000 * valor;
-                break;
-        }
-
-        return resp;
     }
 
 }

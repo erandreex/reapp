@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
+import com.reapp.reapp.Utilidades.UtilidadesGenerales;
 
 @Service
 public class ServicioJwt {
@@ -64,7 +65,8 @@ public class ServicioJwt {
                 .setClaims(extraClaims)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(
-                        new Date(System.currentTimeMillis() + calcularExpiration(intervalo, Integer.parseInt(valor))))
+                        new Date(System.currentTimeMillis()
+                                + UtilidadesGenerales.calcularExpiracionToken(intervalo, Integer.parseInt(valor))))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -142,30 +144,6 @@ public class ServicioJwt {
             throw new CustomException("", errorGeneral, ex);
         }
         return jwt;
-    }
-
-    private int calcularExpiration(String intervalo, int valor) {
-        int resp = 0;
-
-        switch (intervalo) {
-            case "segundos":
-                resp = 1000 * valor;
-                break;
-            case "minutos":
-                resp = 1000 * 60 * valor;
-                break;
-            case "horas":
-                resp = 1000 * 60 * 60 * valor;
-                break;
-            case "dias":
-                resp = 1000 * 60 * 60 * 24 * valor;
-                break;
-            default:
-                resp = 1000 * valor;
-                break;
-        }
-
-        return resp;
     }
 
 }
