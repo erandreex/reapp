@@ -1,0 +1,1 @@
+web: env DATABASE_URL=$JDBC_DATABASE_URL target/reapp-0.0.1-SNAPSHOT.jar
