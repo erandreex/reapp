@@ -14,9 +14,7 @@ public class MyReappApplication {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		SpringApplication.run(MyReappApplication.class, args);
-
 	}
 
 }
