@@ -11,46 +11,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.reapp.reapp.Auth.ModeloClaims;
-import com.reapp.reapp.Auth.ServicioAuth;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
-import com.reapp.reapp.Modelos.ModeloPermisoRolRuta;
+import com.reapp.reapp.Modelos.ModeloPermisoRolRutaAccion;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
-import com.reapp.reapp.Modelos.ModeloUsuario;
-import com.reapp.reapp.Servicios.ServicioAccesos;
-import com.reapp.reapp.Servicios.ServicioPermisoRolesRutas;
+
+import com.reapp.reapp.Servicios.ServicioPermisoRolesRutasAcciones;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/v1/permisos/rolesrutas")
+@RequestMapping("api/v1/permisos/rolesrutasacciones")
 @RequiredArgsConstructor
-public class ControladorPermisoRolesRuta {
+public class ControladorPermisoRolesRutaAcciones {
 
-    private final ServicioPermisoRolesRutas servicioPermisoRolesRutas;
-    private final ServicioAccesos servicioAccesos;
-    private final ServicioAuth servicioAuth;
-
-    private static final String controlador = "ControladorPermisoRolesRuta";
-    private static final String tipo = "Controlador";
-
-    private static final String crear = "crear";
+    private final ServicioPermisoRolesRutasAcciones servicioPermisoRolesRutasAcciones;
 
     @PostMapping("/crear")
-    public ResponseEntity<ModeloRespuestaGeneral> crear(@RequestBody ModeloPermisoRolRuta permiso) {
+    public ResponseEntity<ModeloRespuestaGeneral> crear(@RequestBody ModeloPermisoRolRutaAccion permiso) {
 
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
         String id = UUID.randomUUID().toString();
 
         try {
-            // ModeloUsuario usuario = servicioAuth.usuarioRequest();
-            // servicioAccesos.controladorMetodo(usuario.getRol_id(), controlador, crear);
-
-            servicioPermisoRolesRutas.crear(permiso, id);
-            respuesta.put("permiso", servicioPermisoRolesRutas.obtenerPorId(id));
+            servicioPermisoRolesRutasAcciones.crear(permiso, id);
+            respuesta.put("permiso", servicioPermisoRolesRutasAcciones.obtenerPorId(id));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);

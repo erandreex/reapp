@@ -2,6 +2,7 @@ package com.reapp.reapp.Servicios;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.UUID;
@@ -18,7 +19,7 @@ public class ServicioAccesos {
 
     private static final String tipo = "Servicio";
     private static final String clase = "ServicioAccesos";
-    private static final String sp = "{CALL admin.sp_admin_accesos(?,?,?,?)}";
+    private static final String sp = "{CALL admin.sp_admin_accesos(?,?,?,?,?)}";
 
     private static final String m_ruta = "ruta";
 
@@ -33,6 +34,8 @@ public class ServicioAccesos {
             cst.setString(2, "QVARC");
             cst.setString(3, componente);
             cst.setString(4, rol_id);
+            cst.setString(5, null);
+
             respuesta = cst.execute();
 
             if (!respuesta)
@@ -88,6 +91,81 @@ public class ServicioAccesos {
         }
 
         return respuesta;
+    }
+
+    public void controladorMetodo(String rol_id, String controlador, String metodo) throws CustomException {
+
+        String respuesta = "0";
+
+        try (Connection mariaDB = ConexionMariaDB.getConexion();
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
+
+            cst.setString(1, "Q");
+            cst.setString(2, "QVCMR");
+            cst.setString(3, rol_id);
+            cst.setString(4, controlador);
+            cst.setString(5, metodo);
+
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+                System.out.println(rs.getString(1));
+            }
+
+            if (respuesta.equals("0")) {
+                throw new Exception("Acceso no valido!");
+            }
+
+        } catch (SQLException e) {
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt("No tiene permiso por acceder a esta ruta!");
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_ruta);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            if (e.getMessage().contains("Acceso no valido!")) {
+
+                errorGeneral.setId(UUID.randomUUID().toString());
+                errorGeneral.setDate(new Date());
+                errorGeneral.setMessageInt(e.getMessage());
+                errorGeneral.setMessageExt("Acceso no valido, no cuenta con los permisos suficientes!");
+                errorGeneral.setStatus(HttpStatus.FORBIDDEN);
+                errorGeneral.setCode(HttpStatus.FORBIDDEN.value());
+                errorGeneral.setTipo(tipo);
+                errorGeneral.setClase(clase);
+                errorGeneral.setMetodo(m_ruta);
+                errorGeneral.setError(e);
+
+            } else {
+                errorGeneral.setId(UUID.randomUUID().toString());
+                errorGeneral.setDate(new Date());
+                errorGeneral.setMessageInt(e.getMessage());
+                errorGeneral
+                        .setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
+                errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+                errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+                errorGeneral.setTipo(tipo);
+                errorGeneral.setClase(clase);
+                errorGeneral.setMetodo(m_ruta);
+                errorGeneral.setError(e);
+            }
+
+            throw new CustomException("", errorGeneral, e);
+        }
+
     }
 
 }

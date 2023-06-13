@@ -15,15 +15,14 @@ import org.springframework.stereotype.Service;
 import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
-import com.reapp.reapp.Modelos.ModeloRuta;
-import com.reapp.reapp.Modelos.ModeloRutaGeneral;
+import com.reapp.reapp.Modelos.ModeloRutaAccion;
 
 @Service
-public class ServicioRutas {
+public class ServicioRutasAcciones {
 
     private static final String tipo = "Servicio";
-    private static final String clase = "ServicioRutas";
-    private static final String sp = "{CALL admin.sp_admin_rutas(?,?,?,?,?,?,?,?,?,?,?)}";
+    private static final String clase = "ServicioRutasAcciones";
+    private static final String sp = "{CALL admin.sp_admin_rutas_acciones(?,?,?,?,?,?,?,?)}";
 
     private static final String listar = "listar";
     private static final String crear = "crear";
@@ -31,47 +30,32 @@ public class ServicioRutas {
     private static final String remover = "remover";
     private static final String obtenerPorId = "obtenerPorId";
 
-    public List<ModeloRuta> listar() throws CustomException {
+    public List<ModeloRutaAccion> listar() throws CustomException {
 
-        List<ModeloRuta> lista = new ArrayList<>();
+        List<ModeloRutaAccion> lista = new ArrayList<>();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "Q");
-            cst.setString(2, "QRT");
+            cst.setString(2, "QLT");
             cst.setString(3, null);
             cst.setString(4, null);
             cst.setString(5, null);
             cst.setString(6, null);
             cst.setString(7, null);
             cst.setString(8, null);
-            cst.setString(9, null);
-            cst.setString(10, null);
-            cst.setString(11, null);
 
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
-                ModeloRuta pro = new ModeloRuta();
 
-                pro.setCategoria_id(rs.getString("arc_id"));
-                pro.setCategoria_titulo(rs.getString("arc_titulo"));
-                pro.setCategoria_ruta(rs.getString("arc_ruta"));
-                pro.setCategoria_icono(rs.getString("arc_icono"));
-                pro.setCategoria_color_1(rs.getString("arc_color_1"));
-                pro.setCategoria_color_2(rs.getString("arc_color_2"));
-                pro.setCategoria_orden(rs.getString("arc_orden"));
-
-                pro.setRuta_id(rs.getString("ar_id"));
-                pro.setRuta_orden(rs.getString("ar_orden"));
-                pro.setRuta_componente(rs.getString("ar_componente"));
-                pro.setRuta_titulo(rs.getString("ar_titulo"));
-                pro.setRuta_ruta(rs.getString("ar_ruta"));
-                pro.setRuta_icono(rs.getString("ar_icono"));
-                pro.setRuta_color_1(rs.getString("ar_color_1"));
-                pro.setRuta_color_2(rs.getString("ar_color_2"));
-
+                ModeloRutaAccion pro = new ModeloRutaAccion();
+                pro.setId(rs.getString("ara_id"));
+                pro.setControlador(rs.getString("ara_controlador"));
+                pro.setMetodo(rs.getString("ara_metodo"));
+                pro.setEstado(rs.getString("ara_estado"));
+                pro.setDescripcion(rs.getString("ara_descripcion"));
                 lista.add(pro);
             }
 
@@ -83,7 +67,7 @@ public class ServicioRutas {
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
             errorGeneral.setMessageExt(
-                    "No se ha podido obtener las rutas, favor validar con un administrador con el codigo de referencia");
+                    "No se ha podido obtener las acciones de las rutas, favor validar con un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo(tipo);
@@ -114,7 +98,7 @@ public class ServicioRutas {
         return lista;
     }
 
-    public Boolean crear(ModeloRutaGeneral ruta, String id) throws CustomException {
+    public Boolean crear(ModeloRutaAccion rutaAccion, String id) throws CustomException {
 
         Boolean respuesta = false;
 
@@ -124,14 +108,12 @@ public class ServicioRutas {
             cst.setString(1, "I");
             cst.setString(2, "INR");
             cst.setString(3, id);
-            cst.setString(4, ruta.getOrden());
-            cst.setString(5, ruta.getComponente());
-            cst.setString(6, ruta.getTitulo());
-            cst.setString(7, ruta.getRuta());
-            cst.setString(8, ruta.getIcono());
-            cst.setString(9, ruta.getColor_1());
-            cst.setString(10, ruta.getColor_2());
-            cst.setString(11, ruta.getFk_categoria());
+            cst.setString(4, rutaAccion.getControlador());
+            cst.setString(5, rutaAccion.getMetodo());
+            cst.setString(6, rutaAccion.getEstado());
+            cst.setString(7, rutaAccion.getFk_ruta());
+            cst.setString(8, rutaAccion.getDescripcion());
+
             cst.execute();
             respuesta = true;
 
@@ -142,7 +124,7 @@ public class ServicioRutas {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("No se ha podido crear la ruta");
+            errorGeneral.setMessageExt("No se ha podido crear la accion para la ruta");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo(tipo);
@@ -172,7 +154,7 @@ public class ServicioRutas {
         return respuesta;
     }
 
-    public Boolean actualizar(ModeloRutaGeneral ruta) throws CustomException {
+    public Boolean actualizar(ModeloRutaAccion rutaAccion) throws CustomException {
 
         Boolean respuesta = false;
 
@@ -181,15 +163,12 @@ public class ServicioRutas {
 
             cst.setString(1, "U");
             cst.setString(2, "UR");
-            cst.setString(3, ruta.getId());
-            cst.setString(4, ruta.getOrden());
-            cst.setString(5, ruta.getComponente());
-            cst.setString(6, ruta.getTitulo());
-            cst.setString(7, ruta.getRuta());
-            cst.setString(8, ruta.getIcono());
-            cst.setString(9, ruta.getColor_1());
-            cst.setString(10, ruta.getColor_2());
-            cst.setString(11, ruta.getFk_categoria());
+            cst.setString(3, rutaAccion.getId());
+            cst.setString(4, rutaAccion.getControlador());
+            cst.setString(5, rutaAccion.getMetodo());
+            cst.setString(6, rutaAccion.getEstado());
+            cst.setString(7, rutaAccion.getFk_ruta());
+            cst.setString(8, rutaAccion.getDescripcion());
             cst.execute();
             respuesta = true;
 
@@ -201,7 +180,7 @@ public class ServicioRutas {
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt("No se ha podido actualizar la ruta");
+            errorGeneral.setMessageExt("No se ha podido actualizar la accion de la ruta");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo(tipo);
@@ -232,7 +211,7 @@ public class ServicioRutas {
         return respuesta;
     }
 
-    public Boolean remover(ModeloRutaGeneral ruta) throws CustomException {
+    public Boolean remover(ModeloRutaAccion rutaAccion) throws CustomException {
 
         Boolean respuesta = false;
 
@@ -241,15 +220,12 @@ public class ServicioRutas {
 
             cst.setString(1, "D");
             cst.setString(2, "DR");
-            cst.setString(3, ruta.getId());
+            cst.setString(3, rutaAccion.getId());
             cst.setString(4, null);
             cst.setString(5, null);
             cst.setString(6, null);
             cst.setString(7, null);
             cst.setString(8, null);
-            cst.setString(9, null);
-            cst.setString(10, null);
-            cst.setString(11, null);
             cst.execute();
 
             respuesta = true;
@@ -263,7 +239,7 @@ public class ServicioRutas {
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
             errorGeneral.setMessageExt(
-                    "No ha sido posible remover la ruta, asegurese de que ningun componente dependa de ella");
+                    "No ha sido posible remover la accion de la ruta, asegurese de que ningun componente dependa de ella");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo(tipo);
@@ -294,45 +270,30 @@ public class ServicioRutas {
         return respuesta;
     }
 
-    public ModeloRuta obtenerPorId(String id) throws CustomException {
+    public ModeloRutaAccion obtenerPorId(String id) throws CustomException {
 
-        ModeloRuta ruta = new ModeloRuta();
+        ModeloRutaAccion ruta = new ModeloRutaAccion();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "Q");
-            cst.setString(2, "QRID");
+            cst.setString(2, "QRAID");
             cst.setString(3, id);
             cst.setString(4, null);
             cst.setString(5, null);
             cst.setString(6, null);
             cst.setString(7, null);
             cst.setString(8, null);
-            cst.setString(9, null);
-            cst.setString(10, null);
-            cst.setString(11, null);
 
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
-
-                ruta.setCategoria_id(rs.getString("arc_id"));
-                ruta.setCategoria_titulo(rs.getString("arc_titulo"));
-                ruta.setCategoria_ruta(rs.getString("arc_ruta"));
-                ruta.setCategoria_icono(rs.getString("arc_icono"));
-                ruta.setCategoria_color_1(rs.getString("arc_color_1"));
-                ruta.setCategoria_color_2(rs.getString("arc_color_2"));
-                ruta.setCategoria_orden(rs.getString("arc_orden"));
-
-                ruta.setRuta_id(rs.getString("ar_id"));
-                ruta.setRuta_orden(rs.getString("ar_orden"));
-                ruta.setRuta_componente(rs.getString("ar_componente"));
-                ruta.setRuta_titulo(rs.getString("ar_titulo"));
-                ruta.setRuta_ruta(rs.getString("ar_ruta"));
-                ruta.setRuta_icono(rs.getString("ar_icono"));
-                ruta.setRuta_color_1(rs.getString("ar_color_1"));
-                ruta.setRuta_color_2(rs.getString("ar_color_2"));
+                ruta.setId(rs.getString("ara_id"));
+                ruta.setControlador(rs.getString("ara_controlador"));
+                ruta.setMetodo(rs.getString("ara_metodo"));
+                ruta.setEstado(rs.getString("ara_estado"));
+                ruta.setDescripcion(rs.getString("ara_descripcion"));
             }
 
         } catch (SQLException e) {
@@ -343,7 +304,7 @@ public class ServicioRutas {
             errorGeneral.setDate(new Date());
             errorGeneral.setMessageInt(e.getMessage());
             errorGeneral.setMessageExt(
-                    "No ha sido posible obtener la ruta por el id, favor contactar a un administrador con el codigo de referencia");
+                    "No ha sido posible obtener la accion de la ruta por el id, favor contactar a un administrador con el codigo de referencia");
             errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo(tipo);

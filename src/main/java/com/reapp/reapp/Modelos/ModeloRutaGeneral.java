@@ -3,13 +3,14 @@ package com.reapp.reapp.Modelos;
 public class ModeloRutaGeneral {
 
     private String id;
-    private String fk_categoria;
+    private String orden;
     private String titulo;
     private String ruta;
-    private String icon;
+    private String icono;
     private String color_1;
     private String color_2;
     private String componente;
+    private String fk_categoria;
 
     public String getId() {
         return id;
@@ -17,6 +18,14 @@ public class ModeloRutaGeneral {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getOrden() {
+        return orden;
+    }
+
+    public void setOrden(String orden) {
+        this.orden = orden;
     }
 
     public String getTitulo() {
@@ -35,12 +44,12 @@ public class ModeloRutaGeneral {
         this.ruta = ruta;
     }
 
-    public String getIcon() {
-        return icon;
+    public String getIcono() {
+        return icono;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setIcono(String icono) {
+        this.icono = icono;
     }
 
     public String getColor_1() {

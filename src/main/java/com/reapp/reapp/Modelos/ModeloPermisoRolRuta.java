@@ -6,9 +6,6 @@ public class ModeloPermisoRolRuta {
     private String rol_id;
     private String ruta_id;
     private String estado;
-    private String titulo_ruta;
-    private String titulo_categoria;
-    private String rol_nombre;
 
     public String getId() {
         return id;
@@ -40,30 +37,6 @@ public class ModeloPermisoRolRuta {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getTitulo_ruta() {
-        return titulo_ruta;
-    }
-
-    public void setTitulo_ruta(String titulo_ruta) {
-        this.titulo_ruta = titulo_ruta;
-    }
-
-    public String getTitulo_categoria() {
-        return titulo_categoria;
-    }
-
-    public void setTitulo_categoria(String titulo_categoria) {
-        this.titulo_categoria = titulo_categoria;
-    }
-
-    public String getRol_nombre() {
-        return rol_nombre;
-    }
-
-    public void setRol_nombre(String rol_nombre) {
-        this.rol_nombre = rol_nombre;
     }
 
 }

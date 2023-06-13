@@ -22,7 +22,6 @@ public class UtilidadesGenerales {
                 resp = 1000 * valor;
                 break;
         }
-
         return resp;
     }
 

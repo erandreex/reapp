@@ -71,6 +71,9 @@ public class ControladorAuth {
             resp.setToken(jwtToken);
 
         } catch (CustomException e) {
+
+            System.out.println(e.getMessage());
+
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
             errorControlador.setTipo(tipo);
             errorControlador.setClase(clase);

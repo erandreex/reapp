@@ -10,14 +10,15 @@ public class ModeloRuta {
     private String categoria_color_1;
     private String categoria_color_2;
 
-    private String general_id;
-    private String general_orden;
-    private String general_titulo;
-    private String general_ruta;
-    private String general_icono;
-    private String general_color_1;
-    private String general_color_2;
-    private String general_componente;
+    private String ruta_id;
+    private String ruta_orden;
+    private String ruta_titulo;
+    private String ruta_ruta;
+    private String ruta_icono;
+    private String ruta_color_1;
+    private String ruta_color_2;
+    private String ruta_componente;
+    private String ruta_categoria;
 
     public String getCategoria_id() {
         return categoria_id;
@@ -75,68 +76,76 @@ public class ModeloRuta {
         this.categoria_color_2 = categoria_color_2;
     }
 
-    public String getGeneral_id() {
-        return general_id;
+    public String getRuta_id() {
+        return ruta_id;
     }
 
-    public void setGeneral_id(String general_id) {
-        this.general_id = general_id;
+    public void setRuta_id(String ruta_id) {
+        this.ruta_id = ruta_id;
     }
 
-    public String getGeneral_orden() {
-        return general_orden;
+    public String getRuta_orden() {
+        return ruta_orden;
     }
 
-    public void setGeneral_orden(String general_orden) {
-        this.general_orden = general_orden;
+    public void setRuta_orden(String ruta_orden) {
+        this.ruta_orden = ruta_orden;
     }
 
-    public String getGeneral_titulo() {
-        return general_titulo;
+    public String getRuta_titulo() {
+        return ruta_titulo;
     }
 
-    public void setGeneral_titulo(String general_titulo) {
-        this.general_titulo = general_titulo;
+    public void setRuta_titulo(String ruta_titulo) {
+        this.ruta_titulo = ruta_titulo;
     }
 
-    public String getGeneral_ruta() {
-        return general_ruta;
+    public String getRuta_ruta() {
+        return ruta_ruta;
     }
 
-    public void setGeneral_ruta(String general_ruta) {
-        this.general_ruta = general_ruta;
+    public void setRuta_ruta(String ruta_ruta) {
+        this.ruta_ruta = ruta_ruta;
     }
 
-    public String getGeneral_icono() {
-        return general_icono;
+    public String getRuta_icono() {
+        return ruta_icono;
     }
 
-    public void setGeneral_icono(String general_icono) {
-        this.general_icono = general_icono;
+    public void setRuta_icono(String ruta_icono) {
+        this.ruta_icono = ruta_icono;
     }
 
-    public String getGeneral_color_1() {
-        return general_color_1;
+    public String getRuta_color_1() {
+        return ruta_color_1;
     }
 
-    public void setGeneral_color_1(String general_color_1) {
-        this.general_color_1 = general_color_1;
+    public void setRuta_color_1(String ruta_color_1) {
+        this.ruta_color_1 = ruta_color_1;
     }
 
-    public String getGeneral_color_2() {
-        return general_color_2;
+    public String getRuta_color_2() {
+        return ruta_color_2;
     }
 
-    public void setGeneral_color_2(String general_color_2) {
-        this.general_color_2 = general_color_2;
+    public void setRuta_color_2(String ruta_color_2) {
+        this.ruta_color_2 = ruta_color_2;
     }
 
-    public String getGeneral_componente() {
-        return general_componente;
+    public String getRuta_componente() {
+        return ruta_componente;
     }
 
-    public void setGeneral_componente(String general_componente) {
-        this.general_componente = general_componente;
+    public void setRuta_componente(String ruta_componente) {
+        this.ruta_componente = ruta_componente;
+    }
+
+    public String getRuta_categoria() {
+        return ruta_categoria;
+    }
+
+    public void setRuta_categoria(String ruta_categoria) {
+        this.ruta_categoria = ruta_categoria;
     }
 
 }

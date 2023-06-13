@@ -24,7 +24,7 @@ public class ServicioPermisosConsultas {
     private static final String clase = "ServicioPermisosConsultas";
     private static final String sp = "{CALL admin.sp_admin_permisos_consultas(?,?,?)}";
 
-    private static final String m_rutas = "rutas";
+    private static final String rutas = "rutas";
 
     public List<ModeloRuta> rutas(String rol_id) throws CustomException {
 
@@ -50,20 +50,22 @@ public class ServicioPermisosConsultas {
                 pro.setCategoria_color_1(rs.getString("arc_color_1"));
                 pro.setCategoria_color_2(rs.getString("arc_color_2"));
 
-                pro.setGeneral_id(rs.getString("ar_id"));
-                pro.setGeneral_orden(rs.getString("ar_orden"));
-                pro.setGeneral_componente(rs.getString("ar_componente"));
-                pro.setGeneral_titulo(rs.getString("ar_titulo"));
-                pro.setGeneral_ruta(rs.getString("ar_ruta"));
-                pro.setGeneral_icono(rs.getString("ar_icono"));
-                pro.setGeneral_color_1(rs.getString("ar_color_1"));
-                pro.setGeneral_color_2(rs.getString("ar_color_2"));
+                pro.setRuta_id(rs.getString("ar_id"));
+                pro.setRuta_orden(rs.getString("ar_orden"));
+                pro.setRuta_componente(rs.getString("ar_componente"));
+                pro.setRuta_titulo(rs.getString("ar_titulo"));
+                pro.setRuta_ruta(rs.getString("ar_ruta"));
+                pro.setRuta_icono(rs.getString("ar_icono"));
+                pro.setRuta_color_1(rs.getString("ar_color_1"));
+                pro.setRuta_color_2(rs.getString("ar_color_2"));
+                pro.setRuta_categoria(rs.getString("ar_fk_categoria"));
 
                 lista.add(pro);
             }
 
         } catch (SQLException e) {
 
+            System.out.println(e);
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -74,7 +76,7 @@ public class ServicioPermisosConsultas {
             errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
             errorGeneral.setTipo(tipo);
             errorGeneral.setClase(clase);
-            errorGeneral.setMetodo(m_rutas);
+            errorGeneral.setMetodo(rutas);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
@@ -91,7 +93,7 @@ public class ServicioPermisosConsultas {
             errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
             errorGeneral.setTipo(tipo);
             errorGeneral.setClase(clase);
-            errorGeneral.setMetodo(m_rutas);
+            errorGeneral.setMetodo(rutas);
             errorGeneral.setError(e);
 
             throw new CustomException("", errorGeneral, e);
