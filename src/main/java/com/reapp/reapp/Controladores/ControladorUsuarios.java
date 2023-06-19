@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ import com.reapp.reapp.Servicios.ServicioUsuarios;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/v1/usuarios")
+@RequestMapping("/api/v1/usuarios/")
 @RequiredArgsConstructor
 public class ControladorUsuarios {
 
@@ -33,7 +34,10 @@ public class ControladorUsuarios {
     private final ServicioUsuarios servicioUsuario;
     private final ServicioUsuariosAuth servicioUsuariosAuth;
 
-    @PostMapping("/registro")
+    private final String registro = "registro";
+    private final String listar = "listar";
+
+    @PostMapping(registro)
     public ResponseEntity<ModeloRespuestaGeneral> registro(
             @RequestBody ModeloUsuario body, HttpServletRequest request) {
 
@@ -63,6 +67,33 @@ public class ControladorUsuarios {
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
             resp.setMensaje("Se ha creado el usuario exitosamente!");
+            resp.setRespuesta(respuesta);
+
+        } catch (CustomException e) {
+            ModeloErrorControlador errorControlador = new ModeloErrorControlador();
+
+            errorControlador.setClase("AuthenticationController");
+            errorControlador.setEndpoint("/api/v1/auth/registro");
+
+            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(resp);
+
+    }
+
+    @GetMapping(listar)
+    public ResponseEntity<ModeloRespuestaGeneral> listar() {
+
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
+        Map<String, Object> respuesta = new HashMap<>();
+
+        try {
+            respuesta.put("usuarios", servicioUsuariosAuth.listar());
+            resp.setOk(true);
+            resp.setCode(HttpStatus.OK.value());
+            resp.setStatus(HttpStatus.OK);
+            resp.setMensaje("Se han obtenido los usuarios exitosamente!");
             resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {

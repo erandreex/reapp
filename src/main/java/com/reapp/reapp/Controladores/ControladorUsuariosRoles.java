@@ -47,8 +47,8 @@ public class ControladorUsuariosRoles {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-            ModeloUsuario usuario = servicioAuth.usuarioRequest();
-            servicioAccesos.controladorMetodo(usuario.getRol_id(), controlador, listar);
+            // ModeloUsuario usuario = servicioAuth.usuarioRequest();
+            // servicioAccesos.controladorMetodo(usuario.getRol_id(), controlador, listar);
 
             respuesta.put("roles", servicioRoles.listar());
             resp.setOk(true);
