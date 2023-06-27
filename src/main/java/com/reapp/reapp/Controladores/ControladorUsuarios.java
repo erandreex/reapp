@@ -22,6 +22,7 @@ import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloUsuario;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Servicios.ServicioUsuarios;
+import com.reapp.reapp.Servicios.ServicioUsuariosRoles;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -33,6 +34,7 @@ public class ControladorUsuarios {
     private final PasswordEncoder passwordEncoder;
     private final ServicioUsuarios servicioUsuario;
     private final ServicioUsuariosAuth servicioUsuariosAuth;
+    private final ServicioUsuariosRoles servicioUsuariosRoles;
 
     private final String registro = "registro";
     private final String listar = "listar";
@@ -90,6 +92,7 @@ public class ControladorUsuarios {
 
         try {
             respuesta.put("usuarios", servicioUsuariosAuth.listar());
+            respuesta.put("roles", servicioUsuariosRoles.listar());
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);

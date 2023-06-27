@@ -26,6 +26,7 @@ public class ServicioAccesos {
     public Boolean ruta(String componente, String rol_id) throws CustomException {
 
         Boolean respuesta = false;
+        String respuestaDb = "0";
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(sp);) {
@@ -36,10 +37,15 @@ public class ServicioAccesos {
             cst.setString(4, rol_id);
             cst.setString(5, null);
 
-            respuesta = cst.execute();
+            ResultSet rs = cst.executeQuery();
 
-            if (!respuesta)
-                throw new Exception("Acceso no valido!");
+            while (rs.next()) {
+                respuestaDb = rs.getString(1);
+            }
+
+            if (!respuestaDb.equalsIgnoreCase("0")) {
+                respuesta = true;
+            }
 
         } catch (SQLException e) {
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
@@ -109,7 +115,7 @@ public class ServicioAccesos {
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
-                System.out.println(rs.getString(1));
+                respuesta = rs.getString(1);
             }
 
             if (respuesta.equals("0")) {

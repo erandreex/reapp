@@ -41,11 +41,13 @@ public class ControladorAcesso {
     private static final String ruta = "ruta";
     private static final String tipo = "Controlador";
 
-    @GetMapping(ruta + "/{componente}")
+    @GetMapping("ruta/{componente}")
     public ResponseEntity<ModeloRespuestaGeneral> ruta(@PathVariable("componente") String componente) {
-
+        System.out.println(componente);
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Boolean control = false;
+        Boolean control2 = false;
+
         String jwt = "";
         String token_intervalo = "";
         String token_valor = "";
@@ -64,12 +66,21 @@ public class ControladorAcesso {
                 servicioToken.actualizar(claims, jwt);
             }
 
-            servicioAccesos.ruta(componente, usuario.getRol_id());
-            resp.setOk(true);
-            resp.setCode(HttpStatus.OK.value());
-            resp.setStatus(HttpStatus.OK);
-            resp.setMensaje("Acceso permitido!");
-            resp.setToken(jwt);
+            control2 = servicioAccesos.ruta(componente, usuario.getRol_id());
+
+            if (control2) {
+                resp.setOk(true);
+                resp.setCode(HttpStatus.OK.value());
+                resp.setStatus(HttpStatus.OK);
+                resp.setMensaje("Acceso permitido!");
+                resp.setToken(jwt);
+            } else {
+                resp.setOk(false);
+                resp.setCode(HttpStatus.OK.value());
+                resp.setStatus(HttpStatus.OK);
+                resp.setMensaje("Acceso no valido!");
+                resp.setToken("");
+            }
 
         } catch (CustomException e) {
 
@@ -82,7 +93,7 @@ public class ControladorAcesso {
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+        return ResponseEntity.status(HttpStatus.OK).body(resp);
 
     }
 

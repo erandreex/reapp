@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
         respuesta.setToken("TOKEN");
         respuesta.setError(error);
 
-        return ResponseEntity.status(ex.getErrorGeneral().getCode()).body(respuesta);
+        return ResponseEntity.status(ex.getErrorGeneral().getStatus()).body(respuesta);
     }
 
 }

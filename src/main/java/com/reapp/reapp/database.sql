@@ -19,7 +19,7 @@
 DROP DATABASE IF EXISTS `admin`;
 CREATE DATABASE IF NOT EXISTS `admin` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `admin`;
- 
+
 -- Volcando estructura para tabla admin.admin_parametros
 DROP TABLE IF EXISTS `admin_parametros`;
 CREATE TABLE IF NOT EXISTS `admin_parametros` (
@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS `admin_parametros` (
 -- Volcando datos para la tabla admin.admin_parametros: ~2 rows (aproximadamente)
 DELETE FROM `admin_parametros`;
 INSERT INTO `admin_parametros` (`ap_nombre`, `ap_valor`) VALUES
-	('TOKEN_EXPIRACION_INTERVALO', 'horas'),
-	('TOKEN_EXPIRACION_VALOR', '5');
+	('TOKEN_EXPIRACION_INTERVALO', 'segundos'),
+	('TOKEN_EXPIRACION_VALOR', '30');
 
 -- Volcando estructura para tabla admin.admin_permisos_roles_rutas
 DROP TABLE IF EXISTS `admin_permisos_roles_rutas`;
@@ -48,12 +48,12 @@ CREATE TABLE IF NOT EXISTS `admin_permisos_roles_rutas` (
 -- Volcando datos para la tabla admin.admin_permisos_roles_rutas: ~6 rows (aproximadamente)
 DELETE FROM `admin_permisos_roles_rutas`;
 INSERT INTO `admin_permisos_roles_rutas` (`aprr_id`, `aprr_fk_rol_id`, `aprr_fk_ruta_id`, `aprr_estado`) VALUES
-	('11c238b3-d83a-4d3c-a884-b62a0c79a512', '5d258050-5ee3-4954-8ec4-1b010355b817', '46f69391-e307-4e49-92fe-be7c3ef78def', 'A'),
-	('53a40301-598e-4c68-ae61-2d74de32ea29', '5d258050-5ee3-4954-8ec4-1b010355b817', '7c9950b7-a114-4477-a655-24fc68a10b09', 'A'),
-	('727eb9a2-a67a-4776-ad79-046d4b8c069d', '5d258050-5ee3-4954-8ec4-1b010355b817', '3f7de9ab-d611-475e-a290-62161a2d9856', 'A'),
-	('727eb9a2-a67a-4776-ad79-046d4b8c089d', '5d258050-5ee3-4954-8ec4-1b010355b817', '3f7de9ab-d611-475e-a290-62161a2d9889', 'A'),
-	('727eb9a2-a67a-4776-ad79-046d4b8cwddw', '5d258050-5ee3-4954-8ec4-1b010355b817', '3f7de9ab-d611-475e-a290-62161a2d9632', 'A'),
-	('727eb9a2-a67a-4776-ad79-046d4b8cxxx', '5d258050-5ee3-4954-8ec4-1b010355b817', '3f7de9ab-d611-475e-a290-62161a2d9811', 'A');
+	('0b993f3f-fabe-46e7-bf86-b0e582f54bc8', '5d258050-5ee3-4954-8ec4-1b010355b817', '46f69391-e307-4e49-92fe-be7c3ef78def', 'A'),
+	('0c891b72-7a0a-4d11-a8d9-54087b74f431', '5d258050-5ee3-4954-8ec4-1b010355b817', '3f7de9ab-d611-475e-a290-62161a2d9856', 'A'),
+	('1c47c49b-4965-4d0d-94bc-cc7e261bd7e8', '5d258050-5ee3-4954-8ec4-1b010355b817', '7c9950b7-a114-4477-a655-24fc68a10b09', 'A'),
+	('4200f87e-dc5b-4adf-8c08-a37e1177de6f', '5d258050-5ee3-4954-8ec4-1b010355b817', 'bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb', 'A'),
+	('9b231720-d358-4c72-9fbf-2886fd63d5ab', '5d258050-5ee3-4954-8ec4-1b010355b817', 'b5f5267e-87fa-4678-97ca-6ad4584725d3', 'A'),
+	('eda77a5d-2579-4341-a5de-26a1b9c0e591', '5d258050-5ee3-4954-8ec4-1b010355b817', '53cc74a5-0efb-4d98-b975-7c8451583b0c', 'A');
 
 -- Volcando estructura para tabla admin.admin_permisos_roles_rutas_acciones
 DROP TABLE IF EXISTS `admin_permisos_roles_rutas_acciones`;
@@ -85,15 +85,16 @@ CREATE TABLE IF NOT EXISTS `admin_rutas` (
   UNIQUE KEY `ar_id` (`ar_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_rutas: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_rutas: ~7 rows (aproximadamente)
 DELETE FROM `admin_rutas`;
 INSERT INTO `admin_rutas` (`ar_id`, `ar_orden`, `ar_componente`, `ar_titulo`, `ar_ruta`, `ar_icono`, `ar_color_1`, `ar_color_2`, `ar_fk_categoria`) VALUES
-	('3f7de9ab-d611-475e-a290-62161a2d9632', 1, 'pruebaComponent3', 'Prueba3', 'prueba', 'ri-plane-fill', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b12'),
-	('3f7de9ab-d611-475e-a290-62161a2d9811', 3, 'pruebaComponent2', 'Prueba2', 'prueba', 'ri-plane-fill', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b12'),
+	('3938b044-26ae-4079-81d0-734d248afa75', 0, 'UsuariosComponent', 'Usuarios', 'usuarios', 'ri-user-3-fill', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
 	('3f7de9ab-d611-475e-a290-62161a2d9856', 1, 'RutasComponent', 'Rutas', 'rutas', 'ri-organization-chart', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
-	('3f7de9ab-d611-475e-a290-62161a2d9889', 1, 'pruebaComponent', 'Prueba1', 'prueba', 'ri-plane-fill', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b12'),
 	('46f69391-e307-4e49-92fe-be7c3ef78def', 15, 'UsuariosRolesComponent', 'Usuarios Roles', 'usuarios-roles', 'ri-shield-user-fill', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
-	('7c9950b7-a114-4477-a655-24fc68a10b09', 2, 'RutasCategoriasComponent', 'Rutas Categorias', 'rutas-categorias', 'ri-mind-map', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93');
+	('7c9950b7-a114-4477-a655-24fc68a10b09', 2, 'RutasCategoriasComponent', 'Rutas Categorias', 'rutas-categorias', 'ri-mind-map', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
+	('84d5bca9-3bcd-4f82-ae42-6ea23dcf0522', 0, 'RutasAccionesComponent', 'Rutas Acciones', 'rutas-acciones', 'ri-key-line', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
+	('b5f5267e-87fa-4678-97ca-6ad4584725d3', 0, 'DashboardComponent', 'Dashboard', '', 'ri-flag-2-fill', '#FFFFFF', '#FFFFFF', '85b96a17-6252-428c-ba9c-49df337f52f3'),
+	('bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb', 0, 'IndexComponent', 'Index', '', 'ri-flag-2-fill', '#FFFFFF', '#FFFFFF', '85b96a17-6252-428c-ba9c-49df337f52f3');
 
 -- Volcando estructura para tabla admin.admin_rutas_acciones
 DROP TABLE IF EXISTS `admin_rutas_acciones`;
@@ -128,11 +129,12 @@ CREATE TABLE IF NOT EXISTS `admin_rutas_categorias` (
   UNIQUE KEY `arc_orden` (`arc_orden`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_rutas_categorias: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_rutas_categorias: ~3 rows (aproximadamente)
 DELETE FROM `admin_rutas_categorias`;
 INSERT INTO `admin_rutas_categorias` (`arc_id`, `arc_orden`, `arc_titulo`, `arc_ruta`, `arc_icono`, `arc_color_1`, `arc_color_2`) VALUES
 	('f91dd081-ca36-4d1e-81c9-cffb9e131b93', 5, 'Administracion', 'administracion', 'ri-settings-5-fill', '#FFFFFF', '#FFFFFF'),
-	('f91dd081-ca36-4d1e-81c9-cffb9e131b12', 1, 'Ajustes', 'ajustes', 'ri-arrow-right-up-fill', '#FFFFFF', '#FFFFFF');
+	('f91dd081-ca36-4d1e-81c9-cffb9e131b12', 1, 'Ajustes', 'ajustes', 'ri-arrow-right-up-fill', '#FFFFFF', '#FFFFFF'),
+	('85b96a17-6252-428c-ba9c-49df337f52f3', 2, 'Index', '', 'ri-flag-2-fill', '#FFFFFF', '#FFFFFF');
 
 -- Volcando estructura para tabla admin.admin_usuarios
 DROP TABLE IF EXISTS `admin_usuarios`;
@@ -154,10 +156,13 @@ CREATE TABLE IF NOT EXISTS `admin_usuarios` (
   CONSTRAINT `FK_usuario_rol` FOREIGN KEY (`au_fk_aur_id`) REFERENCES `admin_usuarios_roles` (`aur_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_usuarios: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_usuarios: ~4 rows (aproximadamente)
 DELETE FROM `admin_usuarios`;
 INSERT INTO `admin_usuarios` (`au_id`, `au_nombre`, `au_apellido`, `au_username`, `au_password`, `au_correo`, `au_correo_lower`, `au_pass_key`, `au_estado`, `au_fk_aur_id`) VALUES
-	('a330e7bf-1c4d-4709-a331-6353a44621a4', 'Prueba', 'Test', 'test1', '$2a$10$W3CX0EpFfeCaO0OskoWoOuSCGkf.6UEEkAKKslXwtGKKh3U9P11y6', 'test1@test.com', 'test1@test.com', '4e51a3fa-c345-402b-ac32-d2e39a0a9323', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817');
+	('49d28d27-9a75-482b-9f8f-cdb353508842', 'nombreerg', 'apellidoergerg', 'usernameergerg', '$2a$10$I/7a3E0.n2Xcj.iw4aOSJe3qKxT24nXqQ6PNxpv1IMDDLYEW4w8TO', 'correoergerg', 'correoergerg', '8b3de7e2-c210-4a33-834b-b78d02517a8d', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('5af0baf4-df1d-4978-b18c-d43fb82ab415', 'nombre', 'apellido', 'username', '$2a$10$vGJSe1yYyoagxevBq/7nleCJDAVBX0Kvp7E.PIg7UialS3ZhGZ3Ia', 'correo', 'correo', '61719d97-5764-49f7-a229-52222bb1992d', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('a330e7bf-1c4d-4709-a331-6353a44621a4', 'Prueba', 'Test', 'test1', '$2a$10$W3CX0EpFfeCaO0OskoWoOuSCGkf.6UEEkAKKslXwtGKKh3U9P11y6', 'test1@test.com', 'test1@test.com', '7287fb10-bdee-42f7-a9b1-ee63035b390b', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('e43746bb-3466-45fd-9a4f-bf4e9935ee45', 'Prueba', 'apellidoewfwf', 'usernamewef', '$2a$10$i6Ms5wnRjJoXjZLA34Wnd.HXgrlVvZSI.iVuy..D9VnIe/sJMOWSy', 'correowefwef', 'correowefwef', '92fb1f21-0cec-4438-952f-683595885d25', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817');
 
 -- Volcando estructura para tabla admin.admin_usuarios_roles
 DROP TABLE IF EXISTS `admin_usuarios_roles`;
@@ -187,45 +192,8 @@ CREATE TABLE IF NOT EXISTS `admin_usuarios_tokens` (
   CONSTRAINT `FK_token_usuario_id` FOREIGN KEY (`aut_fk_usuario_id`) REFERENCES `admin_usuarios` (`au_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_usuarios_tokens: ~36 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_usuarios_tokens: ~0 rows (aproximadamente)
 DELETE FROM `admin_usuarios_tokens`;
-INSERT INTO `admin_usuarios_tokens` (`aut_id`, `aut_fecha`, `aut_tipo`, `aut_estado`, `aut_token`, `aut_fk_usuario_id`) VALUES
-	('0391c6bf-3920-46ed-a136-5ac5c63ea8fb', '2023-05-21 21:59:52', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIwMzkxYzZiZi0zOTIwLTQ2ZWQtYTEzNi01YWM1YzYzZWE4ZmIiLCJwYXNzX2tleSI6IjQxZTBkY2M4LTljOGYtNDllZC05MmZhLWE2NDBmNmE1NWQyYiIsImlhdCI6MTY4NDcyNDM5MiwiZXhwIjoxNjg0NzI1MjkyfQ.mNtZOrnrRD6BEjNplfHbPgqhUcQ_bfkRLjdz2ygaZ1U', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('0b984b1f-8eb5-4ee8-9f36-4d8c8dae8c5e', '2023-05-21 22:00:02', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIwYjk4NGIxZi04ZWI1LTRlZTgtOWYzNi00ZDhjOGRhZThjNWUiLCJwYXNzX2tleSI6ImMyODI0YTc5LWI5YmItNDE3NS05YmVlLTNmNTcxYjJkMTYxNSIsImlhdCI6MTY4NDcyNDQwMiwiZXhwIjoxNjg0NzI1MzYyfQ.nSyczoIHeVyXOJx3FnlLQorOMNz-hahb_tcs43YnjcA', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('1f0a362e-b6ab-47f1-8185-858887d42540', '2023-06-07 00:17:46', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIxZjBhMzYyZS1iNmFiLTQ3ZjEtODE4NS04NTg4ODdkNDI1NDAiLCJwYXNzX2tleSI6IjY4M2UyYTdjLWI5NjMtNDE3Mi05YTMwLTIxZGQ1NjBmMDA4YiIsImlhdCI6MTY4NjExNTA2NiwiZXhwIjoxNjg2MTMzMDY2fQ.Hifw3dueMV5jqR1ef3ExpblbiFv9sJUBRUf9rrASfUg', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('23ae83c1-0916-417e-a2f7-72387e0bb4b4', '2023-06-12 02:10:53', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIyM2FlODNjMS0wOTE2LTQxN2UtYTJmNy03MjM4N2UwYmI0YjQiLCJwYXNzX2tleSI6IjhjMDhkYjA1LWJhNjQtNDc1ZS05YzZkLWUxMDIxMWViZDc5MyIsImlhdCI6MTY4NjU1Mzg1MywiZXhwIjoxNjg2NTcxODUzfQ.DHlVTe1kCExanfpC5sL9mtitTrESErWPw-_hHdJCHWs', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('25b61199-9a39-4e66-96fd-4ff471374325', '2023-06-12 01:46:39', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIyNWI2MTE5OS05YTM5LTRlNjYtOTZmZC00ZmY0NzEzNzQzMjUiLCJwYXNzX2tleSI6IjZhMTNjMjE3LTc3M2QtNDBhYS1hNGViLWM3ZjcyYmVhOTA0NSIsImlhdCI6MTY4NjU1MjM5OSwiZXhwIjoxNjg2NTcwMzk5fQ.oa6qz7dEjUdiiDyaGl2OTYp7cF4qKW85dWoMNNVb6Zg', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('3e2e2a8a-2134-4822-b3f6-ff2b4aca4d69', '2023-06-12 01:22:05', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIzZTJlMmE4YS0yMTM0LTQ4MjItYjNmNi1mZjJiNGFjYTRkNjkiLCJwYXNzX2tleSI6ImRkNmU0MDU1LWU1Y2EtNDliYi04MmMwLTBkMDIzMWMzZDFiYiIsImlhdCI6MTY4NjU1MDkyNSwiZXhwIjoxNjg2NTY4OTI1fQ.06A2DBqPgL6n52rIkbFO_7Mys9VX5zjDWCTF-4nTTww', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('461c9c6f-2ba2-4116-8e03-f78fdfff233e', '2023-06-12 01:48:29', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI0NjFjOWM2Zi0yYmEyLTQxMTYtOGUwMy1mNzhmZGZmZjIzM2UiLCJwYXNzX2tleSI6ImY1OGI2OGU0LTFiMDUtNDBjMi1iOWFjLTMwYmNhOTgxZWY1MSIsImlhdCI6MTY4NjU1MjUwOSwiZXhwIjoxNjg2NTcwNTA5fQ.Nh3fNWfuz8TpOUaajgFQf3IxNVUd1lHNwQMawwHxEzY', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('4b046dc4-5d5e-4ff0-8e5b-38b53815637e', '2023-06-12 18:17:50', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI0YjA0NmRjNC01ZDVlLTRmZjAtOGU1Yi0zOGI1MzgxNTYzN2UiLCJwYXNzX2tleSI6IjEzZTY3MzIxLWE5MTAtNGI0ZS1iM2U2LWFjNDhkM2UzMmRmYyIsImlhdCI6MTY4NjYxMTg3MCwiZXhwIjoxNjg2NjI5ODcwfQ.Dk18Fe-9yA_kytuhlu_CgyDIaY_k65lW6Io4pdE03vE', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('4cb93d47-7671-4a14-aed5-8e7c61314bc5', '2023-05-21 21:46:16', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI0Y2I5M2Q0Ny03NjcxLTRhMTQtYWVkNS04ZTdjNjEzMTRiYzUiLCJwYXNzX2tleSI6IjlkNDE3ZmZlLWY5MzItNGJmMi1hOTZiLWRjY2IxZjZlMjkwMiIsImlhdCI6MTY4NDcyMzU3NiwiZXhwIjoxNjg0NzI0NDc2fQ.Vi1BEIIEusMELTjvWzsfigG8sGRK3Ta9SgWV6YLTSYI', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('6e3f2d80-f5b6-4486-9269-c18b2918f92a', '2023-06-11 19:01:46', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI2ZTNmMmQ4MC1mNWI2LTQ0ODYtOTI2OS1jMThiMjkxOGY5MmEiLCJwYXNzX2tleSI6IjFmNjQ3NWMyLWRhY2EtNGIyNi1hNzU4LTVmNmNkYzEyNDUyNyIsImlhdCI6MTY4NjUyODEwNiwiZXhwIjoxNjg2NTQ2MTA2fQ.CyCFxy5umvcuIRDh3eUr7AgrnMDpXZrOFQGITYYWPbI', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('7a1d96e9-7d9e-4c6d-af6d-da021b86dd2e', '2023-05-21 21:20:20', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI3YTFkOTZlOS03ZDllLTRjNmQtYWY2ZC1kYTAyMWI4NmRkMmUiLCJwYXNzX2tleSI6IjliNjBkN2ExLWRiMDUtNGY3Yi05ZjZhLWM3MDAwNjFhOGY2YyIsImlhdCI6MTY4NDcyMjAyMCwiZXhwIjoxNjg0NzIyOTIwfQ.XQq9x4uy49gh4uyt7KbISWPdPtLH_DIkZv6nodQ6ENo', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('7aa67949-6a2e-4834-94bf-578955968a52', '2023-06-12 18:18:43', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI3YWE2Nzk0OS02YTJlLTQ4MzQtOTRiZi01Nzg5NTU5NjhhNTIiLCJwYXNzX2tleSI6IjdiOWEwOTM3LTIwNzgtNDJkMi1hNmI3LTM0ZmViNjNmNjlhNiIsImlhdCI6MTY4NjYxMTkyMywiZXhwIjoxNjg2NjI5OTIzfQ.epDsiaYtv_qe97JurK2NtqH15fnp_ZmbuDMH4ykXIxA', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('813ff4dd-5732-43ef-9434-f6f6d611cdab', '2023-05-22 01:03:40', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI4MTNmZjRkZC01NzMyLTQzZWYtOTQzNC1mNmY2ZDYxMWNkYWIiLCJwYXNzX2tleSI6IjNjMTM2ZTQxLWJlOGQtNDI2ZC04NWRkLTNiNmY5ZGUwYzkyNyIsImlhdCI6MTY4NDczNTQyMCwiZXhwIjoxNjg0NzUzNDIwfQ.wq8ehDJGHPkL2NkGEz42uOu4LJHpV7YAzNBF7cxIIUY', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('8522e91c-608f-4811-80de-c190717b5ef0', '2023-06-13 00:29:32', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI4NTIyZTkxYy02MDhmLTQ4MTEtODBkZS1jMTkwNzE3YjVlZjAiLCJwYXNzX2tleSI6IjRlNTFhM2ZhLWMzNDUtNDAyYi1hYzMyLWQyZTM5YTBhOTMyMyIsImlhdCI6MTY4NjYzNDE3MiwiZXhwIjoxNjg2NjUyMTcyfQ.IU1IA4zj3b-P0hLhWGsf54J4kILgMNXdHCIcYEBiNtk', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('8af9f38b-3a7e-4123-ab8b-86f8a0c9700a', '2023-06-05 22:21:09', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI4YWY5ZjM4Yi0zYTdlLTQxMjMtYWI4Yi04NmY4YTBjOTcwMGEiLCJwYXNzX2tleSI6IjFiZDNhMmEyLTU5NmMtNDBhNi1iNDAxLTAyMTcwNjFmZGNlZCIsImlhdCI6MTY4NjAyMTY2OSwiZXhwIjoxNjg2MDM5NjY5fQ.xQ95ei1QvqRHAtjUbYlePdHDT-cvwOv5g0h_UK0pSpU', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('97801e71-857e-46be-a731-8f7a2edb0e41', '2023-05-22 00:55:46', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI5NzgwMWU3MS04NTdlLTQ2YmUtYTczMS04ZjdhMmVkYjBlNDEiLCJwYXNzX2tleSI6ImY0NWJhOWE4LTM3NWMtNDU3Yi04ZGMzLWQwZDI1MDYzNWFjOCIsImlhdCI6MTY4NDczNDk0NiwiZXhwIjoxNjg0NzUyOTQ2fQ.U01mCQZwJnY6SiYPkcIg9hGVBu88ad6uX_Tjzt_xufQ', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('a018958d-755c-43f0-b94e-f275ddbcd506', '2023-05-21 21:19:07', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJhMDE4OTU4ZC03NTVjLTQzZjAtYjk0ZS1mMjc1ZGRiY2Q1MDYiLCJwYXNzX2tleSI6IjIzM2QxOWFlLWM2YzEtNGVlMC04NjdjLTc5NTU2MDJkMDBiOCIsImlhdCI6MTY4NDcyMTk0NywiZXhwIjoxNjg0NzIyODQ3fQ.9lXHOsJSWqEM9Zo3tfc3cdYGOcmDNDLF_g1uqmO0-nQ', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('a0e08c62-af64-4e60-a62d-2438bd645904', '2023-06-09 01:51:49', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJhMGUwOGM2Mi1hZjY0LTRlNjAtYTYyZC0yNDM4YmQ2NDU5MDQiLCJwYXNzX2tleSI6IjBlMjllYjU3LTM0ZjItNDQ5ZC1hN2E1LTNjNTZjNmY4OWIyNCIsImlhdCI6MTY4NjI5MzUwOSwiZXhwIjoxNjg2MzExNTA5fQ.WnvJ8WrW-apct1jUsSk4M7mSWbYRDjmWvaVey-MiHPA', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('a3a1c76a-ad68-4b8d-ac30-6447ba23dec1', '2023-06-12 01:46:15', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJhM2ExYzc2YS1hZDY4LTRiOGQtYWMzMC02NDQ3YmEyM2RlYzEiLCJwYXNzX2tleSI6IjNkZjVlNWNiLTg0YjUtNDJkYi1iMDM3LTA3MTFhOTRhMWYzNCIsImlhdCI6MTY4NjU1MjM3NSwiZXhwIjoxNjg2NTcwMzc1fQ.s22qGzKSbNTMiugkZtKepUvx4TjqUqczqHZrptM8UwI', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('a6673510-1286-4ea1-884b-04ba30ce4795', '2023-05-22 01:04:22', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJhNjY3MzUxMC0xMjg2LTRlYTEtODg0Yi0wNGJhMzBjZTQ3OTUiLCJwYXNzX2tleSI6ImY1ZTY1MWNmLWUzM2YtNGU1Yi05NWE3LTIzNzk3ZDY4NGIzYSIsImlhdCI6MTY4NDczNTQ2MiwiZXhwIjoxNjg0NzUzNDYyfQ.uVWoIrLBUAW3cE44SpT5M867tjei81Fxwpc-TH5QWHs', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('a8cbf59d-8569-4a52-b3c7-8c46e23f3e54', '2023-06-12 00:05:08', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJhOGNiZjU5ZC04NTY5LTRhNTItYjNjNy04YzQ2ZTIzZjNlNTQiLCJwYXNzX2tleSI6Ijc2OGQ3MGFhLWVmNTAtNDgzZC05N2NkLWYxYTQzOGM3ZGMxZiIsImlhdCI6MTY4NjU0NjMwOCwiZXhwIjoxNjg2NTY0MzA4fQ.AGJR8eulTSxbOIlbbOzhNb6KpTJCkVISCVnirKdxptk', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('b0396b0b-995e-470c-9b88-7f8a547df83c', '2023-06-12 02:07:11', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiMDM5NmIwYi05OTVlLTQ3MGMtOWI4OC03ZjhhNTQ3ZGY4M2MiLCJwYXNzX2tleSI6ImM0NmExMTViLTg4N2UtNDhlZC1iZWNlLWU1MTVhYTZiZGViYiIsImlhdCI6MTY4NjU1MzYzMSwiZXhwIjoxNjg2NTcxNjMxfQ.OezIOXI4VaeTuBX3i5R4B498D9MHMwCLwITnQYplNE0', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('bb3c0a87-3cb2-4b14-8277-8ebb77a0965b', '2023-06-05 22:14:32', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiYjNjMGE4Ny0zY2IyLTRiMTQtODI3Ny04ZWJiNzdhMDk2NWIiLCJwYXNzX2tleSI6ImI4NDBlY2VjLWQzYjItNGVjNy04MWZhLTU0MDc5OWEwYjIxZiIsImlhdCI6MTY4NjAyMTI3MiwiZXhwIjoxNjg2MDM5MjcyfQ.NHp4umxemDm2mY2VkaWi4UseSjXn5FltY4c1vDwIZJI', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('be640f88-f73b-4192-acec-2ebacf5db51d', '2023-05-21 21:46:32', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiZTY0MGY4OC1mNzNiLTQxOTItYWNlYy0yZWJhY2Y1ZGI1MWQiLCJwYXNzX2tleSI6ImY4NzQ3OWM1LTc5ZjktNDk1NC04MzNjLTU4MTRiMjU3ZTAzZCIsImlhdCI6MTY4NDcyMzU5MiwiZXhwIjoxNjg0NzI0NDkyfQ.v7PBVkEzFdiPHgCreqolSMIGraSoTf52pqWEZGIJCVA', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('bf22e7da-3267-456f-9f45-3cdfb379af2d', '2023-06-12 01:47:45', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiZjIyZTdkYS0zMjY3LTQ1NmYtOWY0NS0zY2RmYjM3OWFmMmQiLCJwYXNzX2tleSI6IjI2Y2NmYjJkLTA3ZjgtNDU0ZC1hNGQxLTQ2MTg2ZjFkM2UzYyIsImlhdCI6MTY4NjU1MjQ2NSwiZXhwIjoxNjg2NTcwNDY1fQ.iR1YvmFyRWM96rtRMJB2FitQSVXQ9x3y6988lSd9OCA', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('c727ed41-c1c3-4077-aaba-c300c4447694', '2023-06-12 02:18:53', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJjNzI3ZWQ0MS1jMWMzLTQwNzctYWFiYS1jMzAwYzQ0NDc2OTQiLCJwYXNzX2tleSI6Ijc5MjM0M2M5LTFhMTktNGFlOS04YzZhLTM4OGVkYjMyZDZmZiIsImlhdCI6MTY4NjU1NDMzMywiZXhwIjoxNjg2NTcyMzMzfQ.gsjYCjKoNLwLq8to4CThhPbP7FmTJmT6SPegI7B4804', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('c8e20423-0c2a-47b4-847e-8c7a20d8b165', '2023-06-12 01:45:18', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJjOGUyMDQyMy0wYzJhLTQ3YjQtODQ3ZS04YzdhMjBkOGIxNjUiLCJwYXNzX2tleSI6ImY1OTRkZWQ2LTg2OGQtNDNmOS05M2JkLWZjYWQ5ZmY4YThmNiIsImlhdCI6MTY4NjU1MjMxOCwiZXhwIjoxNjg2NTcwMzE4fQ.Vr-BMkgP3XshlgjdtnPmDU0t3KJ50XywS3M7cukgPxY', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('d624fd79-4fd2-4ba4-8d2c-08aa0bc42dfc', '2023-06-12 02:11:09', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJkNjI0ZmQ3OS00ZmQyLTRiYTQtOGQyYy0wOGFhMGJjNDJkZmMiLCJwYXNzX2tleSI6IjE5MWY1YTFmLTQ2OTgtNDJiNS04NGVhLWFkMzcyOGE5YmEwYiIsImlhdCI6MTY4NjU1Mzg2OSwiZXhwIjoxNjg2NTcxODY5fQ.0BD8uoJKLlqGK5eLs-uAbC8L4p-IjZUgU54vIFNZ30k', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('d8d4c556-9d58-464d-ba8d-4846330e2481', '2023-06-12 10:32:53', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJkOGQ0YzU1Ni05ZDU4LTQ2NGQtYmE4ZC00ODQ2MzMwZTI0ODEiLCJwYXNzX2tleSI6ImEyYjQxNzA4LTkzYTQtNDZlZS1iNWM2LTI5ODViNTFkOTc2MyIsImlhdCI6MTY4NjU4Mzk3MywiZXhwIjoxNjg2NjAxOTczfQ.q8D0tufjrwylIkLDF7978C127O4aZ91MNFRX-GuJvBc', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('d8fb6d52-90bc-49e8-a83e-0e29548c599c', '2023-05-21 22:57:41', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJkOGZiNmQ1Mi05MGJjLTQ5ZTgtYTgzZS0wZTI5NTQ4YzU5OWMiLCJwYXNzX2tleSI6ImM3Y2Y1MjMzLWFiMjMtNDEyYS05OTcyLTAzYjNhMjg5ZDVmZiIsImlhdCI6MTY4NDcyNzg2MSwiZXhwIjoxNjg0NzQ1ODYxfQ.gBLb-N7ih38WKKLPChKFu45KDBajcirwABifirNOw_k', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('e3fcb2b9-5c50-43d8-9cd0-fe1cebd86402', '2023-06-12 02:09:52', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJlM2ZjYjJiOS01YzUwLTQzZDgtOWNkMC1mZTFjZWJkODY0MDIiLCJwYXNzX2tleSI6ImNlOGZmMWFlLTQ3OTUtNDNjZS1iMTZjLTg0ODUwY2U4YjNkNiIsImlhdCI6MTY4NjU1Mzc5MiwiZXhwIjoxNjg2NTcxNzkyfQ.xVDwmkr8ERT_XEq4F9dOqBZoMCfhT6Ml2-bYAxGJMws', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('e820520b-6c8b-47be-8382-d5b8d5282eda', '2023-05-22 00:55:44', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJlODIwNTIwYi02YzhiLTQ3YmUtODM4Mi1kNWI4ZDUyODJlZGEiLCJwYXNzX2tleSI6IjJlNjUyMGI2LTAxNTItNDlmYS04ODk3LWQwN2FlMmYyNmVjMyIsImlhdCI6MTY4NDczNDk0NCwiZXhwIjoxNjg0NzUyOTQ0fQ.tf40AYSIMCY3x3C9tzpnbEpxUn_6kqinjTDIrEiQQ9E', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('e86c179d-5e99-4dc8-a7bb-b9f24a277f67', '2023-05-21 21:15:47', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJlODZjMTc5ZC01ZTk5LTRkYzgtYTdiYi1iOWYyNGEyNzdmNjciLCJwYXNzX2tleSI6ImIyZWZmZDRjLTBlNGItNGNhNy05N2IyLTRiZWRjNmI3ZmFmNiIsImlhdCI6MTY4NDcyMTc0NywiZXhwIjoxNjg0NzIyNjQ3fQ.dacx8EPy2bpEZLCoJCRQ8Izb4WtyHG8CiH_rBESxMlQ', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('ee54ce67-b934-4e6c-90fe-0e0e45b93b94', '2023-06-05 22:06:39', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJlZTU0Y2U2Ny1iOTM0LTRlNmMtOTBmZS0wZTBlNDViOTNiOTQiLCJwYXNzX2tleSI6IjI5ZjBjMWNiLWI3ZDYtNGVjNy1hYWM4LTY5OGFjMzUwYzhjOCIsImlhdCI6MTY4NjAyMDc5OSwiZXhwIjoxNjg2MDM4Nzk5fQ.YGkwiwfD0_LFd6d5deABjNPw6Nvxyqs8iphQDsnLJ1Q', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('ef228678-87a1-4e35-aaf9-f65460e11dc1', '2023-06-10 23:14:42', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJlZjIyODY3OC04N2ExLTRlMzUtYWFmOS1mNjU0NjBlMTFkYzEiLCJwYXNzX2tleSI6IjY3OTNmMjU4LWNiYjktNDcwOS1iNDhiLTE0NzdjZTZmOTVjNCIsImlhdCI6MTY4NjQ1Njg4MiwiZXhwIjoxNjg2NDc0ODgyfQ.chXK22BGsiVyN1awCHKjWzpihd7PT8S9rmxZPg9wrb8', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('f86d4e44-c154-4c04-9bd7-c727a043af83', '2023-05-22 00:56:03', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJmODZkNGU0NC1jMTU0LTRjMDQtOWJkNy1jNzI3YTA0M2FmODMiLCJwYXNzX2tleSI6ImNiNTQ5YmMwLWM0MjItNDY3Ni1iYjQwLWVjM2UxNWVkMWM5MyIsImlhdCI6MTY4NDczNDk2MywiZXhwIjoxNjg0NzUyOTYzfQ.Wv68f1Rat76-VVx_mpby9avf_nOstNNnBtt4wRb_IKk', 'a330e7bf-1c4d-4709-a331-6353a44621a4');
 
 -- Volcando estructura para procedimiento admin.sp_admin_accesos
 DROP PROCEDURE IF EXISTS `sp_admin_accesos`;
@@ -457,7 +425,7 @@ BEGIN
 		IF(i_operacion = 'INR') THEN -- INSERTAR NUEVO REGISTRO
 			
 			INSERT INTO admin.admin_rutas (ar_id, ar_orden, ar_componente, ar_titulo, ar_ruta, ar_icono, ar_color_1, ar_color_2, ar_fk_categoria)
-			VALUES (i_ar_id, ar_orden, i_ar_componente, i_ar_titulo, i_ar_ruta, i_ar_icono, i_ar_color_1, i_ar_color_2, i_ar_fk_categoria);
+			VALUES (i_ar_id, i_ar_orden, i_ar_componente, i_ar_titulo, i_ar_ruta, i_ar_icono, i_ar_color_1, i_ar_color_2, i_ar_fk_categoria);
 			
 		END IF;
 		
@@ -741,6 +709,13 @@ BEGIN
 
 	IF(i_tipo = 'Q') THEN
 	
+	
+		IF(i_operacion = 'QTU') THEN -- CONSULTA POR USERNAME
+			
+			SELECT au_id, au_nombre, au_apellido, au_username, au_correo, au_estado, au_fk_aur_id FROM admin.admin_usuarios;
+			
+		END IF;
+	
 		IF(i_operacion = 'QUUC') THEN -- QUERY USUARIO POR USERNAME O CORREO
 		
 			IF((SELECT 1 FROM admin.admin_usuarios WHERE au_username = i_variable) = 1) THEN
@@ -911,7 +886,7 @@ BEGIN
 				UPDATE admin.admin_usuarios_tokens
 				SET 
 					aut_token = i_aut_token,
-					aut_date 	= NOW()
+					aut_fecha 	= NOW()
 				WHERE
 					aut_id = i_aut_id;
 				

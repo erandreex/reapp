@@ -1,5 +1,6 @@
 package com.reapp.reapp.Controladores;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public class ControladorPermisosConsultas {
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+        return ResponseEntity.status(HttpStatus.OK).body(resp);
     }
 
 }
