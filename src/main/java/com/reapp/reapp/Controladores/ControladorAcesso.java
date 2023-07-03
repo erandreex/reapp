@@ -43,7 +43,6 @@ public class ControladorAcesso {
 
     @GetMapping("ruta/{componente}")
     public ResponseEntity<ModeloRespuestaGeneral> ruta(@PathVariable("componente") String componente) {
-        System.out.println(componente);
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Boolean control = false;
         Boolean control2 = false;
