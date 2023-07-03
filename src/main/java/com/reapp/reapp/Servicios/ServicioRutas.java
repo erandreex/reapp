@@ -304,7 +304,7 @@ public class ServicioRutas {
             cst.setString(1, "Q");
             cst.setString(2, "QRID");
             cst.setString(3, id);
-            cst.setString(4, null);
+            cst.setInt(4, 0);
             cst.setString(5, null);
             cst.setString(6, null);
             cst.setString(7, null);

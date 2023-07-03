@@ -17,7 +17,6 @@ import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloRol;
-import com.reapp.reapp.Modelos.ModeloUsuario;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Servicios.ServicioAccesos;
 import com.reapp.reapp.Servicios.ServicioUsuariosRoles;
@@ -30,8 +29,6 @@ import lombok.RequiredArgsConstructor;
 public class ControladorUsuariosRoles {
 
     private final ServicioUsuariosRoles servicioRoles;
-    private final ServicioAccesos servicioAccesos;
-    private final ServicioAuth servicioAuth;
 
     private static final String controlador = "ControladorUsuariosRoles";
 

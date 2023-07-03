@@ -67,7 +67,7 @@ public class ControladorRutas {
         try {
 
             servicioRutasGeneral.crear(ruta, id);
-            respuesta.put("ruta 2", servicioRutasGeneral.obtenerPorId(id));
+            respuesta.put("ruta", servicioRutasGeneral.obtenerPorId(id));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
@@ -129,10 +129,10 @@ public class ControladorRutas {
         try {
 
             servicioRutasGeneral.remover(ruta);
-            respuesta.put("ruta 2", servicioRutasGeneral.obtenerPorId(ruta.getId()));
+            respuesta.put("ruta", servicioRutasGeneral.obtenerPorId(ruta.getId()));
             resp.setOk(true);
-            resp.setCode(HttpStatus.CREATED.value());
-            resp.setStatus(HttpStatus.CREATED);
+            resp.setCode(HttpStatus.OK.value());
+            resp.setStatus(HttpStatus.OK);
             resp.setMensaje("Se ha removido la ruta exitosamente!");
             resp.setRespuesta(respuesta);
 
