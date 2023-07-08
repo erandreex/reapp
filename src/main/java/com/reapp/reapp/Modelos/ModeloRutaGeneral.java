@@ -10,7 +10,8 @@ public class ModeloRutaGeneral {
     private String color_1;
     private String color_2;
     private String componente;
-    private String fk_categoria;
+    private String categoria_id;
+    private String categoria_titulo;
 
     public String getId() {
         return id;
@@ -68,20 +69,28 @@ public class ModeloRutaGeneral {
         this.color_2 = color_2;
     }
 
-    public String getFk_categoria() {
-        return fk_categoria;
-    }
-
-    public void setFk_categoria(String fk_categoria) {
-        this.fk_categoria = fk_categoria;
-    }
-
     public String getComponente() {
         return componente;
     }
 
     public void setComponente(String componente) {
         this.componente = componente;
+    }
+
+    public String getCategoria_id() {
+        return categoria_id;
+    }
+
+    public void setCategoria_id(String categoria_id) {
+        this.categoria_id = categoria_id;
+    }
+
+    public String getCategoria_titulo() {
+        return categoria_titulo;
+    }
+
+    public void setCategoria_titulo(String categoria_titulo) {
+        this.categoria_titulo = categoria_titulo;
     }
 
 }

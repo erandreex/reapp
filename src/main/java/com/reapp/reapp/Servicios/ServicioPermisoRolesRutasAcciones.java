@@ -4,9 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,6 @@ import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
 import com.reapp.reapp.Modelos.ModeloPermisoRolRutaAccion;
-import com.reapp.reapp.Modelos.ModeloRutaAccion;
 
 @Service
 public class ServicioPermisoRolesRutasAcciones {

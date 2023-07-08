@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
+import com.reapp.reapp.Modelos.ModeloExternoRutaCategoria;
 import com.reapp.reapp.Modelos.ModeloRuta;
 import com.reapp.reapp.Modelos.ModeloRutaGeneral;
 
@@ -31,9 +32,9 @@ public class ServicioRutas {
     private static final String remover = "remover";
     private static final String obtenerPorId = "obtenerPorId";
 
-    public List<ModeloRuta> listar() throws CustomException {
+    public List<ModeloRutaGeneral> listar() throws CustomException {
 
-        List<ModeloRuta> lista = new ArrayList<>();
+        List<ModeloRutaGeneral> lista = new ArrayList<>();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(sp);) {
@@ -53,24 +54,19 @@ public class ServicioRutas {
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
-                ModeloRuta pro = new ModeloRuta();
+                ModeloRutaGeneral pro = new ModeloRutaGeneral();
 
                 pro.setCategoria_id(rs.getString("arc_id"));
                 pro.setCategoria_titulo(rs.getString("arc_titulo"));
-                pro.setCategoria_ruta(rs.getString("arc_ruta"));
-                pro.setCategoria_icono(rs.getString("arc_icono"));
-                pro.setCategoria_color_1(rs.getString("arc_color_1"));
-                pro.setCategoria_color_2(rs.getString("arc_color_2"));
-                pro.setCategoria_orden(rs.getString("arc_orden"));
 
-                pro.setRuta_id(rs.getString("ar_id"));
-                pro.setRuta_orden(rs.getString("ar_orden"));
-                pro.setRuta_componente(rs.getString("ar_componente"));
-                pro.setRuta_titulo(rs.getString("ar_titulo"));
-                pro.setRuta_ruta(rs.getString("ar_ruta"));
-                pro.setRuta_icono(rs.getString("ar_icono"));
-                pro.setRuta_color_1(rs.getString("ar_color_1"));
-                pro.setRuta_color_2(rs.getString("ar_color_2"));
+                pro.setId(rs.getString("ar_id"));
+                pro.setOrden(rs.getString("ar_orden"));
+                pro.setComponente(rs.getString("ar_componente"));
+                pro.setTitulo(rs.getString("ar_titulo"));
+                pro.setRuta(rs.getString("ar_ruta"));
+                pro.setIcono(rs.getString("ar_icono"));
+                pro.setColor_1(rs.getString("ar_color_1"));
+                pro.setColor_2(rs.getString("ar_color_2"));
 
                 lista.add(pro);
             }
@@ -131,7 +127,7 @@ public class ServicioRutas {
             cst.setString(8, ruta.getIcono());
             cst.setString(9, ruta.getColor_1());
             cst.setString(10, ruta.getColor_2());
-            cst.setString(11, ruta.getFk_categoria());
+            cst.setString(11, ruta.getCategoria_id());
             cst.execute();
             respuesta = true;
 
@@ -189,7 +185,7 @@ public class ServicioRutas {
             cst.setString(8, ruta.getIcono());
             cst.setString(9, ruta.getColor_1());
             cst.setString(10, ruta.getColor_2());
-            cst.setString(11, ruta.getFk_categoria());
+            cst.setString(11, ruta.getCategoria_id());
             cst.execute();
             respuesta = true;
 
@@ -373,5 +369,7 @@ public class ServicioRutas {
 
         return ruta;
     }
+
+    // Externos
 
 }

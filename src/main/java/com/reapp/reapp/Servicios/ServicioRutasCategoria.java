@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
+import com.reapp.reapp.Modelos.ModeloExternoRutaCategoria;
 import com.reapp.reapp.Modelos.ModeloRutaCategoria;
 
 @Service
@@ -29,6 +30,8 @@ public class ServicioRutasCategoria {
     private final String m_listar = "listar";
     private final String m_actualizar = "actualizar";
     private final String m_remover = "remover";
+
+    private final String me_categorias = "externo_rutas_categorias";
 
     public Boolean crear(ModeloRutaCategoria ruta, String id) throws CustomException {
 
@@ -324,6 +327,75 @@ public class ServicioRutasCategoria {
 
             throw new CustomException("", errorGeneral, e);
         }
+        return lista;
+    }
+
+    // Externos
+
+    public List<ModeloExternoRutaCategoria> obtenerListaCategorias() throws CustomException {
+
+        List<ModeloExternoRutaCategoria> lista = new ArrayList<>();
+
+        try (Connection mariaDB = ConexionMariaDB.getConexion();
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
+
+            cst.setString(1, "Q");
+            cst.setString(2, "QTRC");
+            cst.setString(3, null);
+            cst.setString(4, null);
+            cst.setString(5, null);
+            cst.setString(6, null);
+            cst.setString(7, null);
+            cst.setString(8, null);
+            cst.setString(9, null);
+
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+                ModeloExternoRutaCategoria pro = new ModeloExternoRutaCategoria();
+
+                pro.setCategoria_id(rs.getString("arc_id"));
+                pro.setCategoria_titulo(rs.getString("arc_titulo"));
+
+                lista.add(pro);
+            }
+
+        } catch (SQLException e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt(
+                    "No ha sido posible obtener la ruta por el id, favor contactar a un administrador con el codigo de referencia");
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(me_categorias);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador");
+            errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(me_categorias);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        }
+
         return lista;
     }
 

@@ -43,7 +43,7 @@ public class ControladorRutasCategoria {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-            respuesta.put("rutas", servicioRutasCategoria.listar());
+            respuesta.put("rutas_categorias", servicioRutasCategoria.listar());
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
@@ -73,7 +73,7 @@ public class ControladorRutasCategoria {
 
         try {
             servicioRutasCategoria.crear(ruta, id);
-            respuesta.put("ruta", servicioRutasCategoria.obtenerPorId(id));
+            respuesta.put("ruta_categoria", servicioRutasCategoria.obtenerPorId(id));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
@@ -104,7 +104,7 @@ public class ControladorRutasCategoria {
         try {
 
             servicioRutasCategoria.actualizar(ruta);
-            respuesta.put("ruta categoria", servicioRutasCategoria.obtenerPorId(ruta.getId()));
+            respuesta.put("ruta_categoria", servicioRutasCategoria.obtenerPorId(ruta.getId()));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
@@ -130,13 +130,16 @@ public class ControladorRutasCategoria {
     public ResponseEntity<ModeloRespuestaGeneral> remover(@RequestBody ModeloRutaCategoria ruta) {
 
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
+        Map<String, Object> respuesta = new HashMap<>();
 
         try {
-
+            respuesta.put("ruta_categoria", "");
             servicioRutasCategoria.remover(ruta);
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
+            resp.setRespuesta(respuesta);
+
             resp.setMensaje("Se ha removido la categoria de ruta exitosamente!");
 
         } catch (CustomException e) {
