@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
+import com.reapp.reapp.Modelos.ModeloExternoRuta;
 import com.reapp.reapp.Modelos.ModeloExternoRutaCategoria;
 import com.reapp.reapp.Modelos.ModeloRuta;
 import com.reapp.reapp.Modelos.ModeloRutaGeneral;
@@ -370,6 +371,79 @@ public class ServicioRutas {
         return ruta;
     }
 
-    // Externos
+    // EXTERNOS
+
+    public List<ModeloExternoRuta> externolistarRutas() throws CustomException {
+
+        List<ModeloExternoRuta> lista = new ArrayList<>();
+
+        try (Connection mariaDB = ConexionMariaDB.getConexion();
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
+
+            cst.setString(1, "E");
+            cst.setString(2, "EQR");
+            cst.setString(3, null);
+            cst.setString(4, null);
+            cst.setString(5, null);
+            cst.setString(6, null);
+            cst.setString(7, null);
+            cst.setString(8, null);
+            cst.setString(9, null);
+            cst.setString(10, null);
+            cst.setString(11, null);
+
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+
+                ModeloExternoRuta pro = new ModeloExternoRuta();
+
+                pro.setId(rs.getString("ar_id"));
+                pro.setTitulo(rs.getString("ar_titulo"));
+                pro.setCategoria_id(rs.getString("ar_fk_categoria"));
+
+                lista.add(pro);
+            }
+
+        } catch (SQLException e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt(
+                    "No se ha podido obtener las rutas, favor validar con un administrador con el codigo de referencia");
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(listar);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral
+                    .setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
+            errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(listar);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        }
+        return lista;
+    }
+
+    // EXTERNOS
 
 }

@@ -17,7 +17,9 @@ import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Modelos.ModeloRutaAccion;
+import com.reapp.reapp.Servicios.ServicioRutas;
 import com.reapp.reapp.Servicios.ServicioRutasAcciones;
+import com.reapp.reapp.Servicios.ServicioRutasCategoria;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +30,9 @@ import lombok.RequiredArgsConstructor;
 public class ControladorRutasAcciones {
 
     private final ServicioRutasAcciones servicioRutasAcciones;
+    private final ServicioRutasCategoria servicioRutasCategoria;
+    private final ServicioRutas servicioRutas;
+
     private static final String clase = "ControladorRutasAcciones";
     private static final String tipo = "Controlador";
 
@@ -43,6 +48,9 @@ public class ControladorRutasAcciones {
         Map<String, Object> respuesta = new HashMap<>();
         try {
             respuesta.put("rutas-acciones", servicioRutasAcciones.listar());
+            respuesta.put("rutas-categorias", servicioRutasCategoria.obtenerListaCategorias());
+            respuesta.put("rutas", servicioRutas.externolistarRutas());
+
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);

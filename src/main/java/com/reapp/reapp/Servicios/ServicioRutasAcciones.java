@@ -22,7 +22,7 @@ public class ServicioRutasAcciones {
 
     private static final String tipo = "Servicio";
     private static final String clase = "ServicioRutasAcciones";
-    private static final String sp = "{CALL admin.sp_admin_rutas_acciones(?,?,?,?,?,?,?,?)}";
+    private static final String sp = "{CALL admin.sp_admin_rutas_acciones(?,?,?,?,?,?,?,?,?)}";
 
     private static final String listar = "listar";
     private static final String crear = "crear";
@@ -45,6 +45,7 @@ public class ServicioRutasAcciones {
             cst.setString(6, null);
             cst.setString(7, null);
             cst.setString(8, null);
+            cst.setString(9, null);
 
             ResultSet rs = cst.executeQuery();
 
@@ -53,6 +54,7 @@ public class ServicioRutasAcciones {
                 ModeloRutaAccion pro = new ModeloRutaAccion();
                 pro.setId(rs.getString("ara_id"));
                 pro.setControlador(rs.getString("ara_controlador"));
+                pro.setEndpoint(rs.getString("ara_endpoint"));
                 pro.setMetodo(rs.getString("ara_metodo"));
                 pro.setEstado(rs.getString("ara_estado"));
                 pro.setDescripcion(rs.getString("ara_descripcion"));
@@ -109,10 +111,11 @@ public class ServicioRutasAcciones {
             cst.setString(2, "INR");
             cst.setString(3, id);
             cst.setString(4, rutaAccion.getControlador());
-            cst.setString(5, rutaAccion.getMetodo());
-            cst.setString(6, rutaAccion.getEstado());
-            cst.setString(7, rutaAccion.getFk_ruta());
-            cst.setString(8, rutaAccion.getDescripcion());
+            cst.setString(5, rutaAccion.getEndpoint());
+            cst.setString(6, rutaAccion.getMetodo());
+            cst.setString(7, rutaAccion.getEstado());
+            cst.setString(8, rutaAccion.getFk_ruta());
+            cst.setString(9, rutaAccion.getDescripcion());
 
             cst.execute();
             respuesta = true;
@@ -165,11 +168,13 @@ public class ServicioRutasAcciones {
             cst.setString(2, "UR");
             cst.setString(3, rutaAccion.getId());
             cst.setString(4, rutaAccion.getControlador());
-            cst.setString(5, rutaAccion.getMetodo());
-            cst.setString(6, rutaAccion.getEstado());
-            cst.setString(7, rutaAccion.getFk_ruta());
-            cst.setString(8, rutaAccion.getDescripcion());
+            cst.setString(5, rutaAccion.getEndpoint());
+            cst.setString(6, rutaAccion.getMetodo());
+            cst.setString(7, rutaAccion.getEstado());
+            cst.setString(8, rutaAccion.getFk_ruta());
+            cst.setString(9, rutaAccion.getDescripcion());
             cst.execute();
+
             respuesta = true;
 
         } catch (SQLException e) {
@@ -226,6 +231,8 @@ public class ServicioRutasAcciones {
             cst.setString(6, null);
             cst.setString(7, null);
             cst.setString(8, null);
+            cst.setString(9, null);
+
             cst.execute();
 
             respuesta = true;
@@ -272,7 +279,7 @@ public class ServicioRutasAcciones {
 
     public ModeloRutaAccion obtenerPorId(String id) throws CustomException {
 
-        ModeloRutaAccion ruta = new ModeloRutaAccion();
+        ModeloRutaAccion accion = new ModeloRutaAccion();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(sp);) {
@@ -285,15 +292,17 @@ public class ServicioRutasAcciones {
             cst.setString(6, null);
             cst.setString(7, null);
             cst.setString(8, null);
+            cst.setString(9, null);
 
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
-                ruta.setId(rs.getString("ara_id"));
-                ruta.setControlador(rs.getString("ara_controlador"));
-                ruta.setMetodo(rs.getString("ara_metodo"));
-                ruta.setEstado(rs.getString("ara_estado"));
-                ruta.setDescripcion(rs.getString("ara_descripcion"));
+                accion.setId(rs.getString("ara_id"));
+                accion.setControlador(rs.getString("ara_controlador"));
+                accion.setEndpoint(rs.getString("ara_endpoint"));
+                accion.setMetodo(rs.getString("ara_metodo"));
+                accion.setEstado(rs.getString("ara_estado"));
+                accion.setDescripcion(rs.getString("ara_descripcion"));
             }
 
         } catch (SQLException e) {
@@ -332,7 +341,7 @@ public class ServicioRutasAcciones {
             throw new CustomException("", errorGeneral, e);
         }
 
-        return ruta;
+        return accion;
     }
 
 }

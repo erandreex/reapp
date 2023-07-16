@@ -330,7 +330,7 @@ public class ServicioRutasCategoria {
         return lista;
     }
 
-    // Externos
+    // EXTERNOS
 
     public List<ModeloExternoRutaCategoria> obtenerListaCategorias() throws CustomException {
 
@@ -398,5 +398,7 @@ public class ServicioRutasCategoria {
 
         return lista;
     }
+
+    // EXTERNOS
 
 }

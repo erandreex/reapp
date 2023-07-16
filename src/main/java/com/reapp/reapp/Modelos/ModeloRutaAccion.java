@@ -4,6 +4,7 @@ public class ModeloRutaAccion {
 
     private String id;
     private String controlador;
+    private String endpoint;
     private String metodo;
     private String estado;
     private String descripcion;
@@ -23,6 +24,14 @@ public class ModeloRutaAccion {
 
     public void setControlador(String controlador) {
         this.controlador = controlador;
+    }
+
+    public String getEndpoint() {
+        return endpoint;
+    }
+
+    public void setEndpoint(String endpoint) {
+        this.endpoint = endpoint;
     }
 
     public String getMetodo() {
