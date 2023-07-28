@@ -62,7 +62,9 @@ public class ControladorAcesso {
                 token_intervalo = servicioParametros.buscarParametro(EnumParametros.TOKEN_EXPIRACION_INTERVALO);
                 token_valor = servicioParametros.buscarParametro(EnumParametros.TOKEN_EXPIRACION_VALOR);
                 jwt = servicioJwt.renovarToken(claims, token_intervalo, token_valor);
-                servicioToken.actualizar(claims, jwt);
+
+                System.out.println("Aqiioioio");
+                servicioToken.actualizarExpiracion(claims, jwt);
             }
 
             control2 = servicioAccesos.ruta(componente, usuario.getRol_id());

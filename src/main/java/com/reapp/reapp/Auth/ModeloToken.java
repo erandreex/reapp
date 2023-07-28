@@ -6,7 +6,8 @@ public class ModeloToken {
     public String fecha;
     public String tipo;
     public String estado;
-    public String token;
+    public String token1;
+    public String token2;
     public String usuario_id;
 
     public String getId() {
@@ -41,12 +42,20 @@ public class ModeloToken {
         this.estado = estado;
     }
 
-    public String getToken() {
-        return token;
+    public String getToken1() {
+        return token1;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setToken1(String token1) {
+        this.token1 = token1;
+    }
+
+    public String getToken2() {
+        return token2;
+    }
+
+    public void setToken2(String token2) {
+        this.token2 = token2;
     }
 
     public String getUsuario_id() {

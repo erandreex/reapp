@@ -25,7 +25,8 @@ public class ServicioValidacionesAuth {
             Long dateExp = claims.getExp();
             Long difference = dateExp - dateIat;
             Long limit = (difference * 3) / 4;
-            if (dateNow >= limit) {
+
+            if (dateNow >= limit + dateIat) {
                 respuesta = true;
             }
         } catch (Exception e) {
@@ -134,6 +135,47 @@ public class ServicioValidacionesAuth {
 
             throw new CustomException("", errorGeneral, null);
         }
+    }
+
+    public void validarTokenDBEstado(ModeloToken token) throws CustomException {
+
+        if (!token.getEstado().equals("A")) {
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt("Error Mensaje interno");
+            errorGeneral
+                    .setMessageExt(
+                            "El usuario no se encuentra activo (A), favor ponerse en contacto con un administrador");
+            errorGeneral.setStatus(HttpStatus.UNAUTHORIZED);
+            errorGeneral.setCode(HttpStatus.UNAUTHORIZED.value());
+            errorGeneral.setTipo("Servicio");
+            errorGeneral.setClase("ServicioValidacionesAuth");
+            errorGeneral.setMetodo("validarUsuarioEstado");
+
+            throw new CustomException("", errorGeneral, null);
+        }
+    }
+
+    public void validarTokenDBClaims(ModeloToken token, ModeloClaims claims) throws CustomException {
+
+        if (!claims.getToken().equals(token.getToken1()) && !claims.getToken().equals(token.getToken2())) {
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt("Error Mensaje interno");
+            errorGeneral
+                    .setMessageExt(
+                            "El token de la DB no es el mismo que el claims");
+            errorGeneral.setStatus(HttpStatus.UNAUTHORIZED);
+            errorGeneral.setCode(HttpStatus.UNAUTHORIZED.value());
+            errorGeneral.setTipo("Servicio");
+            errorGeneral.setClase("ServicioValidacionesAuth");
+            errorGeneral.setMetodo("validarUsuarioEstado");
+
+            throw new CustomException("", errorGeneral, null);
+        }
+
     }
 
     public void validarRequest(String request) throws CustomException {

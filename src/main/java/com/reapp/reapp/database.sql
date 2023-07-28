@@ -20,6 +20,22 @@ DROP DATABASE IF EXISTS `admin`;
 CREATE DATABASE IF NOT EXISTS `admin` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `admin`;
 
+-- Volcando estructura para tabla admin.admin_opciones
+DROP TABLE IF EXISTS `admin_opciones`;
+CREATE TABLE IF NOT EXISTS `admin_opciones` (
+  `ao_nombre` varchar(50) NOT NULL,
+  `ao_valor` varchar(50) NOT NULL,
+  KEY `ao_nombre` (`ao_nombre`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla admin.admin_opciones: ~4 rows (aproximadamente)
+DELETE FROM `admin_opciones`;
+INSERT INTO `admin_opciones` (`ao_nombre`, `ao_valor`) VALUES
+	('METODOS_HTTP', 'GET'),
+	('METODOS_HTTP', 'POST'),
+	('METODOS_HTTP', 'PUT'),
+	('METODOS_HTTP', 'DELETE');
+
 -- Volcando estructura para tabla admin.admin_parametros
 DROP TABLE IF EXISTS `admin_parametros`;
 CREATE TABLE IF NOT EXISTS `admin_parametros` (
@@ -31,8 +47,8 @@ CREATE TABLE IF NOT EXISTS `admin_parametros` (
 -- Volcando datos para la tabla admin.admin_parametros: ~2 rows (aproximadamente)
 DELETE FROM `admin_parametros`;
 INSERT INTO `admin_parametros` (`ap_nombre`, `ap_valor`) VALUES
-	('TOKEN_EXPIRACION_INTERVALO', 'segundos'),
-	('TOKEN_EXPIRACION_VALOR', '30');
+	('TOKEN_EXPIRACION_INTERVALO', 'minutos'),
+	('TOKEN_EXPIRACION_VALOR', '3');
 
 -- Volcando estructura para tabla admin.admin_permisos_roles_rutas
 DROP TABLE IF EXISTS `admin_permisos_roles_rutas`;
@@ -45,13 +61,15 @@ CREATE TABLE IF NOT EXISTS `admin_permisos_roles_rutas` (
   UNIQUE KEY `indice unico` (`aprr_fk_rol_id`,`aprr_fk_ruta_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_permisos_roles_rutas: ~6 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_permisos_roles_rutas: ~8 rows (aproximadamente)
 DELETE FROM `admin_permisos_roles_rutas`;
 INSERT INTO `admin_permisos_roles_rutas` (`aprr_id`, `aprr_fk_rol_id`, `aprr_fk_ruta_id`, `aprr_estado`) VALUES
 	('0b993f3f-fabe-46e7-bf86-b0e582f54bc8', '5d258050-5ee3-4954-8ec4-1b010355b817', '46f69391-e307-4e49-92fe-be7c3ef78def', 'A'),
 	('0c891b72-7a0a-4d11-a8d9-54087b74f431', '5d258050-5ee3-4954-8ec4-1b010355b817', '3f7de9ab-d611-475e-a290-62161a2d9856', 'A'),
 	('1c47c49b-4965-4d0d-94bc-cc7e261bd7e8', '5d258050-5ee3-4954-8ec4-1b010355b817', '7c9950b7-a114-4477-a655-24fc68a10b09', 'A'),
+	('3c653504-53c0-4b38-9941-670780c100a5', '5d258050-5ee3-4954-8ec4-1b010355b817', '3938b044-26ae-4079-81d0-734d248afa75', 'A'),
 	('4200f87e-dc5b-4adf-8c08-a37e1177de6f', '5d258050-5ee3-4954-8ec4-1b010355b817', 'bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb', 'A'),
+	('5078a03d-6bdd-4808-b4b7-7cc37076d257', '5d258050-5ee3-4954-8ec4-1b010355b817', '84d5bca9-3bcd-4f82-ae42-6ea23dcf0522', 'A'),
 	('9b231720-d358-4c72-9fbf-2886fd63d5ab', '5d258050-5ee3-4954-8ec4-1b010355b817', 'b5f5267e-87fa-4678-97ca-6ad4584725d3', 'A'),
 	('eda77a5d-2579-4341-a5de-26a1b9c0e591', '5d258050-5ee3-4954-8ec4-1b010355b817', '53cc74a5-0efb-4d98-b975-7c8451583b0c', 'A');
 
@@ -85,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `admin_rutas` (
   UNIQUE KEY `ar_id` (`ar_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_rutas: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_rutas: ~8 rows (aproximadamente)
 DELETE FROM `admin_rutas`;
 INSERT INTO `admin_rutas` (`ar_id`, `ar_orden`, `ar_componente`, `ar_titulo`, `ar_ruta`, `ar_icono`, `ar_color_1`, `ar_color_2`, `ar_fk_categoria`) VALUES
 	('3938b044-26ae-4079-81d0-734d248afa75', 0, 'UsuariosComponent', 'Usuarios', 'usuarios', 'ri-user-3-fill', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
@@ -94,13 +112,15 @@ INSERT INTO `admin_rutas` (`ar_id`, `ar_orden`, `ar_componente`, `ar_titulo`, `a
 	('7c9950b7-a114-4477-a655-24fc68a10b09', 2, 'RutasCategoriasComponent', 'Rutas Categorias', 'rutas-categorias', 'ri-mind-map', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
 	('84d5bca9-3bcd-4f82-ae42-6ea23dcf0522', 0, 'RutasAccionesComponent', 'Rutas Acciones', 'rutas-acciones', 'ri-key-line', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
 	('b5f5267e-87fa-4678-97ca-6ad4584725d3', 0, 'DashboardComponent', 'Dashboard', '', 'ri-flag-2-fill', '#FFFFFF', '#FFFFFF', '85b96a17-6252-428c-ba9c-49df337f52f3'),
-	('bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb', 0, 'IndexComponent', 'Index', '', 'ri-flag-2-fill', '#FFFFFF', '#FFFFFF', '85b96a17-6252-428c-ba9c-49df337f52f3');
+	('bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb', 0, 'IndexComponent', 'Index', '', 'ri-flag-2-fill', '#FFFFFF', '#FFFFFF', '85b96a17-6252-428c-ba9c-49df337f52f3'),
+	('c6c1466e-aa89-4c78-9580-3365a6ae49db', 0, 'pruebaComponente', 'titulo', 'ruta', 'icono', 'color_1', 'color_2', '8f8c746b-98ef-4cbb-9ac5-ce1313fe3cf6');
 
 -- Volcando estructura para tabla admin.admin_rutas_acciones
 DROP TABLE IF EXISTS `admin_rutas_acciones`;
 CREATE TABLE IF NOT EXISTS `admin_rutas_acciones` (
   `ara_id` varchar(50) NOT NULL,
   `ara_controlador` varchar(50) NOT NULL,
+  `ara_endpoint` varchar(50) DEFAULT NULL,
   `ara_metodo` varchar(50) NOT NULL,
   `ara_estado` varchar(1) NOT NULL DEFAULT 'V',
   `ara_fk_ruta_id` varchar(50) NOT NULL,
@@ -108,10 +128,11 @@ CREATE TABLE IF NOT EXISTS `admin_rutas_acciones` (
   UNIQUE KEY `ara_id` (`ara_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_rutas_acciones: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_rutas_acciones: ~2 rows (aproximadamente)
 DELETE FROM `admin_rutas_acciones`;
-INSERT INTO `admin_rutas_acciones` (`ara_id`, `ara_controlador`, `ara_metodo`, `ara_estado`, `ara_fk_ruta_id`, `ara_descripcion`) VALUES
-	('a7846cc9-dbeb-472a-9adc-c7055dda6da1', 'Prueba', 'Prueba1', 'V', '3f7de9ab-d611-475e-a290-62161a2d9856', 'Esto es una prueba');
+INSERT INTO `admin_rutas_acciones` (`ara_id`, `ara_controlador`, `ara_endpoint`, `ara_metodo`, `ara_estado`, `ara_fk_ruta_id`, `ara_descripcion`) VALUES
+	('2045ace9-1c00-4cf4-b948-7ef4a386103c', 'Prueba', 'ewfwef', 'GET', 'V', '46f69391-e307-4e49-92fe-be7c3ef78def', 'wefwef'),
+	('d1b107f2-2fd4-4f48-ba6e-bc4599e41b69', 'Prueba', 'wqfdqwefwef', 'POST', 'V', '3f7de9ab-d611-475e-a290-62161a2d9856', 'wef');
 
 -- Volcando estructura para tabla admin.admin_rutas_categorias
 DROP TABLE IF EXISTS `admin_rutas_categorias`;
@@ -156,13 +177,24 @@ CREATE TABLE IF NOT EXISTS `admin_usuarios` (
   CONSTRAINT `FK_usuario_rol` FOREIGN KEY (`au_fk_aur_id`) REFERENCES `admin_usuarios_roles` (`aur_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_usuarios: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_usuarios: ~15 rows (aproximadamente)
 DELETE FROM `admin_usuarios`;
 INSERT INTO `admin_usuarios` (`au_id`, `au_nombre`, `au_apellido`, `au_username`, `au_password`, `au_correo`, `au_correo_lower`, `au_pass_key`, `au_estado`, `au_fk_aur_id`) VALUES
+	('0d316219-0207-49a2-a3a4-888d114c4d77', 'nombretrhtyh', 'apellidotyjy', 'usernamewerfeqd', '$2a$10$TrFJngCRprKWsJ7pVm.uX.tEo031wFV9vKEMPS6kfGzd338Uh9ebG', 'correowewerwer@text.com', 'correowewerwer@text.com', '3153af5a-534b-46ab-8f7a-b5fd7c3f990c', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('2e3ee09e-6ea7-4911-b8a1-9fe0dc70863c', 'nombrerg', 'apellidogrg', 'usernamergrgrg', '$2a$10$V7XSGvl6CuCkcPwxeNSzl.9Nd9X.0yfJLGfWn.Fuwfkt0ghMtY9hG', 'correorg', 'correorg', '64c2a1c9-18b9-416e-85af-bcee7ae6566a', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('384f39e3-ba3d-4f93-a196-c90e6d82e439', 'nombretyjtyj54yq2', 'apellidotyjtyj45ye', 'usernametyjtyjtyj45yr', '$2a$10$TJmX1.wj7Uyr5NBnh2aCA.sL.IGiVsSfnUqNXOJiWlYXlnpn0XT4a', 'correo@gtetx45ytthd.con', 'correo@gtetx45ytthd.con', 'caf09b23-2fd0-41b4-af7d-02d4c728e4a2', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
 	('49d28d27-9a75-482b-9f8f-cdb353508842', 'nombreerg', 'apellidoergerg', 'usernameergerg', '$2a$10$I/7a3E0.n2Xcj.iw4aOSJe3qKxT24nXqQ6PNxpv1IMDDLYEW4w8TO', 'correoergerg', 'correoergerg', '8b3de7e2-c210-4a33-834b-b78d02517a8d', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('4f8f4ef3-279a-4d01-9eda-ec1ee6aeb268', 'nombretyjj', 'apellidotyjtyj', 'usernametyjtyj', '$2a$10$RZxpk1T9IXniQ3gB5v688u/j8Yae7Jg/MNxaS9hPVoIsbEg6Siahi', 'correotyjtyjtyj', 'correotyjtyjtyj', '438f027f-a6bd-4367-8b04-6fd62d1663fe', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
 	('5af0baf4-df1d-4978-b18c-d43fb82ab415', 'nombre', 'apellido', 'username', '$2a$10$vGJSe1yYyoagxevBq/7nleCJDAVBX0Kvp7E.PIg7UialS3ZhGZ3Ia', 'correo', 'correo', '61719d97-5764-49f7-a229-52222bb1992d', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
-	('a330e7bf-1c4d-4709-a331-6353a44621a4', 'Prueba', 'Test', 'test1', '$2a$10$W3CX0EpFfeCaO0OskoWoOuSCGkf.6UEEkAKKslXwtGKKh3U9P11y6', 'test1@test.com', 'test1@test.com', '7287fb10-bdee-42f7-a9b1-ee63035b390b', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
-	('e43746bb-3466-45fd-9a4f-bf4e9935ee45', 'Prueba', 'apellidoewfwf', 'usernamewef', '$2a$10$i6Ms5wnRjJoXjZLA34Wnd.HXgrlVvZSI.iVuy..D9VnIe/sJMOWSy', 'correowefwef', 'correowefwef', '92fb1f21-0cec-4438-952f-683595885d25', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817');
+	('6460bd9b-12ed-4a5d-97dc-e4815aad20b1', 'nombretyjtyj', 'apellidotyjtyj', 'usernametyjtyjtyj', '$2a$10$LU5xFTzVttYsYXf4GaCABekIPKjlrnsUmVL3.I6mSZgp4g4Z4U7CO', 'correo@gtetxhd.con', 'correo@gtetxhd.con', '435394f3-ed11-4ce6-9828-0b86aa074e32', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('6c36e4aa-3a51-4175-b86a-a70acfe01960', 'nombretyjtyj54y', 'apellidotyjtyj45y', 'usernametyjtyjtyj45y', '$2a$10$oaRboIHzDO3yKG5ammCXPOasoZ3tlY/hEHFeFELVe2VY3/SDBbNFK', 'correo@gtetx45yhd.con', 'correo@gtetx45yhd.con', '927a65e8-cc2f-41c5-a47e-caa9bc8dddc9', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('a330e7bf-1c4d-4709-a331-6353a44621a4', 'Prueba', 'Test', 'test1', '$2a$10$W3CX0EpFfeCaO0OskoWoOuSCGkf.6UEEkAKKslXwtGKKh3U9P11y6', 'test1@test.com', 'test1@test.com', 'b54e1213-acd5-410d-9787-749c2e720432', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('b581f2b1-f140-4808-b522-ecd245cba13a', 'nombrere', 'apellidor4', 'username4r4r', '$2a$10$ZKKdHq5Zo.BeNgRKNXoDXePK4Ywx7LdPqTVn6Nl02PmxSJSHQ7qwS', 'correo4rr4@text.com', 'correo4rr4@text.com', 'ae50e875-8a8f-4383-b73b-13ace0518e6e', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('c2503c65-b05f-4790-8149-27b11a98495c', 'nombretyh', 'apellidotyhtyh', 'usernametyhtyh', '$2a$10$3TxCI5nhpjhP28a31YUlIOc4gG/gU7UhjwE/DDM/mclADmtTnmvK.', 'correotyh', 'correotyh', 'daff10bc-e516-4e27-b126-4d0cc6b1f3d7', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('d8861a63-4788-4b67-98fa-27be0b9ad870', 'nombrehhh', 'apellidohhh', 'usernamehhh', '$2a$10$QzkQQBohP2QHJ/J0yJiL3.reyjouLCu/dhyLqqe2zLs9TmlYC5Ae2', 'correohhhh', 'correohhhh', 'fdcfd460-7004-4c82-b581-3fa226ff878c', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('e43746bb-3466-45fd-9a4f-bf4e9935ee45', 'Prueba', 'apellidoewfwf', 'usernamewef', '$2a$10$i6Ms5wnRjJoXjZLA34Wnd.HXgrlVvZSI.iVuy..D9VnIe/sJMOWSy', 'correowefwef', 'correowefwef', '92fb1f21-0cec-4438-952f-683595885d25', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('e78146a6-9ace-4814-852c-d745f3d681cf', 'nombreergf', 'apellidoweertf', 'usernameey554f', '$2a$10$B6o2ZUjbFg24GIeHW6e0ne71GbpSxmrk8wetb1OKXMfIwpVqbZwfW', 'correo45y45y45yf@texts.com', 'correo45y45y45yf@texts.com', 'fbca3792-3f0a-4c96-8813-2dfdf48d866c', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('f18e420d-ab5a-484c-849a-cd042ad6b3c0', 'nombreerg', 'apellidoweert', 'usernameey554', '$2a$10$0To3/TAZaV4bJXHBTQXgTeXBNdroiARRd/qQIWTV6D/S9I1tA65N.', 'correo45y45y45y@texts.com', 'correo45y45y45y@texts.com', '9a285dab-d949-4d11-9938-e96bafdbebdc', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817');
 
 -- Volcando estructura para tabla admin.admin_usuarios_roles
 DROP TABLE IF EXISTS `admin_usuarios_roles`;
@@ -184,7 +216,8 @@ CREATE TABLE IF NOT EXISTS `admin_usuarios_tokens` (
   `aut_fecha` datetime NOT NULL,
   `aut_tipo` varchar(25) NOT NULL,
   `aut_estado` varchar(1) NOT NULL,
-  `aut_token` text NOT NULL,
+  `aut_token1` text NOT NULL,
+  `aut_token2` text DEFAULT NULL,
   `aut_fk_usuario_id` varchar(50) NOT NULL,
   UNIQUE KEY `aut_id` (`aut_id`),
   KEY `indice_2` (`aut_id`,`aut_fecha`),
@@ -192,8 +225,13 @@ CREATE TABLE IF NOT EXISTS `admin_usuarios_tokens` (
   CONSTRAINT `FK_token_usuario_id` FOREIGN KEY (`aut_fk_usuario_id`) REFERENCES `admin_usuarios` (`au_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_usuarios_tokens: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_usuarios_tokens: ~4 rows (aproximadamente)
 DELETE FROM `admin_usuarios_tokens`;
+INSERT INTO `admin_usuarios_tokens` (`aut_id`, `aut_fecha`, `aut_tipo`, `aut_estado`, `aut_token1`, `aut_token2`, `aut_fk_usuario_id`) VALUES
+	('b57d3b3d-2928-4731-892f-80c490717e76', '2023-07-28 11:52:15', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiNTdkM2IzZC0yOTI4LTQ3MzEtODkyZi04MGM0OTA3MTdlNzYiLCJwYXNzX2tleSI6IjAzNDU5NGE3LTUwYjItNDFmYS1hMmEyLWJkYWEzNjk1MDRiNyIsImlhdCI6MTY5MDU2MzEzNSwiZXhwIjoxNjkwNTYzMzE1fQ.W02PnhqJqneMtbmo63mcT5Nk8_shOXgWv4mrqSqcJ4', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('b65a4bd2-2fae-4d5e-8287-c2057cfe50da', '2023-07-28 12:05:52', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiNjVhNGJkMi0yZmFlLTRkNWUtODI4Ny1jMjA1N2NmZTUwZGEiLCJwYXNzX2tleSI6ImI1NGUxMjEzLWFjZDUtNDEwZC05Nzg3LTc0OWMyZTcyMDQzMiIsImlhdCI6MTY5MDU2Mzk1MiwiZXhwIjoxNjkwNTY0MTMyfQ.9goOkEiUF7h2luMH6AcgQwx30KlVNMVmv4JSTQplTnY', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('c3260166-7a37-4351-9e2a-a1310f7ce9da', '2023-07-28 11:49:20', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJjMzI2MDE2Ni03YTM3LTQzNTEtOWUyYS1hMTMxMGY3Y2U5ZGEiLCJwYXNzX2tleSI6ImM0NjY2MDI2LTNjYWUtNDA1Ni05MWQ5LThkMjQ2MDNkNzQ3MiIsImlhdCI6MTY5MDU2Mjk2MCwiZXhwIjoxNjkwNTYzMTQwfQ.wUYCq-XC_DTrWT4uiVJjeKPsI4A6Gs6BK1FOxNwDXM', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJjMzI2MDE2Ni03YTM3LTQzNTEtOWUyYS1hMTMxMGY3Y2U5ZGEiLCJwYXNzX2tleSI6ImM0NjY2MDI2LTNjYWUtNDA1Ni05MWQ5LThkMjQ2MDNkNzQ3MiIsImlhdCI6MTY5MDU2MjgyMywiZXhwIjoxNjkwNTYzMDAzfQ.QvUNaD2auBhTtkui8ZNyETIFNl7av2q-kv0b05VcJPU', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('dfcfdabc-1ace-4a7f-955f-1a4dff223622', '2023-07-28 11:50:31', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJkZmNmZGFiYy0xYWNlLTRhN2YtOTU1Zi0xYTRkZmYyMjM2MjIiLCJwYXNzX2tleSI6ImY5YmI3OTY4LThkNWYtNDYyMS1iZDBlLTE1ODZiZGM2YTliMCIsImlhdCI6MTY5MDU2MzAzMSwiZXhwIjoxNjkwNTYzMjExfQ.Rvk5INmpNtspWLyR2O7M-tTdygpVGq0UGSdOmhieW4', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4');
 
 -- Volcando estructura para procedimiento admin.sp_admin_accesos
 DROP PROCEDURE IF EXISTS `sp_admin_accesos`;
@@ -236,6 +274,30 @@ BEGIN
 				
 	END IF;
 	
+
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento admin.sp_admin_opciones
+DROP PROCEDURE IF EXISTS `sp_admin_opciones`;
+DELIMITER //
+CREATE PROCEDURE `sp_admin_opciones`(
+	IN `i_tipo` VARCHAR(50),
+	IN `i_operacion` VARCHAR(50),
+	IN `i_variable` VARCHAR(50)
+)
+BEGIN
+
+	IF (i_tipo = 'Q') THEN
+	
+		IF (i_operacion = 'QPN') THEN
+			
+			SELECT ao_nombre, ao_valor FROM admin.admin_opciones
+			WHERE ao_nombre = i_variable;
+			
+		END IF;
+
+	END IF;
 
 END//
 DELIMITER ;
@@ -400,7 +462,7 @@ BEGIN
 		
 		IF(i_operacion = 'QRT') THEN -- QUERY RUTAS TODAS
 			
-			SELECT arc_id, arc_orden, arc_titulo, arc_ruta, arc_icono, arc_color_1, arc_color_2, 
+			SELECT arc_id, arc_titulo,
             ar_id, ar_orden, ar_componente, ar_titulo, ar_ruta, ar_icono, ar_color_1, ar_color_2, ar_fk_categoria
             FROM admin.admin_rutas, admin.admin_rutas_categorias
             WHERE arc_id = ar_fk_categoria;
@@ -471,6 +533,23 @@ BEGIN
 		
 	END IF;
 	
+		-- EXTERNOS
+	
+	IF(i_tipo = 'E') THEN
+		
+		IF(i_operacion = 'EQR') THEN -- RUTAS
+		
+			SELECT ar_id, ar_titulo, ar_fk_categoria
+			FROM admin.admin_rutas;
+			
+	    END IF;
+		
+	END IF;
+	
+	-- EXTERNOS
+	
+
+	
 
 END//
 DELIMITER ;
@@ -483,6 +562,7 @@ CREATE PROCEDURE `sp_admin_rutas_acciones`(
 	IN `i_operacion` CHAR(5),
 	IN `i_ara_id` VARCHAR(50),
 	IN `i_ara_controlador` VARCHAR(50),
+	IN `i_ara_endpoint` VARCHAR(50),
 	IN `i_ara_metodo` VARCHAR(50),
 	IN `i_ara_estado` VARCHAR(1),
 	IN `i_ara_fk_ruta_id` VARCHAR(50),
@@ -494,16 +574,29 @@ BEGIN
 	
 		IF(i_operacion = 'QLT') THEN -- QUERY LISTAR TODOS
 			
-			SELECT ara_id, ara_controlador, ara_metodo, ara_estado, ara_descripcion
+			SELECT ara_id, ara_controlador, ara_endpoint, ara_metodo, ara_estado, ara_descripcion
 			FROM admin.admin_rutas_acciones;
 			
 		END IF;
 		
 		IF(i_operacion = 'QRAID') THEN -- QUERY RUTA ACCION ID
 			
-			SELECT ara_id, ara_controlador, ara_metodo, ara_estado, ara_descripcion
-			FROM admin.admin_rutas_acciones
-			WHERE ara_id = i_ara_id;
+			SELECT arc.arc_titulo, arc.arc_id, ar.ar_titulo, ar.ar_id, ara_id, ara_controlador, ara_endpoint, ara_metodo, ara_estado, ara_descripcion
+			FROM admin.admin_rutas_acciones ara, admin.admin_rutas ar, admin.admin_rutas_categorias arc
+			WHERE 
+						ara_id = i_ara_id
+			AND		ara.ara_fk_ruta_id = ar.ar_id
+			AND 		ar.ar_fk_categoria = arc.arc_id;
+			
+		END IF;
+		
+		IF(i_operacion = 'QPRU') THEN -- QUERY RUTA ACCION ID
+			
+			SELECT arc.arc_titulo, arc.arc_id, ar.ar_titulo, ar.ar_id, ara_id, ara_controlador, ara_endpoint, ara_metodo, ara_estado, ara_descripcion
+			FROM admin.admin_rutas_acciones ara, admin.admin_rutas ar, admin.admin_rutas_categorias arc
+			WHERE 
+						ara.ara_fk_ruta_id = ar.ar_id
+			AND 		ar.ar_fk_categoria = arc.arc_id;
 			
 		END IF;
 		
@@ -515,8 +608,8 @@ BEGIN
 		
 		IF(i_operacion = 'INR') THEN -- INSERTAR NUEVO REGISTRO
 			
-			INSERT INTO admin.admin_rutas_acciones (ara_id, ara_controlador, ara_metodo, ara_fk_ruta_id, ara_descripcion)
-			VALUES (i_ara_id, i_ara_controlador, i_ara_metodo, i_ara_fk_ruta_id, i_ara_descripcion);
+			INSERT INTO admin.admin_rutas_acciones (ara_id, ara_controlador, ara_endpoint, ara_metodo, ara_fk_ruta_id, ara_descripcion)
+			VALUES (i_ara_id, i_ara_controlador, i_ara_endpoint, i_ara_metodo, i_ara_fk_ruta_id, i_ara_descripcion);
 			
 		END IF;
 		
@@ -530,7 +623,9 @@ BEGIN
 			IF((SELECT COUNT(*) FROM admin.admin_rutas_acciones WHERE ara_id = i_ara_id) = 1) THEN
 			
 				UPDATE admin.admin_rutas_acciones
-				SET ara_controlador        = i_ara_controlador,
+				SET 
+					ara_controlador        = i_ara_controlador,
+					ara_endpoint        		= i_ara_endpoint,
 					ara_metodo 	    			= i_ara_metodo,
 					ara_estado 	    			= i_ara_estado,
 					ara_fk_ruta_id 			= i_ara_fk_ruta_id,
@@ -647,6 +742,20 @@ BEGIN
 		END IF;
 		
 	END IF;
+	
+	-- EXTERNOS
+	
+	IF(i_tipo = 'E') THEN
+		
+		IF(i_operacion = 'EQC') THEN -- RUTAS CATEGORIAS
+		
+			SELECT arc_id, arc_titulo FROM admin.admin_rutas_categorias;
+			
+	    END IF;
+		
+	END IF;
+	
+	-- EXTERNOS
 
 END//
 DELIMITER ;
@@ -839,7 +948,8 @@ CREATE PROCEDURE `sp_admin_usuarios_tokens`(
 	IN `i_operacion` CHAR(5),
 	IN `i_aut_id` VARCHAR(50),
 	IN `i_aut_tipo` VARCHAR(20),
-	IN `i_aut_token` TEXT,
+	IN `i_aut_token1` TEXT,
+	IN `i_aut_token2` TEXT,
 	IN `i_aut_fk_usuario_id` VARCHAR(50)
 )
 BEGIN
@@ -868,10 +978,9 @@ BEGIN
 	
 		IF(i_operacion = 'QTID')THEN
 		
-			SELECT aut_id, aut_fecha, aut_tipo, aut_estado, aut_token, aut_fk_usuario_id FROM admin.admin_usuarios_tokens
+			SELECT aut_id, aut_fecha, aut_tipo, aut_estado, aut_token1, aut_token2, aut_fk_usuario_id FROM admin.admin_usuarios_tokens
 	      WHERE aut_id = i_aut_id
-			AND aut_fecha > @fecha_revisar
-			AND aut_estado = 'A';
+			AND aut_fecha > @fecha_revisar;
 	
 		END IF;
 		
@@ -885,7 +994,8 @@ BEGIN
 				
 				UPDATE admin.admin_usuarios_tokens
 				SET 
-					aut_token = i_aut_token,
+					aut_token1 = i_aut_token1,
+					aut_token2 = i_aut_token2,
 					aut_fecha 	= NOW()
 				WHERE
 					aut_id = i_aut_id;
@@ -897,14 +1007,14 @@ BEGIN
 				aut_fecha,
 				aut_tipo,
 				aut_estado,
-				aut_token,
+				aut_token1,
 				aut_fk_usuario_id)
 				VALUES(
 				i_aut_id,
 				NOW(),
 				i_aut_tipo,
 				'A',
-				i_aut_token,
+				i_aut_token1,
 				i_aut_fk_usuario_id
 				);
 				

@@ -74,7 +74,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             usuarioDB = servicioUsuariosAuth.obtenerPorId(claims.getUsuario_id());
             servicioValidacionesAuth.validarUsuariorClaims(usuarioDB, claims);
             tokenDB = tokenService.obtenerPorId(usuarioDB, claims.getToken_id());
-            // TODO: Validaciones del tokenDB
+            servicioValidacionesAuth.validarTokenDBClaims(tokenDB, claims);
+            servicioValidacionesAuth.validarTokenDBEstado(tokenDB);
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     usuarioDB,
