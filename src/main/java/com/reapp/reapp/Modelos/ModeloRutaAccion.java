@@ -8,7 +8,10 @@ public class ModeloRutaAccion {
     private String metodo;
     private String estado;
     private String descripcion;
-    private String fk_ruta;
+    private String ruta_id;
+    private String ruta_titulo;
+    private String categoria_titulo;
+    private String categoria_id;
 
     public String getId() {
         return id;
@@ -58,12 +61,36 @@ public class ModeloRutaAccion {
         this.descripcion = descripcion;
     }
 
-    public String getFk_ruta() {
-        return fk_ruta;
+    public String getRuta_id() {
+        return ruta_id;
     }
 
-    public void setFk_ruta(String fk_ruta) {
-        this.fk_ruta = fk_ruta;
+    public void setRuta_id(String ruta_id) {
+        this.ruta_id = ruta_id;
+    }
+
+    public String getRuta_titulo() {
+        return ruta_titulo;
+    }
+
+    public void setRuta_titulo(String ruta_titulo) {
+        this.ruta_titulo = ruta_titulo;
+    }
+
+    public String getCategoria_titulo() {
+        return categoria_titulo;
+    }
+
+    public void setCategoria_titulo(String categoria_titulo) {
+        this.categoria_titulo = categoria_titulo;
+    }
+
+    public String getCategoria_id() {
+        return categoria_id;
+    }
+
+    public void setCategoria_id(String categoria_id) {
+        this.categoria_id = categoria_id;
     }
 
 }

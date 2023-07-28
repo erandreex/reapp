@@ -17,6 +17,7 @@ import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Modelos.ModeloRutaAccion;
+import com.reapp.reapp.Servicios.ServicioOpciones;
 import com.reapp.reapp.Servicios.ServicioRutas;
 import com.reapp.reapp.Servicios.ServicioRutasAcciones;
 import com.reapp.reapp.Servicios.ServicioRutasCategoria;
@@ -32,6 +33,7 @@ public class ControladorRutasAcciones {
     private final ServicioRutasAcciones servicioRutasAcciones;
     private final ServicioRutasCategoria servicioRutasCategoria;
     private final ServicioRutas servicioRutas;
+    private final ServicioOpciones servicioOpciones;
 
     private static final String clase = "ControladorRutasAcciones";
     private static final String tipo = "Controlador";
@@ -44,12 +46,15 @@ public class ControladorRutasAcciones {
 
     @GetMapping(listar)
     public ResponseEntity<ModeloRespuestaGeneral> listar() {
+
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
+
         try {
             respuesta.put("rutas-acciones", servicioRutasAcciones.listar());
             respuesta.put("rutas-categorias", servicioRutasCategoria.obtenerListaCategorias());
             respuesta.put("rutas", servicioRutas.externolistarRutas());
+            respuesta.put("metodos-http", servicioOpciones.listar("METODOS_HTTP"));
 
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());

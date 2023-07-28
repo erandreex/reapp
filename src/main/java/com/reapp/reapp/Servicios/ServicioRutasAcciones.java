@@ -38,7 +38,7 @@ public class ServicioRutasAcciones {
                 CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             cst.setString(1, "Q");
-            cst.setString(2, "QLT");
+            cst.setString(2, "QPRU");
             cst.setString(3, null);
             cst.setString(4, null);
             cst.setString(5, null);
@@ -52,6 +52,11 @@ public class ServicioRutasAcciones {
             while (rs.next()) {
 
                 ModeloRutaAccion pro = new ModeloRutaAccion();
+
+                pro.setCategoria_titulo(rs.getString("arc_titulo"));
+                pro.setCategoria_id(rs.getString("arc_id"));
+                pro.setRuta_titulo(rs.getString("ar_titulo"));
+                pro.setRuta_id(rs.getString("ar_id"));
                 pro.setId(rs.getString("ara_id"));
                 pro.setControlador(rs.getString("ara_controlador"));
                 pro.setEndpoint(rs.getString("ara_endpoint"));
@@ -114,7 +119,7 @@ public class ServicioRutasAcciones {
             cst.setString(5, rutaAccion.getEndpoint());
             cst.setString(6, rutaAccion.getMetodo());
             cst.setString(7, rutaAccion.getEstado());
-            cst.setString(8, rutaAccion.getFk_ruta());
+            cst.setString(8, rutaAccion.getRuta_id());
             cst.setString(9, rutaAccion.getDescripcion());
 
             cst.execute();
@@ -171,7 +176,7 @@ public class ServicioRutasAcciones {
             cst.setString(5, rutaAccion.getEndpoint());
             cst.setString(6, rutaAccion.getMetodo());
             cst.setString(7, rutaAccion.getEstado());
-            cst.setString(8, rutaAccion.getFk_ruta());
+            cst.setString(8, rutaAccion.getRuta_id());
             cst.setString(9, rutaAccion.getDescripcion());
             cst.execute();
 
@@ -297,6 +302,10 @@ public class ServicioRutasAcciones {
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
+                accion.setCategoria_titulo(rs.getString("arc_titulo"));
+                accion.setCategoria_id(rs.getString("arc_id"));
+                accion.setRuta_titulo(rs.getString("ar_titulo"));
+                accion.setRuta_id(rs.getString("ar_id"));
                 accion.setId(rs.getString("ara_id"));
                 accion.setControlador(rs.getString("ara_controlador"));
                 accion.setEndpoint(rs.getString("ara_endpoint"));
