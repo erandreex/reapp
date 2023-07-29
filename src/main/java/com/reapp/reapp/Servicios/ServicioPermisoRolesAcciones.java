@@ -13,19 +13,19 @@ import org.springframework.stereotype.Service;
 import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
-import com.reapp.reapp.Modelos.ModeloPermisoRolRutaAccion;
+import com.reapp.reapp.Modelos.ModeloPermisoRolAccion;
 
 @Service
-public class ServicioPermisoRolesRutasAcciones {
+public class ServicioPermisoRolesAcciones {
 
     private static final String tipo = "Servicio";
-    private static final String clase = "ServicioPermisoRolesRutasAcciones";
+    private static final String clase = "ServicioPermisoRolesAcciones";
     private static final String sp = "{CALL admin.sp_admin_permisos_roles_rutas_acciones(?,?,?,?,?)}";
 
     private static final String obtenerPorId = "obtenerPorId";
     private static final String crear = "crear";
 
-    public Boolean crear(ModeloPermisoRolRutaAccion permiso, String id) throws CustomException {
+    public Boolean crear(ModeloPermisoRolAccion permiso, String id) throws CustomException {
 
         Boolean respuesta = false;
 
@@ -35,13 +35,13 @@ public class ServicioPermisoRolesRutasAcciones {
             cst.setString(1, "I");
             cst.setString(2, "INR");
             cst.setString(3, id);
-            cst.setString(4, permiso.getRol_ruta_id());
-            cst.setString(5, permiso.getRuta_accion_id());
+            cst.setString(4, permiso.getRol_id());
+            cst.setString(5, permiso.getAccion_id());
             cst.execute();
             respuesta = true;
 
         } catch (SQLException e) {
-            System.out.println(e);
+
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -77,9 +77,9 @@ public class ServicioPermisoRolesRutasAcciones {
         return respuesta;
     }
 
-    public ModeloPermisoRolRutaAccion obtenerPorId(String id) throws CustomException {
+    public ModeloPermisoRolAccion obtenerPorId(String id) throws CustomException {
 
-        ModeloPermisoRolRutaAccion permiso = new ModeloPermisoRolRutaAccion();
+        ModeloPermisoRolAccion permiso = new ModeloPermisoRolAccion();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(sp);) {
@@ -93,9 +93,10 @@ public class ServicioPermisoRolesRutasAcciones {
             ResultSet rs = cst.executeQuery();
 
             while (rs.next()) {
-                permiso.setId(rs.getString("aprra_id"));
-                permiso.setRol_ruta_id(rs.getString("aprra_fk_aprr_id"));
-                permiso.setRuta_accion_id(rs.getString("aprra_fk_ara_id"));
+
+                permiso.setId(rs.getString("apra_id"));
+                permiso.setRol_id(rs.getString("apra_fk_rol_id"));
+                permiso.setAccion_id(rs.getString("apra_fk_ara_id"));
             }
 
         } catch (SQLException e) {

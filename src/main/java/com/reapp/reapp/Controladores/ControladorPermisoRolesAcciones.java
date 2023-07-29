@@ -14,30 +14,34 @@ import org.springframework.web.bind.annotation.RestController;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
-import com.reapp.reapp.Modelos.ModeloPermisoRolRutaAccion;
+import com.reapp.reapp.Modelos.ModeloPermisoRolAccion;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
-
-import com.reapp.reapp.Servicios.ServicioPermisoRolesRutasAcciones;
+import com.reapp.reapp.Servicios.ServicioPermisoRolesAcciones;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api/v1/permisos/rolesrutasacciones")
+@RequestMapping("api/v1/permisos/roles/acciones")
 @RequiredArgsConstructor
-public class ControladorPermisoRolesRutaAcciones {
+public class ControladorPermisoRolesAcciones {
 
-    private final ServicioPermisoRolesRutasAcciones servicioPermisoRolesRutasAcciones;
+    private final ServicioPermisoRolesAcciones servicioPermisoRolesAcciones;
+
+    private static final String clase = "ControladorPermisoRolesAcciones";
+    private static final String tipo = "Controlador";
+
+    private static final String crear = "crear";
 
     @PostMapping("/crear")
-    public ResponseEntity<ModeloRespuestaGeneral> crear(@RequestBody ModeloPermisoRolRutaAccion permiso) {
+    public ResponseEntity<ModeloRespuestaGeneral> crear(@RequestBody ModeloPermisoRolAccion permiso) {
 
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
         String id = UUID.randomUUID().toString();
 
         try {
-            servicioPermisoRolesRutasAcciones.crear(permiso, id);
-            respuesta.put("permiso", servicioPermisoRolesRutasAcciones.obtenerPorId(id));
+            servicioPermisoRolesAcciones.crear(permiso, id);
+            respuesta.put("permiso", servicioPermisoRolesAcciones.obtenerPorId(id));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
@@ -48,8 +52,9 @@ public class ControladorPermisoRolesRutaAcciones {
 
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
-            errorControlador.setClase("ControladorPermisoRolesRuta");
-            errorControlador.setEndpoint("api/v1/permisos/rolesrutas/crear");
+            errorControlador.setClase(clase);
+            errorControlador.setTipo(tipo);
+            errorControlador.setMetodo(crear);
 
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
