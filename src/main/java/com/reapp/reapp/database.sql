@@ -50,43 +50,41 @@ INSERT INTO `admin_parametros` (`ap_nombre`, `ap_valor`) VALUES
 	('TOKEN_EXPIRACION_INTERVALO', 'minutos'),
 	('TOKEN_EXPIRACION_VALOR', '3');
 
+-- Volcando estructura para tabla admin.admin_permisos_roles_acciones
+DROP TABLE IF EXISTS `admin_permisos_roles_acciones`;
+CREATE TABLE IF NOT EXISTS `admin_permisos_roles_acciones` (
+  `apra_id` varchar(50) NOT NULL,
+  `apra_fk_rol_id` varchar(50) NOT NULL,
+  `apra_fk_ara_id` varchar(50) NOT NULL,
+  UNIQUE KEY `apra_id` (`apra_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla admin.admin_permisos_roles_acciones: ~1 rows (aproximadamente)
+DELETE FROM `admin_permisos_roles_acciones`;
+INSERT INTO `admin_permisos_roles_acciones` (`apra_id`, `apra_fk_rol_id`, `apra_fk_ara_id`) VALUES
+	('1c739355-51e1-4c4b-8868-fca894b257c1', '5d258050-5ee3-4954-8ec4-1b010355b817', 'a7846cc9-dbeb-472a-9adc-c7055dda6da1');
+
 -- Volcando estructura para tabla admin.admin_permisos_roles_rutas
 DROP TABLE IF EXISTS `admin_permisos_roles_rutas`;
 CREATE TABLE IF NOT EXISTS `admin_permisos_roles_rutas` (
   `aprr_id` varchar(50) NOT NULL,
   `aprr_fk_rol_id` varchar(50) NOT NULL,
   `aprr_fk_ruta_id` varchar(50) NOT NULL,
-  `aprr_estado` varchar(1) NOT NULL DEFAULT 'A',
   UNIQUE KEY `aprr_id` (`aprr_id`),
   UNIQUE KEY `indice unico` (`aprr_fk_rol_id`,`aprr_fk_ruta_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Volcando datos para la tabla admin.admin_permisos_roles_rutas: ~8 rows (aproximadamente)
 DELETE FROM `admin_permisos_roles_rutas`;
-INSERT INTO `admin_permisos_roles_rutas` (`aprr_id`, `aprr_fk_rol_id`, `aprr_fk_ruta_id`, `aprr_estado`) VALUES
-	('0b993f3f-fabe-46e7-bf86-b0e582f54bc8', '5d258050-5ee3-4954-8ec4-1b010355b817', '46f69391-e307-4e49-92fe-be7c3ef78def', 'A'),
-	('0c891b72-7a0a-4d11-a8d9-54087b74f431', '5d258050-5ee3-4954-8ec4-1b010355b817', '3f7de9ab-d611-475e-a290-62161a2d9856', 'A'),
-	('1c47c49b-4965-4d0d-94bc-cc7e261bd7e8', '5d258050-5ee3-4954-8ec4-1b010355b817', '7c9950b7-a114-4477-a655-24fc68a10b09', 'A'),
-	('3c653504-53c0-4b38-9941-670780c100a5', '5d258050-5ee3-4954-8ec4-1b010355b817', '3938b044-26ae-4079-81d0-734d248afa75', 'A'),
-	('4200f87e-dc5b-4adf-8c08-a37e1177de6f', '5d258050-5ee3-4954-8ec4-1b010355b817', 'bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb', 'A'),
-	('5078a03d-6bdd-4808-b4b7-7cc37076d257', '5d258050-5ee3-4954-8ec4-1b010355b817', '84d5bca9-3bcd-4f82-ae42-6ea23dcf0522', 'A'),
-	('9b231720-d358-4c72-9fbf-2886fd63d5ab', '5d258050-5ee3-4954-8ec4-1b010355b817', 'b5f5267e-87fa-4678-97ca-6ad4584725d3', 'A'),
-	('eda77a5d-2579-4341-a5de-26a1b9c0e591', '5d258050-5ee3-4954-8ec4-1b010355b817', '53cc74a5-0efb-4d98-b975-7c8451583b0c', 'A');
-
--- Volcando estructura para tabla admin.admin_permisos_roles_rutas_acciones
-DROP TABLE IF EXISTS `admin_permisos_roles_rutas_acciones`;
-CREATE TABLE IF NOT EXISTS `admin_permisos_roles_rutas_acciones` (
-  `aprra_id` varchar(50) NOT NULL,
-  `aprra_fk_aprr_id` varchar(50) NOT NULL,
-  `aprra_fk_ara_id` varchar(50) NOT NULL,
-  UNIQUE KEY `apra_id` (`aprra_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Volcando datos para la tabla admin.admin_permisos_roles_rutas_acciones: ~2 rows (aproximadamente)
-DELETE FROM `admin_permisos_roles_rutas_acciones`;
-INSERT INTO `admin_permisos_roles_rutas_acciones` (`aprra_id`, `aprra_fk_aprr_id`, `aprra_fk_ara_id`) VALUES
-	('1c739355-51e1-4c4b-8868-fca894b257c1', '727eb9a2-a67a-4776-ad79-046d4b8c069d', 'a7846cc9-dbeb-472a-9adc-c7055dda6da1'),
-	('2816fd00-21b8-42ba-ab20-bb63290ff1cd', '727eb9a2-a67a-4776-ad79-046d4b8c069d', 'a7846cc9-dbeb-472a-9adc-c7055dda6da1');
+INSERT INTO `admin_permisos_roles_rutas` (`aprr_id`, `aprr_fk_rol_id`, `aprr_fk_ruta_id`) VALUES
+	('3c653504-53c0-4b38-9941-670780c100a5', '5d258050-5ee3-4954-8ec4-1b010355b817', '3938b044-26ae-4079-81d0-734d248afa75'),
+	('0c891b72-7a0a-4d11-a8d9-54087b74f431', '5d258050-5ee3-4954-8ec4-1b010355b817', '3f7de9ab-d611-475e-a290-62161a2d9856'),
+	('0b993f3f-fabe-46e7-bf86-b0e582f54bc8', '5d258050-5ee3-4954-8ec4-1b010355b817', '46f69391-e307-4e49-92fe-be7c3ef78def'),
+	('eda77a5d-2579-4341-a5de-26a1b9c0e591', '5d258050-5ee3-4954-8ec4-1b010355b817', '53cc74a5-0efb-4d98-b975-7c8451583b0c'),
+	('1c47c49b-4965-4d0d-94bc-cc7e261bd7e8', '5d258050-5ee3-4954-8ec4-1b010355b817', '7c9950b7-a114-4477-a655-24fc68a10b09'),
+	('5078a03d-6bdd-4808-b4b7-7cc37076d257', '5d258050-5ee3-4954-8ec4-1b010355b817', '84d5bca9-3bcd-4f82-ae42-6ea23dcf0522'),
+	('9b231720-d358-4c72-9fbf-2886fd63d5ab', '5d258050-5ee3-4954-8ec4-1b010355b817', 'b5f5267e-87fa-4678-97ca-6ad4584725d3'),
+	('4200f87e-dc5b-4adf-8c08-a37e1177de6f', '5d258050-5ee3-4954-8ec4-1b010355b817', 'bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb');
 
 -- Volcando estructura para tabla admin.admin_rutas
 DROP TABLE IF EXISTS `admin_rutas`;
@@ -100,10 +98,12 @@ CREATE TABLE IF NOT EXISTS `admin_rutas` (
   `ar_color_1` varchar(50) NOT NULL,
   `ar_color_2` varchar(50) DEFAULT NULL,
   `ar_fk_categoria` varchar(50) NOT NULL,
-  UNIQUE KEY `ar_id` (`ar_id`)
+  UNIQUE KEY `ar_id` (`ar_id`),
+  UNIQUE KEY `ar_titulo_ara_categoria` (`ar_titulo`,`ar_fk_categoria`),
+  UNIQUE KEY `ar_ruta_ara_categoria` (`ar_ruta`,`ar_fk_categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_rutas: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_rutas: ~7 rows (aproximadamente)
 DELETE FROM `admin_rutas`;
 INSERT INTO `admin_rutas` (`ar_id`, `ar_orden`, `ar_componente`, `ar_titulo`, `ar_ruta`, `ar_icono`, `ar_color_1`, `ar_color_2`, `ar_fk_categoria`) VALUES
 	('3938b044-26ae-4079-81d0-734d248afa75', 0, 'UsuariosComponent', 'Usuarios', 'usuarios', 'ri-user-3-fill', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
@@ -111,7 +111,6 @@ INSERT INTO `admin_rutas` (`ar_id`, `ar_orden`, `ar_componente`, `ar_titulo`, `a
 	('46f69391-e307-4e49-92fe-be7c3ef78def', 15, 'UsuariosRolesComponent', 'Usuarios Roles', 'usuarios-roles', 'ri-shield-user-fill', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
 	('7c9950b7-a114-4477-a655-24fc68a10b09', 2, 'RutasCategoriasComponent', 'Rutas Categorias', 'rutas-categorias', 'ri-mind-map', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
 	('84d5bca9-3bcd-4f82-ae42-6ea23dcf0522', 0, 'RutasAccionesComponent', 'Rutas Acciones', 'rutas-acciones', 'ri-key-line', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
-	('b5f5267e-87fa-4678-97ca-6ad4584725d3', 0, 'DashboardComponent', 'Dashboard', '', 'ri-flag-2-fill', '#FFFFFF', '#FFFFFF', '85b96a17-6252-428c-ba9c-49df337f52f3'),
 	('bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb', 0, 'IndexComponent', 'Index', '', 'ri-flag-2-fill', '#FFFFFF', '#FFFFFF', '85b96a17-6252-428c-ba9c-49df337f52f3'),
 	('c6c1466e-aa89-4c78-9580-3365a6ae49db', 0, 'pruebaComponente', 'titulo', 'ruta', 'icono', 'color_1', 'color_2', '8f8c746b-98ef-4cbb-9ac5-ce1313fe3cf6');
 
@@ -128,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `admin_rutas_acciones` (
   UNIQUE KEY `ara_id` (`ara_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_rutas_acciones: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_rutas_acciones: ~1 rows (aproximadamente)
 DELETE FROM `admin_rutas_acciones`;
 INSERT INTO `admin_rutas_acciones` (`ara_id`, `ara_controlador`, `ara_endpoint`, `ara_metodo`, `ara_estado`, `ara_fk_ruta_id`, `ara_descripcion`) VALUES
 	('2045ace9-1c00-4cf4-b948-7ef4a386103c', 'Prueba', 'ewfwef', 'GET', 'V', '46f69391-e307-4e49-92fe-be7c3ef78def', 'wefwef'),
@@ -150,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `admin_rutas_categorias` (
   UNIQUE KEY `arc_orden` (`arc_orden`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_rutas_categorias: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_rutas_categorias: ~4 rows (aproximadamente)
 DELETE FROM `admin_rutas_categorias`;
 INSERT INTO `admin_rutas_categorias` (`arc_id`, `arc_orden`, `arc_titulo`, `arc_ruta`, `arc_icono`, `arc_color_1`, `arc_color_2`) VALUES
 	('f91dd081-ca36-4d1e-81c9-cffb9e131b93', 5, 'Administracion', 'administracion', 'ri-settings-5-fill', '#FFFFFF', '#FFFFFF'),
@@ -188,7 +187,7 @@ INSERT INTO `admin_usuarios` (`au_id`, `au_nombre`, `au_apellido`, `au_username`
 	('5af0baf4-df1d-4978-b18c-d43fb82ab415', 'nombre', 'apellido', 'username', '$2a$10$vGJSe1yYyoagxevBq/7nleCJDAVBX0Kvp7E.PIg7UialS3ZhGZ3Ia', 'correo', 'correo', '61719d97-5764-49f7-a229-52222bb1992d', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
 	('6460bd9b-12ed-4a5d-97dc-e4815aad20b1', 'nombretyjtyj', 'apellidotyjtyj', 'usernametyjtyjtyj', '$2a$10$LU5xFTzVttYsYXf4GaCABekIPKjlrnsUmVL3.I6mSZgp4g4Z4U7CO', 'correo@gtetxhd.con', 'correo@gtetxhd.con', '435394f3-ed11-4ce6-9828-0b86aa074e32', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
 	('6c36e4aa-3a51-4175-b86a-a70acfe01960', 'nombretyjtyj54y', 'apellidotyjtyj45y', 'usernametyjtyjtyj45y', '$2a$10$oaRboIHzDO3yKG5ammCXPOasoZ3tlY/hEHFeFELVe2VY3/SDBbNFK', 'correo@gtetx45yhd.con', 'correo@gtetx45yhd.con', '927a65e8-cc2f-41c5-a47e-caa9bc8dddc9', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
-	('a330e7bf-1c4d-4709-a331-6353a44621a4', 'Prueba', 'Test', 'test1', '$2a$10$W3CX0EpFfeCaO0OskoWoOuSCGkf.6UEEkAKKslXwtGKKh3U9P11y6', 'test1@test.com', 'test1@test.com', 'b54e1213-acd5-410d-9787-749c2e720432', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
+	('a330e7bf-1c4d-4709-a331-6353a44621a4', 'Prueba', 'Test', 'test1', '$2a$10$W3CX0EpFfeCaO0OskoWoOuSCGkf.6UEEkAKKslXwtGKKh3U9P11y6', 'test1@test.com', 'test1@test.com', 'b75d164e-f140-49f9-ab56-b32e8f7f0a68', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
 	('b581f2b1-f140-4808-b522-ecd245cba13a', 'nombrere', 'apellidor4', 'username4r4r', '$2a$10$ZKKdHq5Zo.BeNgRKNXoDXePK4Ywx7LdPqTVn6Nl02PmxSJSHQ7qwS', 'correo4rr4@text.com', 'correo4rr4@text.com', 'ae50e875-8a8f-4383-b73b-13ace0518e6e', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
 	('c2503c65-b05f-4790-8149-27b11a98495c', 'nombretyh', 'apellidotyhtyh', 'usernametyhtyh', '$2a$10$3TxCI5nhpjhP28a31YUlIOc4gG/gU7UhjwE/DDM/mclADmtTnmvK.', 'correotyh', 'correotyh', 'daff10bc-e516-4e27-b126-4d0cc6b1f3d7', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
 	('d8861a63-4788-4b67-98fa-27be0b9ad870', 'nombrehhh', 'apellidohhh', 'usernamehhh', '$2a$10$QzkQQBohP2QHJ/J0yJiL3.reyjouLCu/dhyLqqe2zLs9TmlYC5Ae2', 'correohhhh', 'correohhhh', 'fdcfd460-7004-4c82-b581-3fa226ff878c', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817'),
@@ -201,7 +200,8 @@ DROP TABLE IF EXISTS `admin_usuarios_roles`;
 CREATE TABLE IF NOT EXISTS `admin_usuarios_roles` (
   `aur_id` varchar(50) NOT NULL,
   `aur_nombre` varchar(50) NOT NULL,
-  UNIQUE KEY `aur_id` (`aur_id`) USING BTREE
+  UNIQUE KEY `aur_id` (`aur_id`) USING BTREE,
+  UNIQUE KEY `aur_nombre` (`aur_nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Volcando datos para la tabla admin.admin_usuarios_roles: ~1 rows (aproximadamente)
@@ -225,9 +225,10 @@ CREATE TABLE IF NOT EXISTS `admin_usuarios_tokens` (
   CONSTRAINT `FK_token_usuario_id` FOREIGN KEY (`aut_fk_usuario_id`) REFERENCES `admin_usuarios` (`au_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_usuarios_tokens: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_usuarios_tokens: ~5 rows (aproximadamente)
 DELETE FROM `admin_usuarios_tokens`;
 INSERT INTO `admin_usuarios_tokens` (`aut_id`, `aut_fecha`, `aut_tipo`, `aut_estado`, `aut_token1`, `aut_token2`, `aut_fk_usuario_id`) VALUES
+	('92576ca3-4f0a-4a55-9364-24511ac73895', '2023-07-28 12:15:26', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI5MjU3NmNhMy00ZjBhLTRhNTUtOTM2NC0yNDUxMWFjNzM4OTUiLCJwYXNzX2tleSI6ImI3NWQxNjRlLWYxNDAtNDlmOS1hYjU2LWIzMmU4ZjdmMGE2OCIsImlhdCI6MTY5MDU2NDUyNiwiZXhwIjoxNjkwNTY0NzA2fQ.ilXWGQgJKO3IwCn9B-qcH0wh0GsYqEcJyQwmgSLm4Y0', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('b57d3b3d-2928-4731-892f-80c490717e76', '2023-07-28 11:52:15', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiNTdkM2IzZC0yOTI4LTQ3MzEtODkyZi04MGM0OTA3MTdlNzYiLCJwYXNzX2tleSI6IjAzNDU5NGE3LTUwYjItNDFmYS1hMmEyLWJkYWEzNjk1MDRiNyIsImlhdCI6MTY5MDU2MzEzNSwiZXhwIjoxNjkwNTYzMzE1fQ.W02PnhqJqneMtbmo63mcT5Nk8_shOXgWv4mrqSqcJ4', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('b65a4bd2-2fae-4d5e-8287-c2057cfe50da', '2023-07-28 12:05:52', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiNjVhNGJkMi0yZmFlLTRkNWUtODI4Ny1jMjA1N2NmZTUwZGEiLCJwYXNzX2tleSI6ImI1NGUxMjEzLWFjZDUtNDEwZC05Nzg3LTc0OWMyZTcyMDQzMiIsImlhdCI6MTY5MDU2Mzk1MiwiZXhwIjoxNjkwNTY0MTMyfQ.9goOkEiUF7h2luMH6AcgQwx30KlVNMVmv4JSTQplTnY', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('c3260166-7a37-4351-9e2a-a1310f7ce9da', '2023-07-28 11:49:20', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJjMzI2MDE2Ni03YTM3LTQzNTEtOWUyYS1hMTMxMGY3Y2U5ZGEiLCJwYXNzX2tleSI6ImM0NjY2MDI2LTNjYWUtNDA1Ni05MWQ5LThkMjQ2MDNkNzQ3MiIsImlhdCI6MTY5MDU2Mjk2MCwiZXhwIjoxNjkwNTYzMTQwfQ.wUYCq-XC_DTrWT4uiVJjeKPsI4A6Gs6BK1FOxNwDXM', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJjMzI2MDE2Ni03YTM3LTQzNTEtOWUyYS1hMTMxMGY3Y2U5ZGEiLCJwYXNzX2tleSI6ImM0NjY2MDI2LTNjYWUtNDA1Ni05MWQ5LThkMjQ2MDNkNzQ3MiIsImlhdCI6MTY5MDU2MjgyMywiZXhwIjoxNjkwNTYzMDAzfQ.QvUNaD2auBhTtkui8ZNyETIFNl7av2q-kv0b05VcJPU', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
@@ -359,6 +360,47 @@ BEGIN
 END//
 DELIMITER ;
 
+-- Volcando estructura para procedimiento admin.sp_admin_permisos_roles_acciones
+DROP PROCEDURE IF EXISTS `sp_admin_permisos_roles_acciones`;
+DELIMITER //
+CREATE PROCEDURE `sp_admin_permisos_roles_acciones`(
+	IN `i_tipo` CHAR(5),
+	IN `i_operacion` CHAR(5),
+	IN `i_apra_id` VARCHAR(50),
+	IN `i_apra_fk_rol_id` VARCHAR(50),
+	IN `i_apra_fk_ara_id` VARCHAR(50)
+)
+BEGIN
+
+
+	IF(i_tipo = 'Q') THEN
+		
+		IF(i_operacion = 'QPID') THEN -- INSERTAR NUEVO REGISTRO
+			
+			SELECT apra_id, apra_fk_rol_id, apra_fk_ara_id 
+			FROM admin.admin_permisos_roles_rutas_acciones
+			WHERE apra_id = i_apra_id;
+			
+		END IF;
+		
+	END IF;
+	
+
+	IF(i_tipo = 'I') THEN
+		
+		IF(i_operacion = 'INR') THEN -- INSERTAR NUEVO REGISTRO
+			
+			INSERT INTO admin.admin_permisos_roles_rutas_acciones (apra_id, apra_fk_rol_id, apra_fk_ara_id)
+			VALUES (i_apra_id, i_apra_fk_rol_id, i_aprra_fk_ara_id);
+			
+		END IF;
+		
+	END IF;
+	
+
+END//
+DELIMITER ;
+
 -- Volcando estructura para procedimiento admin.sp_admin_permisos_roles_rutas
 DROP PROCEDURE IF EXISTS `sp_admin_permisos_roles_rutas`;
 DELIMITER //
@@ -367,18 +409,38 @@ CREATE PROCEDURE `sp_admin_permisos_roles_rutas`(
 	IN `i_operacion` CHAR(6),
 	IN `i_aprr_id` VARCHAR(50),
 	IN `i_aprr_fk_rol_id` VARCHAR(50),
-	IN `i_aprr_fk_ruta_id` VARCHAR(50),
-	IN `i_aprr_estado` VARCHAR(1)
+	IN `i_aprr_fk_ruta_id` VARCHAR(50)
 )
 BEGIN
 
 	IF (i_tipo = 'Q') THEN
 	
+		IF(i_operacion = 'QTP') THEN
+		
+			SELECT aprr_id, aur.aur_id, aur.aur_nombre, arc.arc_titulo, ar.ar_id, ar.ar_titulo
+			FROM admin.admin_permisos_roles_rutas aprr, ADMIN.admin_usuarios_roles aur, ADMIN.admin_rutas_categorias arc, ADMIN.admin_rutas ar 
+			WHERE aprr_fk_rol_id = aur.aur_id
+			AND 	aprr_fk_ruta_id = ar.ar_id
+			AND   ar.ar_fk_categoria = arc.arc_id;
+		
+		END IF;
+	
 		IF(i_operacion = 'QPRRSI') THEN
 		
-			SELECT aprr_id, aprr_fk_rol_id, aprr_fk_ruta_id, aprr_estado
+			SELECT aprr_id, aprr_fk_rol_id, aprr_fk_ruta_id
 			FROM admin.admin_permisos_roles_rutas 
 			WHERE aprr_id = i_aprr_id;
+		
+		END IF;
+		
+		IF(i_operacion = 'QPID') THEN
+		
+			SELECT aprr_id, aur.aur_id, aur.aur_nombre, arc.arc_titulo, ar.ar_titulo
+			FROM admin.admin_permisos_roles_rutas aprr, ADMIN.admin_usuarios_roles aur, ADMIN.admin_rutas_categorias arc, ADMIN.admin_rutas ar 
+			WHERE aprr_id = i_aprr_id
+			AND 	aprr_fk_rol_id = aur.aur_id
+			AND 	aprr_fk_ruta_id = ar.ar_id
+			AND   ar.ar_fk_categoria = arc.arc_id;
 		
 		END IF;
 	
@@ -394,47 +456,43 @@ BEGIN
 		END IF;
 		
 	END IF;
-
-END//
-DELIMITER ;
-
--- Volcando estructura para procedimiento admin.sp_admin_permisos_roles_rutas_acciones
-DROP PROCEDURE IF EXISTS `sp_admin_permisos_roles_rutas_acciones`;
-DELIMITER //
-CREATE PROCEDURE `sp_admin_permisos_roles_rutas_acciones`(
-	IN `i_tipo` CHAR(5),
-	IN `i_operacion` CHAR(5),
-	IN `i_aprra_id` VARCHAR(50),
-	IN `i_aprra_fk_aprr_id` VARCHAR(50),
-	IN `i_aprra_fk_ara_id` VARCHAR(50)
-)
-BEGIN
-
-
-	IF(i_tipo = 'Q') THEN
+	
+	IF(i_tipo = 'IU') THEN
 		
-		IF(i_operacion = 'QPID') THEN -- INSERTAR NUEVO REGISTRO
-			
-			SELECT aprra_id, aprra_fk_aprr_id, aprra_fk_ara_id 
-			FROM admin.admin_permisos_roles_rutas_acciones
-			WHERE aprra_id = i_aprra_id;
+		IF(i_operacion = 'IUR') THEN -- INSERTAR NUEVO REGISTRO
+		
+		
+			IF( (SELECT COUNT(*) FROM admin.admin_permisos_roles_rutas WHERE aprr_id = i_aprr_id) = 1) THEN 
+			 
+				UPDATE admin.admin_permisos_roles_rutas 
+				SET 	aprr_fk_rol_id  = i_aprr_fk_rol_id,
+						aprr_fk_ruta_id = i_aprr_fk_ruta_id
+				WHERE aprr_id = i_aprr_id;
+				
+			ELSE
+				INSERT INTO admin.admin_permisos_roles_rutas (aprr_id, aprr_fk_rol_id, aprr_fk_ruta_id)
+				VALUES (i_aprr_id, i_aprr_fk_rol_id, i_aprr_fk_ruta_id);
+
+			END IF;
 			
 		END IF;
 		
 	END IF;
 	
-
-	IF(i_tipo = 'I') THEN
+	IF(i_tipo = 'D') THEN
 		
-		IF(i_operacion = 'INR') THEN -- INSERTAR NUEVO REGISTRO
-			
-			INSERT INTO admin.admin_permisos_roles_rutas_acciones (aprra_id, aprra_fk_aprr_id, aprra_fk_ara_id)
-			VALUES (i_aprra_id, i_aprra_fk_aprr_id, i_aprra_fk_ara_id);
+		IF(i_operacion = 'DRU') THEN -- INSERTAR NUEVO REGISTRO
+		
+			IF( (SELECT COUNT(*) FROM admin.admin_permisos_roles_rutas WHERE aprr_id = i_aprr_id) = 1) THEN 
+			 
+				DELETE FROM admin.admin_permisos_roles_rutas 
+				WHERE aprr_id = i_aprr_id;
+				
+			END IF;
 			
 		END IF;
 		
 	END IF;
-	
 
 END//
 DELIMITER ;
@@ -1346,7 +1404,7 @@ CREATE TABLE IF NOT EXISTS `permiso_roles_rutas` (
   CONSTRAINT `FK2_ruta` FOREIGN KEY (`FK_ruta`) REFERENCES `rutas_general` (`rug_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
--- Volcando datos para la tabla auth.permiso_roles_rutas: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla auth.permiso_roles_rutas: ~1 rows (aproximadamente)
 DELETE FROM `permiso_roles_rutas`;
 INSERT INTO `permiso_roles_rutas` (`prr_id`, `FK_rol`, `FK_ruta`, `prr_estado`) VALUES
 	('9d6e010e-d5af-42b6-84b2-ec9efcf9249b', '5d258050-5ee3-4954-8ec4-1b010355b817', 'ec0e9ca5-67b1-4bd9-8523-f977bf680db7', 'V'),
@@ -1403,7 +1461,7 @@ CREATE TABLE IF NOT EXISTS `rutas_general` (
   CONSTRAINT `FK_categoria` FOREIGN KEY (`rug_fk_categoria`) REFERENCES `rutas_categorias` (`ru_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
--- Volcando datos para la tabla auth.rutas_general: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla auth.rutas_general: ~1 rows (aproximadamente)
 DELETE FROM `rutas_general`;
 INSERT INTO `rutas_general` (`rug_id`, `rug_fk_categoria`, `rug_componente`, `rug_titulo`, `rug_ruta`, `rug_icon`, `rug_color_1`, `rug_color_2`, `rug_order`) VALUES
 	('114629ab-0687-46c3-b55e-bc5bea34e29c', '58af8ed3-78c6-4fb7-a66d-fe5c2415bc73', 'rutas', 'Rutas', 'rutas', 'fa-solid fa-sitemap', '#FFFFFF', '#FFFFFF', 0),
@@ -2029,7 +2087,7 @@ CREATE TABLE IF NOT EXISTS `tokens_users` (
   KEY `token_indice_1` (`to_date`,`to_user_id`,`to_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
--- Volcando datos para la tabla auth.tokens_users: ~63 rows (aproximadamente)
+-- Volcando datos para la tabla auth.tokens_users: ~52 rows (aproximadamente)
 DELETE FROM `tokens_users`;
 INSERT INTO `tokens_users` (`to_id`, `to_user_id`, `to_date`, `to_type`, `to_revoked`, `to_token`) VALUES
 	('044edfc3-3ff2-4817-b566-528bd0779554', 'a330e7bf-1c4d-4709-a331-6353a44621a4', '2023-04-21 14:25:24', 'BEARER', 'F', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl9pZCI6IjA0NGVkZmMzLTNmZjItNDgxNy1iNTY2LTUyOGJkMDc3OTU1NCIsImlkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwicGFzc19rZXkiOiJlNDM3ZDZjYy02YWVlLTQyNmMtYjZkYS01ZDIwMzJkNDEwMWEiLCJpYXQiOjE2ODIxMDUxMjQsImV4cCI6MTY4MjEyMzEyNH0.qGSX0akcabz3QaB8eprs0fd4pSmBP8T9AMjxjCTd1L0'),
