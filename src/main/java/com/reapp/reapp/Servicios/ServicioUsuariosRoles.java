@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
+import com.reapp.reapp.Modelos.ModeloExternoRol;
 import com.reapp.reapp.Modelos.ModeloRol;
 
 @Service
@@ -291,6 +292,62 @@ public class ServicioUsuariosRoles {
             throw new CustomException("", errorGeneral, e);
         }
         return respuesta;
+    }
+
+    public List<ModeloExternoRol> listarRolesExterno() throws CustomException {
+
+        List<ModeloExternoRol> lista = new ArrayList<>();
+
+        try (Connection mariaDB = ConexionMariaDB.getConexion();
+                CallableStatement cst = mariaDB.prepareCall(sp);) {
+            cst.setString(1, "Q");
+            cst.setString(2, "QER");
+            cst.setString(3, null);
+            cst.setString(4, null);
+
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+                ModeloExternoRol pro = new ModeloExternoRol();
+                pro.setRol_id(rs.getString("aur_id"));
+                pro.setRol_nombre(rs.getString("aur_nombre"));
+                lista.add(pro);
+            }
+
+        } catch (SQLException e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt("No se ha podido obtener los roles");
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo("Servicio");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_lista);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
+            errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorGeneral.setTipo("Servicio");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_lista);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        }
+        return lista;
     }
 
 }

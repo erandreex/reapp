@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,9 @@ import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloPermisoRolRuta;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Servicios.ServicioPermisoRolesRutas;
+import com.reapp.reapp.Servicios.ServicioRutas;
+import com.reapp.reapp.Servicios.ServicioRutasCategoria;
+import com.reapp.reapp.Servicios.ServicioUsuariosRoles;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,17 +30,19 @@ import lombok.RequiredArgsConstructor;
 public class ControladorPermisoRolesRuta {
 
     private final ServicioPermisoRolesRutas servicioPermisoRolesRutas;
+    private final ServicioRutasCategoria servicioRutasCategoria;
+    private final ServicioRutas servicioRutas;
+    private final ServicioUsuariosRoles servicioUsuariosRoles;
 
     private static final String tipo = "Controlador";
     private static final String clase = "ControladorPermisoRolesRuta";
 
     private static final String listar = "listar";
-    private static final String crear = "crear";
-    private static final String actualizar = "actualizar";
+    private static final String agregar = "agregar";
     private static final String remover = "remover";
 
-    @PostMapping("/listar")
-    public ResponseEntity<ModeloRespuestaGeneral> listar(@RequestBody ModeloPermisoRolRuta permiso) {
+    @GetMapping("/listar")
+    public ResponseEntity<ModeloRespuestaGeneral> listar() {
 
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
@@ -44,6 +50,10 @@ public class ControladorPermisoRolesRuta {
         try {
 
             respuesta.put("permisos-roles-rutas", servicioPermisoRolesRutas.listar());
+            respuesta.put("rutas", servicioRutas.externolistarRutas());
+            respuesta.put("rutas-categorias", servicioRutasCategoria.obtenerListaCategorias());
+            respuesta.put("roles", servicioUsuariosRoles.listarRolesExterno());
+
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);
@@ -65,8 +75,8 @@ public class ControladorPermisoRolesRuta {
 
     }
 
-    @PostMapping("/crear")
-    public ResponseEntity<ModeloRespuestaGeneral> crear(@RequestBody ModeloPermisoRolRuta permiso) {
+    @PostMapping("/agregar")
+    public ResponseEntity<ModeloRespuestaGeneral> agregar(@RequestBody ModeloPermisoRolRuta permiso) {
 
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
@@ -88,35 +98,8 @@ public class ControladorPermisoRolesRuta {
 
             errorControlador.setClase(clase);
             errorControlador.setTipo(tipo);
-            errorControlador.setMetodo(crear);
+            errorControlador.setMetodo(agregar);
 
-            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
-        }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
-
-    }
-
-    @PostMapping("/actualizar")
-    public ResponseEntity<ModeloRespuestaGeneral> actualizar(@RequestBody ModeloPermisoRolRuta permiso) {
-
-        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
-        Map<String, Object> respuesta = new HashMap<>();
-
-        try {
-            servicioPermisoRolesRutas.actualizar(permiso);
-            respuesta.put("permiso-rol-ruta", servicioPermisoRolesRutas.obtenerPorId(permiso.getId()));
-            resp.setOk(true);
-            resp.setCode(HttpStatus.CREATED.value());
-            resp.setStatus(HttpStatus.CREATED);
-            resp.setMensaje("Se ha actualizar el permiso-ruta exitosamente!");
-            resp.setRespuesta(respuesta);
-
-        } catch (CustomException e) {
-            ModeloErrorControlador errorControlador = new ModeloErrorControlador();
-            errorControlador.setClase(clase);
-            errorControlador.setTipo(tipo);
-            errorControlador.setMetodo(actualizar);
             throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
         }
 
@@ -131,7 +114,7 @@ public class ControladorPermisoRolesRuta {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-            servicioPermisoRolesRutas.actualizar(permiso);
+            servicioPermisoRolesRutas.remover(permiso);
             respuesta.put("permiso-rol-ruta", servicioPermisoRolesRutas.obtenerPorId(permiso.getId()));
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
@@ -140,6 +123,7 @@ public class ControladorPermisoRolesRuta {
             resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {
+            System.out.println(e);
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
             errorControlador.setClase(clase);
             errorControlador.setTipo(tipo);

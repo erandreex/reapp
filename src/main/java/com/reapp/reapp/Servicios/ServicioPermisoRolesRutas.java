@@ -26,7 +26,6 @@ public class ServicioPermisoRolesRutas {
 
     private static final String crear = "crear";
     private static final String listar = "listar";
-    private static final String actualizar = "actualizar";
     private static final String remover = "remover";
 
     private static final String obtenerPorId = "obtenerPorId";
@@ -205,59 +204,6 @@ public class ServicioPermisoRolesRutas {
             throw new CustomException("", errorGeneral, e);
         }
         return permiso;
-    }
-
-    public Boolean actualizar(ModeloPermisoRolRuta permiso) throws CustomException {
-
-        Boolean respuesta = false;
-
-        try (Connection mariaDB = ConexionMariaDB.getConexion();
-                CallableStatement cst = mariaDB.prepareCall(sp);) {
-
-            cst.setString(1, "IU");
-            cst.setString(2, "IUR");
-            cst.setString(3, permiso.getId());
-            cst.setString(4, permiso.getRol_id());
-            cst.setString(5, permiso.getRuta_id());
-            cst.execute();
-            respuesta = true;
-
-        } catch (SQLException e) {
-
-            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
-
-            errorGeneral.setId(UUID.randomUUID().toString());
-            errorGeneral.setDate(new Date());
-            errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral.setMessageExt(
-                    "No se ha podido actualizar el permiso del rol a la ruta, favor contactar a un administrador con el codigo de referencia");
-            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
-            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
-            errorGeneral.setTipo(tipo);
-            errorGeneral.setClase(clase);
-            errorGeneral.setMetodo(actualizar);
-            errorGeneral.setError(e);
-
-            throw new CustomException("", errorGeneral, e);
-        } catch (Exception e) {
-
-            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
-
-            errorGeneral.setId(UUID.randomUUID().toString());
-            errorGeneral.setDate(new Date());
-            errorGeneral.setMessageInt(e.getMessage());
-            errorGeneral
-                    .setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
-            errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            errorGeneral.setTipo(tipo);
-            errorGeneral.setClase(clase);
-            errorGeneral.setMetodo(actualizar);
-            errorGeneral.setError(e);
-
-            throw new CustomException("", errorGeneral, e);
-        }
-        return respuesta;
     }
 
     public Boolean remover(ModeloPermisoRolRuta permiso) throws CustomException {
