@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.reapp.reapp.Auth.ServicioAuth;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
-import com.reapp.reapp.Modelos.ModeloRol;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
+import com.reapp.reapp.Modelos.ModeloRol;
 import com.reapp.reapp.Servicios.ServicioAccesos;
 import com.reapp.reapp.Servicios.ServicioUsuariosRoles;
 
@@ -29,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class ControladorUsuariosRoles {
 
     private final ServicioUsuariosRoles servicioRoles;
+    private final ServicioAccesos servicioAccesos;
 
     private static final String controlador = "ControladorUsuariosRoles";
 
@@ -44,8 +44,7 @@ public class ControladorUsuariosRoles {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-            // ModeloUsuario usuario = servicioAuth.usuarioRequest();
-            // servicioAccesos.controladorMetodo(usuario.getRol_id(), controlador, listar);
+            servicioAccesos.controladorEndpoint(controlador, "listar");
 
             respuesta.put("roles", servicioRoles.listar());
             resp.setOk(true);
@@ -56,6 +55,7 @@ public class ControladorUsuariosRoles {
 
         } catch (CustomException e) {
 
+            System.out.println(e.getErrorGeneral().getMessageInt());
             ModeloErrorControlador errorControlador = new ModeloErrorControlador();
 
             errorControlador.setClase(controlador);
@@ -75,6 +75,8 @@ public class ControladorUsuariosRoles {
         String id = UUID.randomUUID().toString();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "crear");
+
             servicioRoles.crear(rol, id);
             respuesta.put("rol", servicioRoles.obtenerPorId(id));
             resp.setOk(true);
@@ -102,6 +104,7 @@ public class ControladorUsuariosRoles {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "actualizar");
 
             servicioRoles.actualizar(ruta);
             respuesta.put("rol", servicioRoles.obtenerPorId(ruta.getId()));
@@ -130,6 +133,7 @@ public class ControladorUsuariosRoles {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "remover");
 
             servicioRoles.remover(ruta);
             respuesta.put("rol", servicioRoles.obtenerPorId(ruta.getId()));

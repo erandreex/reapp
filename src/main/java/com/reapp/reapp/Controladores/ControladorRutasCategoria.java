@@ -17,6 +17,7 @@ import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloRutaCategoria;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
+import com.reapp.reapp.Servicios.ServicioAccesos;
 import com.reapp.reapp.Servicios.ServicioRutasCategoria;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,11 @@ import lombok.RequiredArgsConstructor;
 public class ControladorRutasCategoria {
 
     private final ServicioRutasCategoria servicioRutasCategoria;
+    private final ServicioAccesos servicioAccesos;
+
     private static final String clase = "ControladorRutasCategoria";
+    private static final String controlador = "ControladorRutasCategoria";
+
     private static final String tipo = "Controlador";
 
     // Metodos
@@ -43,6 +48,8 @@ public class ControladorRutasCategoria {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "listar");
+
             respuesta.put("rutas_categorias", servicioRutasCategoria.listar());
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
@@ -72,6 +79,8 @@ public class ControladorRutasCategoria {
         String id = UUID.randomUUID().toString();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "crear");
+
             servicioRutasCategoria.crear(ruta, id);
             respuesta.put("ruta_categoria", servicioRutasCategoria.obtenerPorId(id));
             resp.setOk(true);
@@ -102,6 +111,7 @@ public class ControladorRutasCategoria {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "actualizar");
 
             servicioRutasCategoria.actualizar(ruta);
             respuesta.put("ruta_categoria", servicioRutasCategoria.obtenerPorId(ruta.getId()));
@@ -133,6 +143,8 @@ public class ControladorRutasCategoria {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "remover");
+
             respuesta.put("ruta_categoria", "");
             servicioRutasCategoria.remover(ruta);
             resp.setOk(true);

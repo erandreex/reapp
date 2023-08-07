@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.reapp.reapp.Excepciones.CustomException;
-import com.reapp.reapp.Excepciones.HandlerAllException;
-import com.reapp.reapp.Excepciones.ModeloErrorControlador;
+import com.reapp.reapp.Servicios.ServicioRutasCategoria;
+import com.reapp.reapp.Servicios.ServicioRutas;
+import com.reapp.reapp.Servicios.ServicioAccesos;
 import com.reapp.reapp.Modelos.ModeloRutaGeneral;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
-import com.reapp.reapp.Servicios.ServicioRutas;
-import com.reapp.reapp.Servicios.ServicioRutasCategoria;
+import com.reapp.reapp.Excepciones.ModeloErrorControlador;
+import com.reapp.reapp.Excepciones.HandlerAllException;
+import com.reapp.reapp.Excepciones.CustomException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,8 +30,11 @@ public class ControladorRutas {
 
     private final ServicioRutas servicioRutasGeneral;
     private final ServicioRutasCategoria servicioRutasCategoria;
+    private final ServicioAccesos servicioAccesos;
 
     private static final String clase = "ControladorRutas";
+    private static final String controlador = "ControladorRutas";
+
     private static final String tipo = "Controlador";
 
     // Metodos
@@ -44,6 +48,7 @@ public class ControladorRutas {
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
         try {
+            servicioAccesos.controladorEndpoint(controlador, "listar");
             respuesta.put("rutas", servicioRutasGeneral.listar());
             respuesta.put("categorias", servicioRutasCategoria.obtenerListaCategorias());
 
@@ -70,7 +75,7 @@ public class ControladorRutas {
         String id = UUID.randomUUID().toString();
 
         try {
-
+            servicioAccesos.controladorEndpoint(controlador, "crear");
             servicioRutasGeneral.crear(ruta, id);
             respuesta.put("ruta", servicioRutasGeneral.obtenerPorId(id));
             resp.setOk(true);
@@ -101,7 +106,7 @@ public class ControladorRutas {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-
+            servicioAccesos.controladorEndpoint(controlador, "actualizar");
             servicioRutasGeneral.actualizar(ruta);
             respuesta.put("ruta", servicioRutasGeneral.obtenerPorId(ruta.getId()));
             resp.setOk(true);
@@ -132,7 +137,7 @@ public class ControladorRutas {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-
+            servicioAccesos.controladorEndpoint(controlador, "remover");
             servicioRutasGeneral.remover(ruta);
             respuesta.put("ruta", servicioRutasGeneral.obtenerPorId(ruta.getId()));
             resp.setOk(true);

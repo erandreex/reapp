@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,17 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.reapp.reapp.Excepciones.CustomException;
-import com.reapp.reapp.Excepciones.HandlerAllException;
-import com.reapp.reapp.Excepciones.ModeloErrorControlador;
-import com.reapp.reapp.Modelos.ModeloPermisoRolRuta;
-import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
-import com.reapp.reapp.Servicios.ServicioPermisoRolesRutas;
-import com.reapp.reapp.Servicios.ServicioRutas;
-import com.reapp.reapp.Servicios.ServicioRutasCategoria;
 import com.reapp.reapp.Servicios.ServicioUsuariosRoles;
-
-import lombok.RequiredArgsConstructor;
+import com.reapp.reapp.Servicios.ServicioRutasCategoria;
+import com.reapp.reapp.Servicios.ServicioRutas;
+import com.reapp.reapp.Servicios.ServicioPermisoRolesRutas;
+import com.reapp.reapp.Servicios.ServicioAccesos;
+import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
+import com.reapp.reapp.Modelos.ModeloPermisoRolRuta;
+import com.reapp.reapp.Excepciones.ModeloErrorControlador;
+import com.reapp.reapp.Excepciones.HandlerAllException;
+import com.reapp.reapp.Excepciones.CustomException;
 
 @RestController
 @RequestMapping("api/v1/permisos/roles/rutas")
@@ -33,9 +34,11 @@ public class ControladorPermisoRolesRuta {
     private final ServicioRutasCategoria servicioRutasCategoria;
     private final ServicioRutas servicioRutas;
     private final ServicioUsuariosRoles servicioUsuariosRoles;
+    private final ServicioAccesos servicioAccesos;
 
     private static final String tipo = "Controlador";
     private static final String clase = "ControladorPermisoRolesRuta";
+    private static final String controlador = "ControladorPermisoRolesRuta";
 
     private static final String listar = "listar";
     private static final String agregar = "agregar";
@@ -48,6 +51,7 @@ public class ControladorPermisoRolesRuta {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "listar");
 
             respuesta.put("permisos-roles-rutas", servicioPermisoRolesRutas.listar());
             respuesta.put("rutas", servicioRutas.externolistarRutas());
@@ -83,6 +87,7 @@ public class ControladorPermisoRolesRuta {
         String id = UUID.randomUUID().toString();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "agregar");
 
             servicioPermisoRolesRutas.crear(permiso, id);
             respuesta.put("permiso-rol-ruta", servicioPermisoRolesRutas.obtenerPorId(id));
@@ -114,6 +119,7 @@ public class ControladorPermisoRolesRuta {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "remover");
             servicioPermisoRolesRutas.remover(permiso);
             respuesta.put("permiso-rol-ruta", servicioPermisoRolesRutas.obtenerPorId(permiso.getId()));
             resp.setOk(true);

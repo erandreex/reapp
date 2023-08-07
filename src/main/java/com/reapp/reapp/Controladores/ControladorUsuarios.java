@@ -21,6 +21,7 @@ import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloUsuario;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
+import com.reapp.reapp.Servicios.ServicioAccesos;
 import com.reapp.reapp.Servicios.ServicioUsuarios;
 import com.reapp.reapp.Servicios.ServicioUsuariosRoles;
 
@@ -35,9 +36,11 @@ public class ControladorUsuarios {
     private final ServicioUsuarios servicioUsuario;
     private final ServicioUsuariosAuth servicioUsuariosAuth;
     private final ServicioUsuariosRoles servicioUsuariosRoles;
+    private final ServicioAccesos servicioAccesos;
 
     private final String registro = "registro";
     private final String listar = "listar";
+    private final String controlador = "ControladorUsuarios";
 
     @PostMapping(registro)
     public ResponseEntity<ModeloRespuestaGeneral> registro(
@@ -62,6 +65,7 @@ public class ControladorUsuarios {
         usuario.setRol_id(body.getRol_id());
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "registro");
 
             servicioUsuario.registro(usuario);
             respuesta.put("usuario", servicioUsuariosAuth.obtenerPorId(usuario_id));
@@ -91,6 +95,8 @@ public class ControladorUsuarios {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "listar");
+
             respuesta.put("usuarios", servicioUsuariosAuth.listar());
             respuesta.put("roles", servicioUsuariosRoles.listar());
             resp.setOk(true);

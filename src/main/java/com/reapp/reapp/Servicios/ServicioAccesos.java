@@ -8,11 +8,14 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
+import com.reapp.reapp.Modelos.ModeloUsuario;
 
 @Service
 public class ServicioAccesos {
@@ -99,18 +102,22 @@ public class ServicioAccesos {
         return respuesta;
     }
 
-    public void controladorMetodo(String rol_id, String controlador, String metodo) throws CustomException {
+    public void controladorEndpoint(String controlador, String endpoint) throws CustomException {
 
         String respuesta = "0";
+        ModeloUsuario user = new ModeloUsuario();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(sp);) {
 
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            user = (ModeloUsuario) authentication.getPrincipal();
+
             cst.setString(1, "Q");
-            cst.setString(2, "QVCMR");
-            cst.setString(3, rol_id);
+            cst.setString(2, "QVCM2");
+            cst.setString(3, user.getRol_id());
             cst.setString(4, controlador);
-            cst.setString(5, metodo);
+            cst.setString(5, endpoint);
 
             ResultSet rs = cst.executeQuery();
 

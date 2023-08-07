@@ -17,6 +17,7 @@ import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Modelos.ModeloRutaAccion;
+import com.reapp.reapp.Servicios.ServicioAccesos;
 import com.reapp.reapp.Servicios.ServicioOpciones;
 import com.reapp.reapp.Servicios.ServicioRutas;
 import com.reapp.reapp.Servicios.ServicioRutasAcciones;
@@ -34,8 +35,11 @@ public class ControladorRutasAcciones {
     private final ServicioRutasCategoria servicioRutasCategoria;
     private final ServicioRutas servicioRutas;
     private final ServicioOpciones servicioOpciones;
+    private final ServicioAccesos servicioAccesos;
 
     private static final String clase = "ControladorRutasAcciones";
+    private static final String controlador = "ControladorRutasAcciones";
+
     private static final String tipo = "Controlador";
 
     // Metodos
@@ -51,6 +55,7 @@ public class ControladorRutasAcciones {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
+            servicioAccesos.controladorEndpoint(controlador, "listar");
             respuesta.put("rutas-acciones", servicioRutasAcciones.listar());
             respuesta.put("rutas-categorias", servicioRutasCategoria.obtenerListaCategorias());
             respuesta.put("rutas", servicioRutas.externolistarRutas());
@@ -79,7 +84,7 @@ public class ControladorRutasAcciones {
         String id = UUID.randomUUID().toString();
 
         try {
-
+            servicioAccesos.controladorEndpoint(controlador, "crear");
             servicioRutasAcciones.crear(rutaAccion, id);
             respuesta.put("ruta-accion", servicioRutasAcciones.obtenerPorId(id));
             resp.setOk(true);
@@ -110,7 +115,7 @@ public class ControladorRutasAcciones {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-
+            servicioAccesos.controladorEndpoint(controlador, "actualizar");
             servicioRutasAcciones.actualizar(rutaAccion);
             respuesta.put("ruta-accion", servicioRutasAcciones.obtenerPorId(rutaAccion.getId()));
             resp.setOk(true);
@@ -141,7 +146,7 @@ public class ControladorRutasAcciones {
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-
+            servicioAccesos.controladorEndpoint(controlador, "remover");
             servicioRutasAcciones.remover(rutaAccion);
             respuesta.put("ruta-accion", servicioRutasAcciones.obtenerPorId(rutaAccion.getId()));
             resp.setOk(true);
