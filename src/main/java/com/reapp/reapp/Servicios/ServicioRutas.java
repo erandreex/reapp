@@ -16,7 +16,6 @@ import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
 import com.reapp.reapp.Modelos.ModeloExternoRuta;
-import com.reapp.reapp.Modelos.ModeloExternoRutaCategoria;
 import com.reapp.reapp.Modelos.ModeloRuta;
 import com.reapp.reapp.Modelos.ModeloRutaGeneral;
 

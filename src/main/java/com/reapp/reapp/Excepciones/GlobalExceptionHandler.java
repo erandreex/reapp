@@ -15,6 +15,8 @@ public class GlobalExceptionHandler {
         ModeloRespuestaGeneral respuesta = new ModeloRespuestaGeneral();
         ModeloErrorCliente error = new ModeloErrorCliente();
 
+        System.out.println(ex.getMessage());
+
         error.setId(ex.getErrorGeneral().getId());
         error.setFecha(ex.getErrorGeneral().getDate());
         error.setMensaje(ex.getErrorGeneral().getMessageExt());

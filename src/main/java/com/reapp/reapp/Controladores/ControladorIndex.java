@@ -41,8 +41,7 @@ public class ControladorIndex {
     private final ServicioParametros servicioParametros;
 
     private static final String tipo = "Controlador";
-    private static final String clase = "ControladorPermisosConsultas";
-    private static final String controlador = "ControladorPermisosConsultas";
+    private static final String clase = "ControladorIndex";
 
     private static final String m_rutas = "rutas";
     private static final String m_ruta = "ruta";

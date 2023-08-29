@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.reapp.reapp.Auth.ModeloReqGeneral;
+import com.reapp.reapp.Auth.ModeloReqInfo;
 import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
@@ -22,7 +24,7 @@ public class ServicioAccesos {
 
     private static final String tipo = "Servicio";
     private static final String clase = "ServicioAccesos";
-    private static final String sp = "{CALL admin.sp_admin_accesos(?,?,?,?,?)}";
+    private static final String sp = "{CALL admin.sp_admin_accesos(?,?,?,?,?,?,?,?)}";
 
     private static final String m_ruta = "ruta";
 
@@ -30,15 +32,23 @@ public class ServicioAccesos {
 
         Boolean respuesta = false;
         String respuestaDb = "0";
+        ModeloUsuario user = new ModeloUsuario();
+        ModeloReqInfo reqInfo = new ModeloReqInfo();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(sp);) {
 
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            user = ((ModeloReqGeneral) authentication.getPrincipal()).getUsuario();
+            reqInfo = ((ModeloReqGeneral) authentication.getPrincipal()).getRequest();
             cst.setString(1, "Q");
             cst.setString(2, "QVARC");
-            cst.setString(3, componente);
-            cst.setString(4, rol_id);
-            cst.setString(5, null);
+            cst.setString(3, reqInfo.getReq_id());
+            cst.setString(4, user.getId());
+            cst.setString(5, user.getRol_id());
+            cst.setString(6, componente);
+            cst.setString(7, "");
+            cst.setString(8, "");
 
             ResultSet rs = cst.executeQuery();
 
@@ -106,18 +116,23 @@ public class ServicioAccesos {
 
         String respuesta = "0";
         ModeloUsuario user = new ModeloUsuario();
+        ModeloReqInfo reqInfo = new ModeloReqInfo();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(sp);) {
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            user = (ModeloUsuario) authentication.getPrincipal();
+            user = ((ModeloReqGeneral) authentication.getPrincipal()).getUsuario();
+            reqInfo = ((ModeloReqGeneral) authentication.getPrincipal()).getRequest();
 
             cst.setString(1, "Q");
-            cst.setString(2, "QVCM2");
-            cst.setString(3, user.getRol_id());
-            cst.setString(4, controlador);
-            cst.setString(5, endpoint);
+            cst.setString(2, "QVCM");
+            cst.setString(3, reqInfo.getReq_id());
+            cst.setString(4, user.getId());
+            cst.setString(5, user.getRol_id());
+            cst.setString(6, "");
+            cst.setString(7, controlador);
+            cst.setString(8, endpoint);
 
             ResultSet rs = cst.executeQuery();
 

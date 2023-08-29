@@ -19,8 +19,10 @@ public class ServicioAuth {
         ModeloUsuario user = new ModeloUsuario();
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            user = (ModeloUsuario) authentication.getPrincipal();
+            user = ((ModeloReqGeneral) authentication.getPrincipal()).getUsuario();
         } catch (Exception e) {
+
+            System.out.println(e);
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());
@@ -40,8 +42,10 @@ public class ServicioAuth {
         ModeloClaims claims;
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            claims = (ModeloClaims) authentication.getCredentials();
+            claims = ((ModeloReqGeneral) authentication.getPrincipal()).getClaims();
         } catch (Exception e) {
+            System.out.println(e);
+
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
             errorGeneral.setId(UUID.randomUUID().toString());
             errorGeneral.setDate(new Date());

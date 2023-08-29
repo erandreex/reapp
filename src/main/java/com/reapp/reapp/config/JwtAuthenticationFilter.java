@@ -1,6 +1,7 @@
 package com.reapp.reapp.Config;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -26,6 +27,8 @@ import com.reapp.reapp.Auth.ServicioUsuariosAuth;
 import com.reapp.reapp.Auth.ServicioValidacionesAuth;
 import com.reapp.reapp.Enum.EnumParametros;
 import com.reapp.reapp.Auth.ModeloClaims;
+import com.reapp.reapp.Auth.ModeloReqGeneral;
+import com.reapp.reapp.Auth.ModeloReqInfo;
 import com.reapp.reapp.Auth.ModeloToken;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Modelos.ModeloUsuario;
@@ -77,9 +80,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             servicioValidacionesAuth.validarTokenDBClaims(tokenDB, claims);
             servicioValidacionesAuth.validarTokenDBEstado(tokenDB);
 
+            ModeloReqInfo reqInfo = new ModeloReqInfo();
+            reqInfo.setReq_id(UUID.randomUUID().toString());
+
+            ModeloReqGeneral reqGeneral = new ModeloReqGeneral(usuarioDB, claims, reqInfo);
+
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                    usuarioDB,
-                    claims,
+                    reqGeneral,
+                    null,
                     null);
 
             authToken.setDetails(
