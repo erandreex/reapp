@@ -145,6 +145,7 @@ public class ServicioAccesos {
             }
 
         } catch (SQLException e) {
+            System.out.println(e);
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());

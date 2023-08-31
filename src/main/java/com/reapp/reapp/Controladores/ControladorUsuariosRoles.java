@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
+import com.reapp.reapp.Modelos.ModeloPermisoRolRuta;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Modelos.ModeloRol;
 import com.reapp.reapp.Servicios.ServicioAccesos;
+import com.reapp.reapp.Servicios.ServicioPermisoRolesRutas;
 import com.reapp.reapp.Servicios.ServicioUsuariosRoles;
 
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,7 @@ public class ControladorUsuariosRoles {
 
     private final ServicioUsuariosRoles servicioRoles;
     private final ServicioAccesos servicioAccesos;
+    private final ServicioPermisoRolesRutas servicioPermisoRolesRutas;
 
     private static final String controlador = "ControladorUsuariosRoles";
 
@@ -72,13 +75,20 @@ public class ControladorUsuariosRoles {
 
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
-        String id = UUID.randomUUID().toString();
+        String rol_id = UUID.randomUUID().toString();
+        String idEx = UUID.randomUUID().toString();
+
+        ModeloPermisoRolRuta rolRuta = new ModeloPermisoRolRuta();
 
         try {
             servicioAccesos.controladorEndpoint(controlador, "crear");
+            servicioRoles.crear(rol, rol_id);
 
-            servicioRoles.crear(rol, id);
-            respuesta.put("rol", servicioRoles.obtenerPorId(id));
+            rolRuta.setRol_id(rol_id);
+            rolRuta.setRuta_id("bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb");
+            servicioPermisoRolesRutas.crear(rolRuta, idEx);
+
+            respuesta.put("rol", servicioRoles.obtenerPorId(rol_id));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);

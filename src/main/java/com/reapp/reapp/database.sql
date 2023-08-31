@@ -16,34 +16,235 @@
 
 
 -- Volcando estructura de base de datos para admin
+DROP DATABASE IF EXISTS `admin`;
 CREATE DATABASE IF NOT EXISTS `admin` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `admin`;
 
--- Volcando estructura para tabla admin.admin_logs_excepciones
-CREATE TABLE IF NOT EXISTS `admin_logs_excepciones` (
-  `ale_id` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Volcando datos para la tabla admin.admin_logs_excepciones: ~0 rows (aproximadamente)
-DELETE FROM `admin_logs_excepciones`;
-
 -- Volcando estructura para tabla admin.admin_logs_requests
+DROP TABLE IF EXISTS `admin_logs_requests`;
 CREATE TABLE IF NOT EXISTS `admin_logs_requests` (
   `alr_req_id` varchar(50) NOT NULL DEFAULT '',
   `alr_fecha` datetime NOT NULL,
   `alr_tipo` varchar(50) NOT NULL,
   `alr_usuario` varchar(50) NOT NULL,
-  `alr_controlador` varchar(50) NOT NULL,
-  `alr_endpoint` varchar(50) NOT NULL
+  `alr_valor_1` varchar(50) NOT NULL,
+  `alr_valor_2` varchar(50) NOT NULL,
+  `alr_estado` varchar(50) DEFAULT NULL,
+  `alr_excepcion` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_logs_requests: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_logs_requests: ~206 rows (aproximadamente)
 DELETE FROM `admin_logs_requests`;
-INSERT INTO `admin_logs_requests` (`alr_req_id`, `alr_fecha`, `alr_tipo`, `alr_usuario`, `alr_controlador`, `alr_endpoint`) VALUES
-	('62cb8eba-ffac-428e-a5d6-0300363ff423', '2023-08-28 23:25:41', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', '', ''),
-	('061fdded-bf84-46a7-9c34-2664cacbe6d7', '2023-08-28 23:25:41', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar');
+INSERT INTO `admin_logs_requests` (`alr_req_id`, `alr_fecha`, `alr_tipo`, `alr_usuario`, `alr_valor_1`, `alr_valor_2`, `alr_estado`, `alr_excepcion`) VALUES
+	('62feb9e4-d936-434d-8cc3-abd5f237c79d', '2023-08-30 23:43:08', 'RUTA', '378b7237-ce03-459e-9698-a4d118c6ee2b', 'IndexComponent', '', NULL, NULL),
+	('a3b514e6-caa5-44ab-be21-dadf676a0802', '2023-08-30 23:43:08', 'RUTA', '378b7237-ce03-459e-9698-a4d118c6ee2b', 'DashboardComponent', '', NULL, NULL),
+	('b88ebb69-ab94-454e-863e-f3d80d323e70', '2023-08-30 23:43:08', 'ACCION', '378b7237-ce03-459e-9698-a4d118c6ee2b', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('5c47c963-e899-46ee-8265-6b026a23ac43', '2023-08-30 23:47:24', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('e503e7c0-4207-453a-87d4-b3caba462747', '2023-08-30 23:47:24', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('48fb523b-e178-4642-b6e7-81d123498a9b', '2023-08-30 23:47:24', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('595bc16d-d131-4d3b-a253-1eaa3a5822ae', '2023-08-30 23:47:36', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('2db839fb-2193-4e85-a191-13d428493a89', '2023-08-30 23:47:36', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('64cac7e1-0d6b-43af-80a9-0ec376d49be2', '2023-08-30 23:47:37', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('aef02a3a-1caf-4421-b44a-3600ae1293b0', '2023-08-30 23:47:37', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('18359dda-0280-44fc-93dd-587a5a42ee02', '2023-08-30 23:47:46', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('cd606654-3c74-4516-8977-9a8924b0ec7e', '2023-08-30 23:47:46', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('3dfa43af-d2be-46e4-af48-67df53e032e0', '2023-08-30 23:48:04', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('737cc720-624d-4e53-b20e-20eb600e7c17', '2023-08-30 23:48:04', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('72bd2d3e-e59d-4cb3-87db-66ab009d532f', '2023-08-30 23:48:51', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'crear', NULL, NULL),
+	('ec6de5c6-4b57-4d72-8ec0-b9f29caa91b1', '2023-08-30 23:48:52', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('30fc9636-c1ca-45e2-a33a-f66f470aa0b2', '2023-08-30 23:48:53', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('f49e7bea-1c15-498e-ad10-3c7584da9d2c', '2023-08-30 23:49:39', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('74eb6621-55b6-4347-ad06-a72ea818ce48', '2023-08-30 23:49:39', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('d192ac4c-000f-4af7-84d7-f50c714e7e79', '2023-08-30 23:49:44', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('7deaa271-1bd3-4b29-a466-8af76bf9f606', '2023-08-30 23:49:44', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('4b17174f-c199-4f59-99bd-d4414b4d4e6c', '2023-08-30 23:50:35', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'crear', NULL, NULL),
+	('b40def07-5516-455f-ac49-a42ba0a2cea8', '2023-08-30 23:52:11', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('f3a19ba9-09a2-432b-9e63-0dc07db65357', '2023-08-30 23:52:11', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('e067b894-1bb2-45c4-a76f-ee86aeb39beb', '2023-08-30 23:52:11', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('4906927b-7be2-45a5-bba1-791a4f30a1bc', '2023-08-30 23:52:11', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('894d8ae2-3bb2-42f0-9e5b-fe9b0335c2d8', '2023-08-30 23:52:55', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'crear', NULL, NULL),
+	('ddd4e109-449c-45da-a33d-ecb1be7dac79', '2023-08-30 23:54:07', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'crear', NULL, NULL),
+	('023a4bc7-e0ec-481f-af83-b1d213677f64', '2023-08-30 23:57:21', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasAccionesComponent', '', NULL, NULL),
+	('99244bd3-8dd9-482b-a326-2af28a7ecd2e', '2023-08-30 23:57:21', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('20290559-45e8-48bf-9c55-698013145bbd', '2023-08-30 23:58:43', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'crear', NULL, NULL),
+	('b7e52b54-49fc-482f-a196-d83fa093a004', '2023-08-30 23:58:44', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('bcddec59-1b81-4131-8a47-3cc13ca8ce02', '2023-08-30 23:59:51', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'crear', NULL, NULL),
+	('7b147cd4-4c60-4bc9-bebf-f31bf69b8292', '2023-08-30 23:59:52', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('7d8d4203-02c1-4ac2-8453-97e87bceea45', '2023-08-31 00:00:18', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'crear', NULL, NULL),
+	('a6f4f712-e1c2-4657-83b9-796bf7e51931', '2023-08-31 00:00:19', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('c4892935-8579-47f4-bbbc-8c496b79907b', '2023-08-31 00:00:23', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('e827523a-d550-4d0b-9af2-b589f319d5a9', '2023-08-31 00:00:23', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('f99bd1d2-b5bf-482e-8977-80b6708498e0', '2023-08-31 00:01:01', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'crear', NULL, NULL),
+	('a4b56a01-8de5-4d7c-9ab4-9d24ffb06ced', '2023-08-31 00:01:02', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('e3a3844e-db4d-4547-a5a8-cb99e1730cd5', '2023-08-31 00:01:19', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('29a255e8-98d3-4d37-9f0d-93f0d1a96352', '2023-08-31 00:01:19', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('dc6172e9-9c6f-4ce5-909e-36ddb4b4eaf8', '2023-08-31 00:01:29', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'agregar', NULL, NULL),
+	('3a292ac4-37ba-4ec4-bd1d-6b0e5dca5bab', '2023-08-31 00:01:30', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('3d2f54e7-4180-4ec0-847b-9334d101fa13', '2023-08-31 00:01:37', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('45850013-6285-434b-aa33-e46a4acf422e', '2023-08-31 00:01:37', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('30d1550d-26a6-47b1-bb8f-ce9215860fbf', '2023-08-31 00:01:37', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('7d53eb36-5376-4bd0-9d80-2edaf3cc7569', '2023-08-31 00:01:37', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('cd14dc6a-afa3-429d-9a12-e60373e03d39', '2023-08-31 00:01:39', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('aeba857a-6699-482a-bad3-96a39186f630', '2023-08-31 00:01:46', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('1e9d518a-2fa9-4d1b-83aa-b0532538618a', '2023-08-31 00:01:46', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('36517ba5-ace1-4dc0-812c-271f0b4abfa3', '2023-08-31 00:01:46', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('ea0107bf-2036-4c65-aba0-720f54d55682', '2023-08-31 00:03:32', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('c4e776a5-e74c-4b38-8415-c06187a7d3c0', '2023-08-31 00:03:32', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('9743419a-504e-40e9-90e0-01614a1e9cc4', '2023-08-31 00:03:41', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('6441082d-826e-4b52-9eec-3d80e8415178', '2023-08-31 00:03:41', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('60e12fa1-1ee1-41cf-afe8-c94ec141a565', '2023-08-31 00:03:48', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'actualizar', NULL, NULL),
+	('f5db6c8f-ad82-4a5e-9bb3-90cc61904098', '2023-08-31 00:03:50', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'actualizar', NULL, NULL),
+	('5dcf1e40-3590-4dc4-8cba-4fd445a5e50d', '2023-08-31 00:04:06', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'actualizar', NULL, NULL),
+	('d97efd65-7ce4-449f-b804-65cbb9ec6b29', '2023-08-31 00:04:07', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('f4746fbe-c201-4ecb-a698-777c9c58a83d', '2023-08-31 00:04:08', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('11ac19f1-0184-4956-8501-3ec7634689ae', '2023-08-31 00:04:43', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasAccionesComponent', '', NULL, NULL),
+	('a120aa9d-cb4e-4b15-8115-c5e7ed9e25b5', '2023-08-31 00:04:43', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('457f252a-7cfe-4e48-ad85-2719bfa9a3a8', '2023-08-31 00:05:25', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('ca9e9a25-8a84-4fdc-a9ce-1323ba2c1cc9', '2023-08-31 00:05:25', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('2421034d-ec20-43c8-8ec3-528f41c992d7', '2023-08-31 00:05:26', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosComponent', '', NULL, NULL),
+	('8052c695-3eed-4a42-85e7-8f440f201171', '2023-08-31 00:05:26', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuarios', 'listar', NULL, NULL),
+	('9375a459-01c7-4589-ba49-5a1c73712ffa', '2023-08-31 00:05:27', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('db028a96-3877-45f4-a23a-ba9d3584e946', '2023-08-31 00:05:27', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('e0e867f1-3601-403e-a7a2-4a146ec9a622', '2023-08-31 00:05:27', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('77fb9968-c04e-4ea0-b6d7-55ffd20aa36f', '2023-08-31 00:05:27', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('3fa9a57d-e4b0-43ec-9766-1191477f4111', '2023-08-31 00:05:29', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('d6d08eaf-9ab2-4b33-aa6c-2140e13363dc', '2023-08-31 00:05:37', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('fecad90b-334d-41a5-8d6f-5140b5d8670d', '2023-08-31 00:05:37', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('14a3c677-2a5a-417f-92c4-f28ea74a578c', '2023-08-31 00:05:37', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('56969076-bad7-47d8-97fc-b46c1f6c3343', '2023-08-31 00:05:39', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('bf8c1bc9-2630-4caa-9be0-adce4bfc8b4d', '2023-08-31 00:05:39', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('320cad60-2ec2-4865-b6eb-370c9d71a47d', '2023-08-31 00:05:39', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('c6def6ca-09b3-4d7f-bb22-0a957a4bd8ed', '2023-08-31 00:05:55', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('ce9077f3-ee2a-432b-bdb8-ce0937a7d85e', '2023-08-31 00:05:55', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('b1b6567c-8b7b-4b1d-a0a8-122a9e54c37c', '2023-08-31 00:05:59', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('ff1785d0-3702-4834-8d32-6d78c10e869e', '2023-08-31 00:06:09', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('b1a37378-c0e3-44b1-a8f9-4739a13df13b', '2023-08-31 00:06:09', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('06c1e2f7-8ab4-405c-bfdb-b33c527e162d', '2023-08-31 00:06:09', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('8bd3caf3-8a3f-493d-b3a8-7d36a3ed1164', '2023-08-31 00:06:11', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('b8da8539-a0a0-47ce-b613-a6a038471154', '2023-08-31 00:06:12', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosComponent', '', NULL, NULL),
+	('940ec41a-b98f-4911-9fbf-ef48fddf1aab', '2023-08-31 00:06:12', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('db3cf60d-32c6-4968-91f3-c7e2add460e8', '2023-08-31 00:06:12', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuarios', 'listar', NULL, NULL),
+	('f4828a56-17a5-4941-bf57-b33dab70e3d3', '2023-08-31 00:06:14', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('f1b1495d-3130-45c9-9eb0-1938d2c09f74', '2023-08-31 00:06:14', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('a350ba32-7252-4141-94bf-be8e37aa0d2e', '2023-08-31 00:06:14', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('1e38e8ba-6a22-4779-a531-5ff03a672b64', '2023-08-31 00:06:14', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('17298aa5-9767-4136-9b8b-853f13c9a75d', '2023-08-31 00:06:15', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasAccionesComponent', '', NULL, NULL),
+	('80dd49f6-53af-4a01-8255-9de81c2d2c19', '2023-08-31 00:06:15', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('53bdfaf1-327e-4921-9732-dab68ed818e9', '2023-08-31 00:06:17', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('4e5d67b2-99c2-4185-9fb5-ec9e82955e93', '2023-08-31 00:06:24', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('0f67ec2f-316b-4d77-8d67-89b316ba467a', '2023-08-31 00:06:24', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('69ffc6b2-05d6-4cc7-aab5-0bb64c450c67', '2023-08-31 00:06:24', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('358ff28c-caae-45e3-a679-e88899926910', '2023-08-31 00:06:33', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('79958c05-5c1b-4239-a88c-165e3acb4c40', '2023-08-31 00:06:33', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('8b62d5d1-263f-4a2a-8259-c9eaefb36cb8', '2023-08-31 00:06:34', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('a9d7c0e3-240a-4747-a6b5-6b70449a5a68', '2023-08-31 00:07:39', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosComponent', '', NULL, NULL),
+	('9ef917db-00f4-4b57-80fe-b3407dc89ab5', '2023-08-31 00:07:39', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('d2858342-5777-4b43-a3be-16195e00de18', '2023-08-31 00:07:39', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuarios', 'listar', NULL, NULL),
+	('2501d20d-1f09-4af5-a49e-5f65852503e9', '2023-08-31 00:07:46', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('37924fd3-7aee-4bf0-9a20-351e80034fdc', '2023-08-31 00:08:08', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('ecc3efc3-e8de-455d-a9f5-a7c69634e9af', '2023-08-31 00:08:08', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('c9ba339b-b570-426c-ac5b-cb1d6685d719', '2023-08-31 00:08:08', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('083ebb3d-4c32-4224-ae17-717b668c74c0', '2023-08-31 00:08:11', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('e27d5b66-e519-4450-aaa9-67ba2fed409e', '2023-08-31 00:08:11', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('45a34b2e-35de-4f96-8c5f-82011e0e18d1', '2023-08-31 00:08:12', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('8ebac7a9-e879-4d35-82d4-c6e505605b90', '2023-08-31 00:08:19', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('ce173f67-3c80-4ae9-a504-026d487e5d4f', '2023-08-31 00:08:19', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('b8124f42-30d5-48f1-8547-87e6987309cc', '2023-08-31 00:08:19', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('5e115a05-022a-4bc4-85ff-5a2f0470b302', '2023-08-31 00:08:24', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('ed9b74d2-2379-4c56-aec6-94165052a3da', '2023-08-31 00:08:24', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('15e8a10b-a9c6-4a7f-b196-56244ad99a97', '2023-08-31 00:08:25', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('f6beefa7-0043-4732-bf27-fc2dcf1dc2c0', '2023-08-31 00:08:25', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('f6c302f6-ff31-458d-8a51-b2479427de4b', '2023-08-31 00:08:26', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('fdc088a8-53a2-4f33-813a-8aff93f1e03c', '2023-08-31 00:08:28', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasAccionesComponent', '', NULL, NULL),
+	('8555ef98-cadd-4c14-b1e7-e86f18ee644f', '2023-08-31 00:08:28', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('d7cc2309-9dad-4c7d-9414-975c7d303d09', '2023-08-31 00:08:29', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('97bb98e1-0742-4695-9e16-559cf6229ee3', '2023-08-31 00:08:40', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('d5d4fdc3-d6f2-45da-8e1a-b76e611a6297', '2023-08-31 00:08:40', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('24378973-057e-4c23-a388-e615c8ab5868', '2023-08-31 00:08:40', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('8d362db5-c668-46e7-a0d5-769e8e05a7de', '2023-08-31 00:08:43', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosComponent', '', NULL, NULL),
+	('0310713e-8ef9-4d40-956b-3b314992c9ca', '2023-08-31 00:08:43', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuarios', 'listar', NULL, NULL),
+	('04b91efa-64e3-4204-8ec7-76a548a6f71b', '2023-08-31 00:08:44', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('7e3abe75-38a9-4a7e-89f8-cd8ad1c447be', '2023-08-31 00:08:44', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('c839bc6b-0ce4-4421-918f-9edeecb6b527', '2023-08-31 00:08:45', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('4c505169-3f8d-4bcf-a8e2-8f5c81a21532', '2023-08-31 00:08:52', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('f171da89-01f1-436a-87de-99aae9d8215a', '2023-08-31 00:08:52', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('0cd8a8a2-e27c-4495-92b6-7b2c265b9c56', '2023-08-31 00:08:52', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('3eb6625b-6aed-41eb-af7f-792f09b22e2a', '2023-08-31 00:08:54', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('172632ac-ec18-458b-a11a-49b45816d85b', '2023-08-31 00:09:05', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('f2d31640-d8ac-4049-b574-5a0a9f7eb580', '2023-08-31 00:09:05', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('6b24dea6-e1be-4c0f-be98-6c3e789d8404', '2023-08-31 00:09:05', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('921f7b10-8400-4349-ab4f-ab8f83f2f5af', '2023-08-31 00:09:08', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosComponent', '', NULL, NULL),
+	('5eb8c0ae-8bbd-468b-8c73-9585f401dcf2', '2023-08-31 00:09:08', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuarios', 'listar', NULL, NULL),
+	('bcd0b52c-e3f3-46e0-80e5-a95868f0a3f7', '2023-08-31 00:09:08', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasAccionesComponent', '', NULL, NULL),
+	('79430c73-a1d2-40fd-88c7-be81b82f0b5d', '2023-08-31 00:09:08', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('f1fa2b63-4578-4cf3-bfa0-e84831048168', '2023-08-31 00:09:10', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('9679f119-b956-42ab-a855-ecec48e7cd91', '2023-08-31 00:09:18', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasAccionesComponent', '', NULL, NULL),
+	('ca45e8b0-d917-433e-9654-fde418b4625d', '2023-08-31 00:09:18', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('81f8c838-49e5-440c-9e8c-63c7c86ec4a1', '2023-08-31 00:09:19', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosRolesComponent', '', NULL, NULL),
+	('26a642a1-fcc0-49d8-b293-0e8691f2ac69', '2023-08-31 00:09:19', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuariosRoles', 'listar', NULL, NULL),
+	('b39d8325-e116-474a-9455-8b428a687ebf', '2023-08-31 00:09:20', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('0f06aa24-272b-4cd2-aede-fb47bb44ef6c', '2023-08-31 00:09:28', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('48d0bf54-66b1-473a-ac3e-1a6dff25cdb2', '2023-08-31 00:09:28', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('c7466e02-3fea-413a-aee8-dd6f440ce1b6', '2023-08-31 00:09:30', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('234db68d-22c8-48b5-862c-a432025ae3b5', '2023-08-31 00:09:31', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasAccionesComponent', '', NULL, NULL),
+	('6c28b652-68ae-4363-bb86-5f734783c314', '2023-08-31 00:09:31', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('394003c9-436b-4cfa-bea9-556e95a8e9ce', '2023-08-31 00:09:32', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosRolesComponent', '', NULL, NULL),
+	('5679f644-7cde-4337-8198-87ca152b4ec9', '2023-08-31 00:09:32', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuariosRoles', 'listar', NULL, NULL),
+	('4630bde8-a39d-4326-8124-646ea29a826a', '2023-08-31 00:09:33', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('962a4a18-6d0d-4cc6-8852-da33bc238220', '2023-08-31 00:09:40', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('8af28a26-f14a-41f4-b0f7-b134c595805f', '2023-08-31 00:09:40', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('88f93a0a-54af-4a1b-89ba-ebcd19623e33', '2023-08-31 00:09:40', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('d255f4d2-6d2c-47a0-b2a3-68bf7849ffa4', '2023-08-31 00:09:57', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('04799bef-71f9-4a78-ac43-22d5ec9d475b', '2023-08-31 00:09:57', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('0e85e5b1-24d5-48d8-b5ef-27b72d94ab41', '2023-08-31 00:09:58', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('3c37e750-96ee-41d3-a97b-f21040b1b4ab', '2023-08-31 00:10:01', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('3830b9be-451c-421b-9f7d-14b3dccb4305', '2023-08-31 00:10:01', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('16eb9b7b-2c88-4c7b-a511-4de42d3fde68', '2023-08-31 00:10:01', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('a7f7887e-4263-40d2-a381-117bb372f0ca', '2023-08-31 00:10:03', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('f531892e-a436-4d4d-9675-fe28d77635ce', '2023-08-31 00:10:03', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('2ee9095c-cbc3-4400-ba96-ff241716c6c7', '2023-08-31 00:10:03', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosComponent', '', NULL, NULL),
+	('27c39686-763c-4fdd-bc21-5a9f1dfdebd8', '2023-08-31 00:10:03', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuarios', 'listar', NULL, NULL),
+	('54b6d03d-1b87-416b-9403-3d3effe3e795', '2023-08-31 00:10:04', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('d523477f-8691-4ad5-a45a-e5a192052664', '2023-08-31 00:10:04', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('d1ac67f4-2e01-4ebb-a367-6a2557154df9', '2023-08-31 00:10:04', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasAccionesComponent', '', NULL, NULL),
+	('594adbbe-1100-4d25-88da-113b306699be', '2023-08-31 00:10:04', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('c81f709a-2ddc-4014-adfc-a041edbe5e45', '2023-08-31 00:10:04', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosRolesComponent', '', NULL, NULL),
+	('1d16ef87-3b1b-4840-b2c0-90647e97cf9c', '2023-08-31 00:10:04', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuariosRoles', 'listar', NULL, NULL),
+	('c38bd330-5001-4893-b8eb-d7fc00a0bbcd', '2023-08-31 00:10:05', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('f623d959-47b2-4de2-bd4d-8f7189d4c5bb', '2023-08-31 00:10:15', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('ac3a6884-ef2f-479d-ba4a-7694c99a5c3a', '2023-08-31 00:10:15', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('d6b9ce06-6c3d-4c07-b2ec-d97425c9b472', '2023-08-31 00:10:15', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('0090d489-0a46-4591-a152-635959c02ef7', '2023-08-31 00:10:17', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('7843a7e5-a396-4a71-959a-460d16bc8b99', '2023-08-31 00:10:18', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'IndexComponent', '', NULL, NULL),
+	('069eccee-5268-440e-8e95-71e0b719daae', '2023-08-31 00:10:18', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('bcb0a591-3b35-45b5-9588-1dcfdd5f199b', '2023-08-31 00:10:18', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorIndex', 'listarRutas', NULL, NULL),
+	('af29eb77-a13d-4b55-9a33-4bf5b2d8a5a5', '2023-08-31 00:10:20', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('df5d3168-cf5a-42ba-a1a4-83a138a1023c', '2023-08-31 00:10:20', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('b7a1ad0a-badf-430f-b287-850129513bcb', '2023-08-31 00:10:21', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosComponent', '', NULL, NULL),
+	('825c8927-808a-4783-87e5-9b4f987d3856', '2023-08-31 00:10:21', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuarios', 'listar', NULL, NULL),
+	('45e08b0b-1e40-467c-bef6-a07a398a3760', '2023-08-31 00:10:22', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('38e8bfd0-25e0-4575-b173-4fe0d44282b8', '2023-08-31 00:10:23', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('0ba0838f-37ec-434c-87be-3b375091c364', '2023-08-31 00:10:23', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('d0dc0d7f-e744-40a5-9ad3-be7d6f39e9b2', '2023-08-31 00:10:23', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('1c4ff01e-1ea9-409b-8ea4-f0fc5970067e', '2023-08-31 00:10:23', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('06f203b4-db67-4303-9e87-0aec60b3dcb0', '2023-08-31 00:10:24', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasAccionesComponent', '', NULL, NULL),
+	('16adccb6-c63f-437d-8090-d8ffd10140cb', '2023-08-31 00:10:24', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('fc227590-d3db-484d-a03b-046d1ea93358', '2023-08-31 00:10:24', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'DashboardComponent', '', NULL, NULL),
+	('67a011e5-df29-4b70-b31d-bea51bf8ddef', '2023-08-31 00:10:27', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'PermisosRolesRutasComponent', '', NULL, NULL),
+	('8c3ed2ff-b7f3-4c4c-aa19-2319f8b8f3b8', '2023-08-31 00:10:27', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorPermisoRolesRuta', 'listar', NULL, NULL),
+	('6157fada-aa17-4765-b92d-ef5d53ebc541', '2023-08-31 00:10:27', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosComponent', '', NULL, NULL),
+	('c8fa0ef0-da47-4848-8851-e366757864a3', '2023-08-31 00:10:27', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuarios', 'listar', NULL, NULL),
+	('00e9c843-d601-473b-b39e-18977cf0e82e', '2023-08-31 00:10:28', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasComponent', '', NULL, NULL),
+	('9305f66e-e2f5-4453-bfd2-8e0711cf8f34', '2023-08-31 00:10:28', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutas', 'listar', NULL, NULL),
+	('4e10848b-aea9-4df4-b34f-519a6c018f74', '2023-08-31 00:10:28', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasCategoriasComponent', '', NULL, NULL),
+	('e5e45495-5d28-4467-8b6f-90304ebce590', '2023-08-31 00:10:28', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasCategoria', 'listar', NULL, NULL),
+	('c8e5327c-9628-496b-b135-0b6b21eed744', '2023-08-31 00:10:29', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'RutasAccionesComponent', '', NULL, NULL),
+	('f046c527-9cfe-4497-bf55-3ae7df8bfc50', '2023-08-31 00:10:29', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorRutasAcciones', 'listar', NULL, NULL),
+	('ba27d875-b608-4aff-bc73-32bcc27bc114', '2023-08-31 00:10:29', 'RUTA', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'UsuariosRolesComponent', '', NULL, NULL),
+	('d96b6e95-a080-434e-a718-e4f41ceee62b', '2023-08-31 00:10:29', 'ACCION', 'a330e7bf-1c4d-4709-a331-6353a44621a4', 'ControladorUsuariosRoles', 'listar', NULL, NULL);
 
 -- Volcando estructura para tabla admin.admin_opciones
+DROP TABLE IF EXISTS `admin_opciones`;
 CREATE TABLE IF NOT EXISTS `admin_opciones` (
   `ao_nombre` varchar(50) NOT NULL,
   `ao_valor` varchar(50) NOT NULL,
@@ -59,6 +260,7 @@ INSERT INTO `admin_opciones` (`ao_nombre`, `ao_valor`) VALUES
 	('METODOS_HTTP', 'DELETE');
 
 -- Volcando estructura para tabla admin.admin_parametros
+DROP TABLE IF EXISTS `admin_parametros`;
 CREATE TABLE IF NOT EXISTS `admin_parametros` (
   `ap_nombre` varchar(100) NOT NULL,
   `ap_valor` varchar(100) NOT NULL,
@@ -72,6 +274,7 @@ INSERT INTO `admin_parametros` (`ap_nombre`, `ap_valor`) VALUES
 	('TOKEN_EXPIRACION_VALOR', '2');
 
 -- Volcando estructura para tabla admin.admin_permisos_roles_rutas
+DROP TABLE IF EXISTS `admin_permisos_roles_rutas`;
 CREATE TABLE IF NOT EXISTS `admin_permisos_roles_rutas` (
   `aprr_id` varchar(50) NOT NULL,
   `aprr_fk_rol_id` varchar(50) NOT NULL,
@@ -80,12 +283,15 @@ CREATE TABLE IF NOT EXISTS `admin_permisos_roles_rutas` (
   UNIQUE KEY `indice unico` (`aprr_fk_rol_id`,`aprr_fk_ruta_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_permisos_roles_rutas: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_permisos_roles_rutas: ~13 rows (aproximadamente)
 DELETE FROM `admin_permisos_roles_rutas`;
 INSERT INTO `admin_permisos_roles_rutas` (`aprr_id`, `aprr_fk_rol_id`, `aprr_fk_ruta_id`) VALUES
 	('f783d9ac-e700-46c3-b680-9ea7375d17b2', '19fd172e-30dd-4af0-85b0-a59cb03788b9', '3938b044-26ae-4079-81d0-734d248afa75'),
+	('4798498b-1d73-470d-a77c-1eaffda96214', '47037fa4-818a-4557-8d89-97b550e5dc41', '3938b044-26ae-4079-81d0-734d248afa75'),
+	('51dcda56-39eb-42c3-a777-f585665e2087', '47037fa4-818a-4557-8d89-97b550e5dc41', 'bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb'),
 	('3c653504-53c0-4b38-9941-670780c100a5', '5d258050-5ee3-4954-8ec4-1b010355b817', '3938b044-26ae-4079-81d0-734d248afa75'),
 	('0c891b72-7a0a-4d11-a8d9-54087b74f431', '5d258050-5ee3-4954-8ec4-1b010355b817', '3f7de9ab-d611-475e-a290-62161a2d9856'),
+	('ead32b9d-d63c-4e93-bedc-eafaa3c40403', '5d258050-5ee3-4954-8ec4-1b010355b817', '45ea42d1-5802-4c91-9944-875d1f3e3641'),
 	('0b993f3f-fabe-46e7-bf86-b0e582f54bc8', '5d258050-5ee3-4954-8ec4-1b010355b817', '46f69391-e307-4e49-92fe-be7c3ef78def'),
 	('eda77a5d-2579-4341-a5de-26a1b9c0e591', '5d258050-5ee3-4954-8ec4-1b010355b817', '53cc74a5-0efb-4d98-b975-7c8451583b0c'),
 	('1c47c49b-4965-4d0d-94bc-cc7e261bd7e8', '5d258050-5ee3-4954-8ec4-1b010355b817', '7c9950b7-a114-4477-a655-24fc68a10b09'),
@@ -95,6 +301,7 @@ INSERT INTO `admin_permisos_roles_rutas` (`aprr_id`, `aprr_fk_rol_id`, `aprr_fk_
 	('4200f87e-dc5b-4adf-8c08-a37e1177de6x', '5d258050-5ee3-4954-8ec4-1b010355b817', 'c2b74d49-f958-4ea1-ac43-a4b4a4ad2158');
 
 -- Volcando estructura para tabla admin.admin_rutas
+DROP TABLE IF EXISTS `admin_rutas`;
 CREATE TABLE IF NOT EXISTS `admin_rutas` (
   `ar_id` varchar(50) NOT NULL,
   `ar_orden` int(10) unsigned NOT NULL,
@@ -110,11 +317,12 @@ CREATE TABLE IF NOT EXISTS `admin_rutas` (
   UNIQUE KEY `ar_ruta_ara_categoria` (`ar_ruta`,`ar_fk_categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_rutas: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_rutas: ~10 rows (aproximadamente)
 DELETE FROM `admin_rutas`;
 INSERT INTO `admin_rutas` (`ar_id`, `ar_orden`, `ar_componente`, `ar_titulo`, `ar_ruta`, `ar_icono`, `ar_color_1`, `ar_color_2`, `ar_fk_categoria`) VALUES
 	('3938b044-26ae-4079-81d0-734d248afa75', 0, 'UsuariosComponent', 'Usuarios', 'usuarios', 'ri-user-3-fill', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
 	('3f7de9ab-d611-475e-a290-62161a2d9856', 1, 'RutasComponent', 'Rutas', 'rutas', 'ri-organization-chart', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
+	('45ea42d1-5802-4c91-9944-875d1f3e3641', 1, 'DashboardComponent', 'Dashboard', '/', 'ri-dashboard-fill', '#FFFFFF', '#FFFFFF', '27f129f4-a5b0-4436-9ff8-0c102f180b56'),
 	('46f69391-e307-4e49-92fe-be7c3ef78def', 15, 'UsuariosRolesComponent', 'Usuarios Roles', 'usuarios-roles', 'ri-shield-user-fill', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
 	('6ff6db35-6edd-42e8-b130-e431050c5bf8', 12, 'pruebaComponentedd', 'Prueba', 'prueba', 'ri-shield-user-fill', '#FFFFFF', '#FFFFFF', '0974258b-7b27-4328-9115-b663c5b5d85c'),
 	('7c9950b7-a114-4477-a655-24fc68a10b09', 2, 'RutasCategoriasComponent', 'Rutas Categorias', 'rutas-categorias', 'ri-mind-map', '#FFFFFF', '#FFFFFF', 'f91dd081-ca36-4d1e-81c9-cffb9e131b93'),
@@ -124,6 +332,7 @@ INSERT INTO `admin_rutas` (`ar_id`, `ar_orden`, `ar_componente`, `ar_titulo`, `a
 	('c6c1466e-aa89-4c78-9580-3365a6ae49db', 0, 'pruebaComponente', 'titulo', 'ruta', 'icono', 'color_1', 'color_2', '8f8c746b-98ef-4cbb-9ac5-ce1313fe3cf6');
 
 -- Volcando estructura para tabla admin.admin_rutas_acciones
+DROP TABLE IF EXISTS `admin_rutas_acciones`;
 CREATE TABLE IF NOT EXISTS `admin_rutas_acciones` (
   `ara_id` varchar(50) NOT NULL,
   `ara_controlador` varchar(50) NOT NULL,
@@ -135,11 +344,12 @@ CREATE TABLE IF NOT EXISTS `admin_rutas_acciones` (
   UNIQUE KEY `ara_id` (`ara_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_rutas_acciones: ~17 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_rutas_acciones: ~22 rows (aproximadamente)
 DELETE FROM `admin_rutas_acciones`;
 INSERT INTO `admin_rutas_acciones` (`ara_id`, `ara_controlador`, `ara_endpoint`, `ara_metodo`, `ara_estado`, `ara_fk_ruta_id`, `ara_descripcion`) VALUES
 	('17dc7e50-f25f-445b-9d94-794f4d6bca7a', 'ControladorPermisoRolesRuta', 'remover', 'POST', 'V', 'c2b74d49-f958-4ea1-ac43-a4b4a4ad2158', 'Remover el permiso de un rol sobre una ruta'),
 	('35184de1-84e1-4138-b539-7612bbb2f01f', 'ControladorUsuariosRoles', 'crear', 'POST', 'V', '46f69391-e307-4e49-92fe-be7c3ef78def', 'Agregar nuevo rol'),
+	('49aafaef-987d-4a07-802e-6a118ad46fb4', 'ControladorRutas', 'remover', 'POST', 'V', '3f7de9ab-d611-475e-a290-62161a2d9856', 'Remover una ruta'),
 	('5757258d-4d3e-4339-b892-f664e28e6c2d', 'ControladorRutasCategoria', 'actualizar', 'POST', 'V', '7c9950b7-a114-4477-a655-24fc68a10b09', 'Actualizar la categoría de rutas'),
 	('58c95eed-3cd4-44e1-9875-492a06bc7297', 'ControladorPermisoRolesRuta', 'listar', 'GET', 'V', 'c2b74d49-f958-4ea1-ac43-a4b4a4ad2158', 'Listar los permisos de los roles rutas'),
 	('6f8a9a61-3223-4b41-99ea-7bfc1edd266e', 'ControladorRutasAcciones', 'listar', 'GET', 'V', '84d5bca9-3bcd-4f82-ae42-6ea23dcf0522', 'Listas todas las acciones de las rutas'),
@@ -148,16 +358,20 @@ INSERT INTO `admin_rutas_acciones` (`ara_id`, `ara_controlador`, `ara_endpoint`,
 	('8e10141f-5e1f-4469-8289-0aaaeeb312dc', 'ControladorRutasCategoria', 'listar', 'GET', 'V', '7c9950b7-a114-4477-a655-24fc68a10b09', 'Listar todas las categorías de las rutas'),
 	('8f6035e3-ccc0-413e-a2d3-bc4eb249a4e8', 'ControladorRutasAcciones', 'remover', 'POST', 'V', '84d5bca9-3bcd-4f82-ae42-6ea23dcf0522', 'Remover una acción de una ruta'),
 	('99362cb5-7f52-4171-820b-91d51fe3b0eb', 'ControladorRutasCategoria', 'crear', 'POST', 'V', '7c9950b7-a114-4477-a655-24fc68a10b09', 'Crear una categoría para rutas'),
+	('9ed08b35-7b7b-4abc-ad72-ab71472f6f2f', 'ControladorRutas', 'crear', 'POST', 'V', '3f7de9ab-d611-475e-a290-62161a2d9856', 'Crear rutas'),
 	('ae7dc360-45cf-42f8-8408-93b03806ae2d', 'ControladorRutas', 'listar', 'GET', 'V', '3f7de9ab-d611-475e-a290-62161a2d9856', 'Listar todas las rutas'),
 	('b35d7297-88fc-4c81-b6d5-1a57c62a933e', 'ControladorUsuariosRoles', 'remover', 'POST', 'V', '46f69391-e307-4e49-92fe-be7c3ef78def', 'Remover el rol'),
 	('d151d41e-a3f8-45b0-9900-3e106ec438cf', 'ControladorRutasAcciones', 'crear', 'POST', 'V', '84d5bca9-3bcd-4f82-ae42-6ea23dcf0522', 'Agregar acción a una ruta'),
+	('d34c6716-7fe4-401d-bf84-be181851e349', 'ControladorRutas', 'actualizar', 'POST', 'V', '3f7de9ab-d611-475e-a290-62161a2d9856', 'Actualizar una ruta'),
 	('d3ec363c-9574-42fe-8233-f73111ea495d', 'ControladorUsuariosRoles', 'actualizar', 'POST', 'V', '46f69391-e307-4e49-92fe-be7c3ef78def', 'Actualizar el nombre del rol'),
 	('d83b4ecd-53cf-4f09-bb16-3a9353637a43', 'ControladorRutasAcciones', 'actualizar', 'POST', 'V', '84d5bca9-3bcd-4f82-ae42-6ea23dcf0522', 'Actualizar la acción de una ruta'),
+	('e5111993-3b37-44fe-8dcb-dd26f19521d5', 'ControladorIndex', 'listarRutas', 'GET', 'V', 'bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb', 'Listar rutas del usuario en el index'),
 	('e9b625f7-dd55-47c1-97ca-b4f1af5c1961', 'ControladorRutasCategoria', 'remover', 'POST', 'V', '7c9950b7-a114-4477-a655-24fc68a10b09', 'Remover una categoría de ruta'),
 	('f0e9f2b1-e98c-4ea7-ac3f-71d9049b32a6', 'ControladorUsuariosRoles', 'listar', 'GET', 'V', '46f69391-e307-4e49-92fe-be7c3ef78def', 'Listar los roles de los usuarios'),
 	('f5f7c514-0872-44a3-8333-c1bf292142dd', 'ControladorUsuarios', 'registro', 'POST', 'V', '3938b044-26ae-4079-81d0-734d248afa75', 'Registro de usuarios');
 
 -- Volcando estructura para tabla admin.admin_rutas_categorias
+DROP TABLE IF EXISTS `admin_rutas_categorias`;
 CREATE TABLE IF NOT EXISTS `admin_rutas_categorias` (
   `arc_id` varchar(50) NOT NULL,
   `arc_orden` int(11) unsigned NOT NULL,
@@ -172,15 +386,17 @@ CREATE TABLE IF NOT EXISTS `admin_rutas_categorias` (
   UNIQUE KEY `arc_orden` (`arc_orden`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_rutas_categorias: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_rutas_categorias: ~5 rows (aproximadamente)
 DELETE FROM `admin_rutas_categorias`;
 INSERT INTO `admin_rutas_categorias` (`arc_id`, `arc_orden`, `arc_titulo`, `arc_ruta`, `arc_icono`, `arc_color_1`, `arc_color_2`) VALUES
 	('f91dd081-ca36-4d1e-81c9-cffb9e131b93', 5, 'Administracion', 'administracion', 'ri-settings-5-fill', '#FFFFFF', '#FFFFFF'),
 	('f91dd081-ca36-4d1e-81c9-cffb9e131b12', 1, 'Ajustes', 'ajustes', 'ri-arrow-right-up-fill', '#FFFFFF', '#FFFFFF'),
-	('85b96a17-6252-428c-ba9c-49df337f52f3', 2, 'Index', '', 'ri-flag-2-fill', '#FFFFFF', '#FFFFFF'),
+	('85b96a17-6252-428c-ba9c-49df337f52f3', 2, 'Index', 'index', 'ri-flag-2-fill', '#FFFFFF', '#FFFFFF'),
+	('27f129f4-a5b0-4436-9ff8-0c102f180b56', 0, 'Inicio', '', 'ri-home-2-fill', '#FFFFFF', '#FFFFFF'),
 	('0974258b-7b27-4328-9115-b663c5b5d85c', 3, 'Permisos', 'permisos', 'ri-shield-keyhole-fill', '#FFFFFF', '#FFFFFF');
 
 -- Volcando estructura para tabla admin.admin_usuarios
+DROP TABLE IF EXISTS `admin_usuarios`;
 CREATE TABLE IF NOT EXISTS `admin_usuarios` (
   `au_id` varchar(50) NOT NULL,
   `au_nombre` varchar(50) NOT NULL,
@@ -199,13 +415,15 @@ CREATE TABLE IF NOT EXISTS `admin_usuarios` (
   CONSTRAINT `FK_usuario_rol` FOREIGN KEY (`au_fk_aur_id`) REFERENCES `admin_usuarios_roles` (`aur_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_usuarios: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_usuarios: ~3 rows (aproximadamente)
 DELETE FROM `admin_usuarios`;
 INSERT INTO `admin_usuarios` (`au_id`, `au_nombre`, `au_apellido`, `au_username`, `au_password`, `au_correo`, `au_correo_lower`, `au_pass_key`, `au_estado`, `au_fk_aur_id`) VALUES
 	('173dad68-d1d3-4237-8a2c-26f5b4660061', 'Test2', 'prueba2', 'test2', '$2a$10$FCgp61o/01GtpSvi4H7Kiea7soyrPvpUc58MBEqv/sMi476mnHGCu', 'test2@test.com', 'test2@test.com', '462e5393-be70-4ef6-9c4d-d958b87cc9af', 'A', '19fd172e-30dd-4af0-85b0-a59cb03788b9'),
-	('a330e7bf-1c4d-4709-a331-6353a44621a4', 'Prueba', 'Test', 'test1', '$2a$10$W3CX0EpFfeCaO0OskoWoOuSCGkf.6UEEkAKKslXwtGKKh3U9P11y6', 'test1@test.com', 'test1@test.com', '71264692-4015-4571-aee7-cfbd22b2b08a', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817');
+	('378b7237-ce03-459e-9698-a4d118c6ee2b', 'Prueba', 'Prueba2', 'username', '$2a$10$MDAR53WmtbWZ1xF/ae31ne/lvTOgXnz/o12AFKOsYN2Vph7.HyDua', 'correo@corre.txt', 'correo@corre.txt', '9a2be4b9-798d-4b63-b816-43f0149ca5e7', 'A', '47037fa4-818a-4557-8d89-97b550e5dc41'),
+	('a330e7bf-1c4d-4709-a331-6353a44621a4', 'Prueba', 'Test', 'test1', '$2a$10$W3CX0EpFfeCaO0OskoWoOuSCGkf.6UEEkAKKslXwtGKKh3U9P11y6', 'test1@test.com', 'test1@test.com', '90f03640-a7ec-4cce-a023-cc07e353c3e3', 'A', '5d258050-5ee3-4954-8ec4-1b010355b817');
 
 -- Volcando estructura para tabla admin.admin_usuarios_roles
+DROP TABLE IF EXISTS `admin_usuarios_roles`;
 CREATE TABLE IF NOT EXISTS `admin_usuarios_roles` (
   `aur_id` varchar(50) NOT NULL,
   `aur_nombre` varchar(50) NOT NULL,
@@ -213,13 +431,15 @@ CREATE TABLE IF NOT EXISTS `admin_usuarios_roles` (
   UNIQUE KEY `aur_nombre` (`aur_nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_usuarios_roles: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_usuarios_roles: ~3 rows (aproximadamente)
 DELETE FROM `admin_usuarios_roles`;
 INSERT INTO `admin_usuarios_roles` (`aur_id`, `aur_nombre`) VALUES
 	('5d258050-5ee3-4954-8ec4-1b010355b817', 'ADMIN'),
-	('19fd172e-30dd-4af0-85b0-a59cb03788b9', 'DEVELOPER');
+	('19fd172e-30dd-4af0-85b0-a59cb03788b9', 'DEVELOPER'),
+	('47037fa4-818a-4557-8d89-97b550e5dc41', 'PRUEBA');
 
 -- Volcando estructura para tabla admin.admin_usuarios_tokens
+DROP TABLE IF EXISTS `admin_usuarios_tokens`;
 CREATE TABLE IF NOT EXISTS `admin_usuarios_tokens` (
   `aut_id` varchar(50) NOT NULL,
   `aut_fecha` datetime NOT NULL,
@@ -234,21 +454,31 @@ CREATE TABLE IF NOT EXISTS `admin_usuarios_tokens` (
   CONSTRAINT `FK_token_usuario_id` FOREIGN KEY (`aut_fk_usuario_id`) REFERENCES `admin_usuarios` (`au_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla admin.admin_usuarios_tokens: ~25 rows (aproximadamente)
+-- Volcando datos para la tabla admin.admin_usuarios_tokens: ~37 rows (aproximadamente)
 DELETE FROM `admin_usuarios_tokens`;
 INSERT INTO `admin_usuarios_tokens` (`aut_id`, `aut_fecha`, `aut_tipo`, `aut_estado`, `aut_token1`, `aut_token2`, `aut_fk_usuario_id`) VALUES
 	('15a34508-ef07-4d91-99a4-955223f77b03', '2023-08-07 14:25:48', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIxNWEzNDUwOC1lZjA3LTRkOTEtOTlhNC05NTUyMjNmNzdiMDMiLCJwYXNzX2tleSI6ImI3YThhYWY1LTk3ZTItNGZmZC1hOTY3LTM4NDkxM2RhNTVhMiIsImlhdCI6MTY5MTQzNjM0OCwiZXhwIjoxNjkxNDQzNTQ4fQ.jf_ujXgXo0vuEhLkZD67S1uJGwV3mvskWM3ZRQo-Y0c', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIxNWEzNDUwOC1lZjA3LTRkOTEtOTlhNC05NTUyMjNmNzdiMDMiLCJwYXNzX2tleSI6ImI3YThhYWY1LTk3ZTItNGZmZC1hOTY3LTM4NDkxM2RhNTVhMiIsImlhdCI6MTY5MTQzMDE2MywiZXhwIjoxNjkxNDM3MzYzfQ.O0kCkSwn06CbktrttCxetqcemDF2TihCjpTLykJK7h4', 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('1dc6380d-38f4-407e-ab33-65d25493a7d8', '2023-08-31 00:08:19', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIxZGM2MzgwZC0zOGY0LTQwN2UtYWIzMy02NWQyNTQ5M2E3ZDgiLCJwYXNzX2tleSI6ImI2NDgzZjJlLTg5NzktNDQ4OS1hMTBlLTUzNzc1MDQxYjJiNiIsImlhdCI6MTY5MzQ1ODQ5OSwiZXhwIjoxNjkzNDY1Njk5fQ.9eAcRNjn0FEAlVsIMjGroCf3NUPekS-eM1z354hYImQ', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('262a915d-a460-4561-9d57-156da4a57e3b', '2023-08-01 14:41:20', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIyNjJhOTE1ZC1hNDYwLTQ1NjEtOWQ1Ny0xNTZkYTRhNTdlM2IiLCJwYXNzX2tleSI6IjA0YzA5NzIzLTg4ODItNDI2YS1iN2Y1LTYwYWZjMjU3NjU2MyIsImlhdCI6MTY5MDkxODg4MCwiZXhwIjoxNjkwOTI2MDgwfQ.W1C1hvEl3fVYhhZTs1-0-batM2LRPbCQufVHznfuAXA', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('2740c4fd-ded0-4d28-8bd3-a3344d851f40', '2023-08-30 23:47:24', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIyNzQwYzRmZC1kZWQwLTRkMjgtOGJkMy1hMzM0NGQ4NTFmNDAiLCJwYXNzX2tleSI6IjQzYmE3N2EwLTg0NGYtNDdlZC1hNTExLWMyNTYzOGQwZjY3YSIsImlhdCI6MTY5MzQ1NzI0NCwiZXhwIjoxNjkzNDY0NDQ0fQ.Cx2yatecp8WssJu55Mua66XcBiPiXZnSv1PgfAPkenM', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('2ae14fd0-f404-4cf6-bf76-012b6b2e9af0', '2023-08-31 00:08:40', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIyYWUxNGZkMC1mNDA0LTRjZjYtYmY3Ni0wMTJiNmIyZTlhZjAiLCJwYXNzX2tleSI6IjkwZjAzNjQwLWE3ZWMtNGNjZS1hMDIzLWNjMDdlMzUzYzNlMyIsImlhdCI6MTY5MzQ1ODUyMCwiZXhwIjoxNjkzNDY1NzIwfQ.Kfp_3C1W0qFENu5PdHJIWY2lu5aIklHzEANYahQyynM', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('2f27fb8d-81df-4481-98df-2375a45a23f5', '2023-08-30 23:36:38', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIyZjI3ZmI4ZC04MWRmLTQ0ODEtOThkZi0yMzc1YTQ1YTIzZjUiLCJwYXNzX2tleSI6ImY2NzI2YzhlLWI2ODItNDM4My04ZWIyLTllOTk2N2ZmZDJiOSIsImlhdCI6MTY5MzQ1NjU5OCwiZXhwIjoxNjkzNDYzNzk4fQ.LF0qhZstTWIlHgrOLGnqqxwbm6R2BqqfSRXFIHC1YQk', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('2fcdae9a-8e6a-4ce4-8cb4-bbf306550132', '2023-08-28 21:30:26', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIyZmNkYWU5YS04ZTZhLTRjZTQtOGNiNC1iYmYzMDY1NTAxMzIiLCJwYXNzX2tleSI6IjQzNTQ5NzQ2LWZkOWEtNDAwOC1hYmZlLTkxMTg0ZWIzMGFkZiIsImlhdCI6MTY5MzI3NjIyNiwiZXhwIjoxNjkzMjgzNDI2fQ.pfd9DS0IIXTnEoiRIoRIu4-hT0XthNa8fldQHe5sa5c', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('3024f466-1475-48b4-8982-17dd1293937a', '2023-08-28 22:33:53', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIzMDI0ZjQ2Ni0xNDc1LTQ4YjQtODk4Mi0xN2RkMTI5MzkzN2EiLCJwYXNzX2tleSI6Ijc3YTc2MDM1LWE3ZDktNDNmYy05OTE1LThlNDUxNDdjZTU3NiIsImlhdCI6MTY5MzI4MDAzMywiZXhwIjoxNjkzMjg3MjMzfQ.jnK_8Ilwvwy6h4AQ7klYbTglnXDLJ9dY3j68pn_AVec', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('389f48e4-fc05-435a-b297-14f2352abf2e', '2023-08-28 22:24:21', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiIzODlmNDhlNC1mYzA1LTQzNWEtYjI5Ny0xNGYyMzUyYWJmMmUiLCJwYXNzX2tleSI6IjZiYTQ5MmU0LTJmYjEtNDdhOC1hZWEyLWIzZjQ3MmQwZGYzNSIsImlhdCI6MTY5MzI3OTQ2MSwiZXhwIjoxNjkzMjg2NjYxfQ.uWkvMQOXgw_J2ECpAnHRUClzjpcxS7A1B-5W2HRRiGM', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('43c3e024-8fca-4f06-9593-8b5bfa9ae585', '2023-08-31 00:05:39', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI0M2MzZTAyNC04ZmNhLTRmMDYtOTU5My04YjViZmE5YWU1ODUiLCJwYXNzX2tleSI6IjdiZjllOWRlLTY5MTktNGFmNC1iY2U5LWE4ODkyMTAyYjA5YiIsImlhdCI6MTY5MzQ1ODMzOSwiZXhwIjoxNjkzNDY1NTM5fQ.VFmlovJZnD22F0Toq6_HbRF1BqgteoDWNdmTHpGn340', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('449326f7-ca4f-464b-9d10-1da1f05b353d', '2023-08-30 23:38:26', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiMzc4YjcyMzctY2UwMy00NTllLTk2OTgtYTRkMTE4YzZlZTJiIiwidG9rZW5faWQiOiI0NDkzMjZmNy1jYTRmLTQ2NGItOWQxMC0xZGExZjA1YjM1M2QiLCJwYXNzX2tleSI6IjA0ZmYzMDExLThlOTMtNDNmZi04NzZiLTg0N2EzOTNmYzQxYSIsImlhdCI6MTY5MzQ1NjcwNiwiZXhwIjoxNjkzNDYzOTA2fQ.R1bBie3NGkSkTlCRnpCLzPDM394RQJ13uR4rVhTZ-ZQ', NULL, '378b7237-ce03-459e-9698-a4d118c6ee2b'),
+	('460d619c-09b3-4da6-8e23-4a64d384296c', '2023-08-30 23:39:19', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI0NjBkNjE5Yy0wOWIzLTRkYTYtOGUyMy00YTY0ZDM4NDI5NmMiLCJwYXNzX2tleSI6IjA0NGQ3OTg0LWE4NGEtNGU1OC04NzM1LTI3NGZmOGM2NTEyNiIsImlhdCI6MTY5MzQ1Njc1OSwiZXhwIjoxNjkzNDYzOTU5fQ.R99L4Jj65wj_mi6lwhojnZE9eByz9Rm79Gd-aUxzFkA', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('6778da3d-2d65-49f7-8e6d-23a7b826da7e', '2023-08-30 22:23:03', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI2Nzc4ZGEzZC0yZDY1LTQ5ZjctOGU2ZC0yM2E3YjgyNmRhN2UiLCJwYXNzX2tleSI6ImQ3ZmM3MWIzLWVjY2MtNDI2Mi1iMzllLTFkYjgxZWZmOWEwMCIsImlhdCI6MTY5MzQ1MjE4MywiZXhwIjoxNjkzNDU5MzgzfQ.lnWEVPanVZwY_KWfcS6VdzCe7mbcor5MrcKrW-v5BSU', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('6ea39896-1a01-414b-bedc-dcaf7ae1aaba', '2023-08-28 22:34:59', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI2ZWEzOTg5Ni0xYTAxLTQxNGItYmVkYy1kY2FmN2FlMWFhYmEiLCJwYXNzX2tleSI6ImFkYTAxMTI3LTMzZmEtNGIwMi1hNTE1LTIxM2U3YTQ4MjJlYyIsImlhdCI6MTY5MzI4MDA5OSwiZXhwIjoxNjkzMjg3Mjk5fQ.7plLXu2jhTcM264EesRGgy0dPMM1VRdgue4CL-0OhM8', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('8a07528a-2943-4d34-aa6e-0906abe77fcb', '2023-08-28 23:13:55', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI4YTA3NTI4YS0yOTQzLTRkMzQtYWE2ZS0wOTA2YWJlNzdmY2IiLCJwYXNzX2tleSI6IjMyNDA0NWEwLTUxMTctNGMwMS05NzFjLWI5MDdlOGU2MjhmZCIsImlhdCI6MTY5MzI4MjQzNSwiZXhwIjoxNjkzMjg5NjM1fQ.Tv_VT6D6ZsXTZ7h5MagXIJ7AZu3blWAlqPVBdQvHyLs', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('8aa36cb7-e2bc-495b-b3b5-4bddd3ca4eff', '2023-08-28 22:31:26', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI4YWEzNmNiNy1lMmJjLTQ5NWItYjNiNS00YmRkZDNjYTRlZmYiLCJwYXNzX2tleSI6IjI1NDQyMmQxLWFhYzEtNDk2Yi04Y2ExLThlZmE1MmE4ZGVmMCIsImlhdCI6MTY5MzI3OTg4NiwiZXhwIjoxNjkzMjg3MDg2fQ.HW7tH_TYfOxbG3NNJCnxa9KfpaaDmdCbpNfSfZfy0BM', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('92576ca3-4f0a-4a55-9364-24511ac73895', '2023-07-28 12:15:26', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI5MjU3NmNhMy00ZjBhLTRhNTUtOTM2NC0yNDUxMWFjNzM4OTUiLCJwYXNzX2tleSI6ImI3NWQxNjRlLWYxNDAtNDlmOS1hYjU2LWIzMmU4ZjdmMGE2OCIsImlhdCI6MTY5MDU2NDUyNiwiZXhwIjoxNjkwNTY0NzA2fQ.ilXWGQgJKO3IwCn9B-qcH0wh0GsYqEcJyQwmgSLm4Y0', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('95b1d79c-b91c-462b-823f-81ce4998e804', '2023-08-01 12:30:30', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI5NWIxZDc5Yy1iOTFjLTQ2MmItODIzZi04MWNlNDk5OGU4MDQiLCJwYXNzX2tleSI6ImU3OGMxY2ViLTNlYTItNGMxMy1iOWU4LTQ4ZWRiZTczMTQwMyIsImlhdCI6MTY5MDkxMTAzMCwiZXhwIjoxNjkwOTE4MjMwfQ.Dudc4hUlQ_zx0YhGSDczqxLVFBnPet-MEJQVfZQ80s0', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('989aecae-e044-4ef2-b2a1-0d9b3783373e', '2023-07-31 14:22:24', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiI5ODlhZWNhZS1lMDQ0LTRlZjItYjJhMS0wZDliMzc4MzM3M2UiLCJwYXNzX2tleSI6ImYyZTNmNWRkLWY5Y2UtNDM3ZC04ZmUxLTY4ZDI2ZjZiNjgzNSIsImlhdCI6MTY5MDgzMTM0NCwiZXhwIjoxNjkwODM4NTQ0fQ.rnf5SSSODGTD6jC1Y9ZOn_M_Xob3kydQY0MVTG55DCQ', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('a0c15a5c-ec18-44d2-a565-27db725ecd08', '2023-08-31 00:01:46', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJhMGMxNWE1Yy1lYzE4LTQ0ZDItYTU2NS0yN2RiNzI1ZWNkMDgiLCJwYXNzX2tleSI6IjA1OTdlNDQ3LTljMDUtNDUxNy04ZjZiLTA5Nzk4NTk3YzFjMSIsImlhdCI6MTY5MzQ1ODEwNiwiZXhwIjoxNjkzNDY1MzA2fQ.YgaXuBteSbmeImtWTbWlJubky34lhi4GbtKPHuF9m3Y', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('a46b8f9c-f90b-4967-8bd1-6eb060a119f8', '2023-08-28 22:30:50', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJhNDZiOGY5Yy1mOTBiLTQ5NjctOGJkMS02ZWIwNjBhMTE5ZjgiLCJwYXNzX2tleSI6ImM3YzQxMDIzLTM1NTItNDdkOS1hOTFmLTUyYzg5MjU4NjM2MCIsImlhdCI6MTY5MzI3OTg1MCwiZXhwIjoxNjkzMjg3MDUwfQ.BxtqT71g8hvfFWV6_3PwV39W-u8G-jDSP0wsoXmkmiU', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('b2c2bbda-c06f-47e2-a348-27858132d49b', '2023-08-30 23:39:46', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiMzc4YjcyMzctY2UwMy00NTllLTk2OTgtYTRkMTE4YzZlZTJiIiwidG9rZW5faWQiOiJiMmMyYmJkYS1jMDZmLTQ3ZTItYTM0OC0yNzg1ODEzMmQ0OWIiLCJwYXNzX2tleSI6ImJiMTJjYzEwLTNjNzgtNDRkYy05N2ViLWJhYmE2ZjgxNTYzNCIsImlhdCI6MTY5MzQ1Njc4NiwiZXhwIjoxNjkzNDYzOTg2fQ.PxMDbpaU9k-bGmyP_srOLxPZ2DeILBIMT7Tt2pkX5PI', NULL, '378b7237-ce03-459e-9698-a4d118c6ee2b'),
 	('b345c9a5-0174-4b25-a13b-8e4f2e926fcb', '2023-08-28 23:14:09', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiMzQ1YzlhNS0wMTc0LTRiMjUtYTEzYi04ZTRmMmU5MjZmY2IiLCJwYXNzX2tleSI6IjcxMjY0NjkyLTQwMTUtNDU3MS1hZWU3LWNmYmQyMmIyYjA4YSIsImlhdCI6MTY5MzI4MjQ0OSwiZXhwIjoxNjkzMjg5NjQ5fQ.wC4ID_2AQARuOiWAF29s2CKE5xenVD-wZzk7id8K-68', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('b57d3b3d-2928-4731-892f-80c490717e76', '2023-07-28 11:52:15', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiNTdkM2IzZC0yOTI4LTQ3MzEtODkyZi04MGM0OTA3MTdlNzYiLCJwYXNzX2tleSI6IjAzNDU5NGE3LTUwYjItNDFmYS1hMmEyLWJkYWEzNjk1MDRiNyIsImlhdCI6MTY5MDU2MzEzNSwiZXhwIjoxNjkwNTYzMzE1fQ.W02PnhqJqneMtbmo63mcT5Nk8_shOXgWv4mrqSqcJ4', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('b65a4bd2-2fae-4d5e-8287-c2057cfe50da', '2023-07-28 12:05:52', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJiNjVhNGJkMi0yZmFlLTRkNWUtODI4Ny1jMjA1N2NmZTUwZGEiLCJwYXNzX2tleSI6ImI1NGUxMjEzLWFjZDUtNDEwZC05Nzg3LTc0OWMyZTcyMDQzMiIsImlhdCI6MTY5MDU2Mzk1MiwiZXhwIjoxNjkwNTY0MTMyfQ.9goOkEiUF7h2luMH6AcgQwx30KlVNMVmv4JSTQplTnY', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
@@ -258,12 +488,15 @@ INSERT INTO `admin_usuarios_tokens` (`aut_id`, `aut_fecha`, `aut_tipo`, `aut_est
 	('d2baebba-ec91-4b30-8fc1-56cf80d35064', '2023-08-07 14:28:49', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJkMmJhZWJiYS1lYzkxLTRiMzAtOGZjMS01NmNmODBkMzUwNjQiLCJwYXNzX2tleSI6ImQwNDI2ZDA2LTg4OTMtNDhkYy1iMTI0LWIwOGQ2NWNmYWY1ZCIsImlhdCI6MTY5MTQzNjUyOSwiZXhwIjoxNjkxNDQzNzI5fQ.E-ZXl8DQYQBaGoL8Ew2Le4qzVOUn7wPlCY9v8kff3WI', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('d8db0262-da18-4f67-8b8a-143093e00a2b', '2023-08-28 22:36:01', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJkOGRiMDI2Mi1kYTE4LTRmNjctOGI4YS0xNDMwOTNlMDBhMmIiLCJwYXNzX2tleSI6ImU1YTU5ZWQ0LTAyZWEtNDI1OS05YzA1LWUwNDQwZmVhZmU2YyIsImlhdCI6MTY5MzI4MDE2MSwiZXhwIjoxNjkzMjg3MzYxfQ.tZHfYRvuQhCD5MEOMcGCTyj9ksXoscrEwrqE_Y6-YRw', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('d94fc3d9-bcd5-4d9e-a866-f92fb9e5a3f3', '2023-07-31 14:15:33', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJkOTRmYzNkOS1iY2Q1LTRkOWUtYTg2Ni1mOTJmYjllNWEzZjMiLCJwYXNzX2tleSI6IjBjYzNlNTg0LTBlNDYtNDM3OS1iYzEyLWIyY2E2Yzk0OTI4MCIsImlhdCI6MTY5MDgzMDkzMywiZXhwIjoxNjkwODQxNzMzfQ.scfYNie8tOELta41tl4X-YuIvppwlkNQU0_Le-MZ4JU', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('dedce86a-bbce-4003-aa2f-88c12b993eca', '2023-08-30 23:42:12', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiMzc4YjcyMzctY2UwMy00NTllLTk2OTgtYTRkMTE4YzZlZTJiIiwidG9rZW5faWQiOiJkZWRjZTg2YS1iYmNlLTQwMDMtYWEyZi04OGMxMmI5OTNlY2EiLCJwYXNzX2tleSI6IjlhMmJlNGI5LTc5OGQtNGI2My1iODE2LTQzZjAxNDljYTVlNyIsImlhdCI6MTY5MzQ1NjkzMiwiZXhwIjoxNjkzNDY0MTMyfQ.MjGgMZhkGk-gWgl5ozmBNHefalhnJYR2hY8jk20uqtM', NULL, '378b7237-ce03-459e-9698-a4d118c6ee2b'),
 	('dfcfdabc-1ace-4a7f-955f-1a4dff223622', '2023-07-28 11:50:31', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJkZmNmZGFiYy0xYWNlLTRhN2YtOTU1Zi0xYTRkZmYyMjM2MjIiLCJwYXNzX2tleSI6ImY5YmI3OTY4LThkNWYtNDYyMS1iZDBlLTE1ODZiZGM2YTliMCIsImlhdCI6MTY5MDU2MzAzMSwiZXhwIjoxNjkwNTYzMjExfQ.Rvk5INmpNtspWLyR2O7M-tTdygpVGq0UGSdOmhieW4', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('f3739298-3ed4-4867-98e7-7d4615c982c8', '2023-07-31 14:21:02', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJmMzczOTI5OC0zZWQ0LTQ4NjctOThlNy03ZDQ2MTVjOTgyYzgiLCJwYXNzX2tleSI6IjdmMjUyMzFiLWZkMDEtNDJlOC05ZTBjLWI0YzJmMDY2MWJkYyIsImlhdCI6MTY5MDgzMTI2MiwiZXhwIjoxNjkwODQyMDYyfQ.aGkvS41N_kH-Jr-JVeNyY9DIWUqdpXodTlLzhlph_Lo', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
 	('fbb49f14-2c75-4b8e-9be3-e3da895e2681', '2023-08-28 22:35:17', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJmYmI0OWYxNC0yYzc1LTRiOGUtOWJlMy1lM2RhODk1ZTI2ODEiLCJwYXNzX2tleSI6ImY3MWM5NDlhLWJiNmUtNDM1Zi1iZGZmLWUzNDQ2NDE1Y2U4NiIsImlhdCI6MTY5MzI4MDExNywiZXhwIjoxNjkzMjg3MzE3fQ.C8L5UvnPwzzdCiFEy3YU1G5hPnBCIQFNO2mnD8C_RBs', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
-	('fbe265d5-8bdd-455e-a68a-3d3186bb7fad', '2023-07-31 14:11:30', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJmYmUyNjVkNS04YmRkLTQ1NWUtYTY4YS0zZDMxODZiYjdmYWQiLCJwYXNzX2tleSI6IjQ5YTU4YTZhLTY3OGUtNDUxYy05Zjk5LTA5MjM5MWJmOGZjOSIsImlhdCI6MTY5MDgzMDY5MCwiZXhwIjoxNjkwODMwODcwfQ.OsbDdVKAgVcSnx1F26ah3beUe9sn1JeIgJaAXfSutvI', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4');
+	('fbe265d5-8bdd-455e-a68a-3d3186bb7fad', '2023-07-31 14:11:30', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJmYmUyNjVkNS04YmRkLTQ1NWUtYTY4YS0zZDMxODZiYjdmYWQiLCJwYXNzX2tleSI6IjQ5YTU4YTZhLTY3OGUtNDUxYy05Zjk5LTA5MjM5MWJmOGZjOSIsImlhdCI6MTY5MDgzMDY5MCwiZXhwIjoxNjkwODMwODcwfQ.OsbDdVKAgVcSnx1F26ah3beUe9sn1JeIgJaAXfSutvI', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4'),
+	('fec10b10-8165-4a02-ac2f-2cab8613e80e', '2023-08-30 22:18:16', 'JWT', 'A', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvX2lkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwidG9rZW5faWQiOiJmZWMxMGIxMC04MTY1LTRhMDItYWMyZi0yY2FiODYxM2U4MGUiLCJwYXNzX2tleSI6Ijc3Y2Q0MjhiLWI2ZTUtNGExYi1hMjBmLTE0NzhhZWQyZTU3YiIsImlhdCI6MTY5MzQ1MTg5NiwiZXhwIjoxNjkzNDU5MDk2fQ.3T9ImFZznZmGjf7n0ORlhMkW38urk_-txRLYU-s4BqA', NULL, 'a330e7bf-1c4d-4709-a331-6353a44621a4');
 
 -- Volcando estructura para procedimiento admin.sp_admin_accesos
+DROP PROCEDURE IF EXISTS `sp_admin_accesos`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_accesos`(
 	IN `i_tipo` CHAR(5),
@@ -277,10 +510,7 @@ CREATE PROCEDURE `sp_admin_accesos`(
 )
 BEGIN
 
-	SET @tipo := '';
-
 	IF(i_tipo = 'Q') THEN
-	
 	
 		IF(i_operacion = 'QVARC') THEN -- QUERY VALIDACION RUTA COMPONENTE ROL
 			
@@ -290,7 +520,8 @@ BEGIN
 			AND		ar_id	 					= aprr_fk_ruta_id
 			AND		aprr_fk_rol_id 		= i_rol_id;	-- ROL
 			
-			SET @tipo := 'RUTA';
+			CALL ADMIN.sp_admin_logs_requests('I', 'INR', i_req_id, NOW(), 'RUTA', i_usuario_id, i_componente, '');
+			
 		END IF;
 		
 		
@@ -304,20 +535,18 @@ BEGIN
 			AND ara.ara_fk_ruta_id = aprr.aprr_fk_ruta_id
 			AND aprr.aprr_fk_rol_id = i_rol_id;
 			
-			SET @tipo := 'ACCION';
+			
+			CALL ADMIN.sp_admin_logs_requests('I', 'INR', i_req_id, NOW(), 'ACCION', i_usuario_id, i_controlador, i_endpoint);
+			
 		END IF;
 				
 	END IF;
 	
-	
-	-- SET @ruta = (SELECT ara.ara_fk_ruta_id FROM ADMIN.admin_rutas_acciones ara WHERE  ara.ara_controlador = i_variable_2 AND ara.ara_endpoint = i_variable_3);
-	
-	CALL ADMIN.sp_admin_logs_requests('I', 'INR', i_req_id, NOW(), @tipo, i_usuario_id, i_controlador, i_endpoint);
-
 END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_logs_requests
+DROP PROCEDURE IF EXISTS `sp_admin_logs_requests`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_logs_requests`(
 	IN `i_tipo` CHAR(5),
@@ -326,8 +555,8 @@ CREATE PROCEDURE `sp_admin_logs_requests`(
 	IN `i_alr_fecha` DATETIME,
 	IN `i_alr_tipo` VARCHAR(50),
 	IN `i_alr_usuario` VARCHAR(50),
-	IN `i_alr_controlador` VARCHAR(50),
-	IN `i_alr_endpoint` VARCHAR(50)
+	IN `i_alr_valor_1` VARCHAR(50),
+	IN `i_alr_valor_2` VARCHAR(50)
 )
 BEGIN
 
@@ -345,8 +574,8 @@ BEGIN
 	
 		IF (i_operacion = 'INR') THEN
 			
-			INSERT INTO admin.admin_logs_requests (alr_req_id, alr_fecha, alr_tipo, alr_usuario, alr_controlador, alr_endpoint)
-			VALUES (i_req_id, i_alr_fecha, i_alr_tipo, i_alr_usuario, i_alr_controlador, i_alr_endpoint);
+			INSERT INTO admin.admin_logs_requests (alr_req_id, alr_fecha, alr_tipo, alr_usuario, alr_valor_1, alr_valor_2)
+			VALUES (i_req_id, i_alr_fecha, i_alr_tipo, i_alr_usuario, i_alr_valor_1, i_alr_valor_2);
 			
 		END IF;
 
@@ -356,6 +585,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_opciones
+DROP PROCEDURE IF EXISTS `sp_admin_opciones`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_opciones`(
 	IN `i_tipo` VARCHAR(50),
@@ -379,6 +609,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_parametros
+DROP PROCEDURE IF EXISTS `sp_admin_parametros`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_parametros`(
 	IN `i_tipo` CHAR(5),
@@ -406,6 +637,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_permisos_consultas
+DROP PROCEDURE IF EXISTS `sp_admin_permisos_consultas`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_permisos_consultas`(
 	IN `i_tipo` CHAR(5),
@@ -423,7 +655,8 @@ BEGIN
 			WHERE 	aur_id = i_variable_1 -- ROL
 			AND		aur_id = aprr_fk_rol_id
 			AND		aprr_fk_ruta_id = ar_id
-			AND		ar_fk_categoria = arc_id;
+			AND		ar_fk_categoria = arc_id
+			AND 		arc_titulo NOT IN ('Index');
 			
 		END IF;
 				
@@ -433,6 +666,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_permisos_roles_rutas
+DROP PROCEDURE IF EXISTS `sp_admin_permisos_roles_rutas`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_permisos_roles_rutas`(
 	IN `i_tipo` CHAR(5),
@@ -528,6 +762,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_rutas
+DROP PROCEDURE IF EXISTS `sp_admin_rutas`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_rutas`(
 	IN `i_tipo` CHAR(5),
@@ -642,6 +877,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_rutas_acciones
+DROP PROCEDURE IF EXISTS `sp_admin_rutas_acciones`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_rutas_acciones`(
 	IN `i_tipo` CHAR(5),
@@ -744,6 +980,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_rutas_categorias
+DROP PROCEDURE IF EXISTS `sp_admin_rutas_categorias`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_rutas_categorias`(
 	IN `i_tipo` CHAR(5),
@@ -846,6 +1083,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_usuarios
+DROP PROCEDURE IF EXISTS `sp_admin_usuarios`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_usuarios`(
 	IN `i_tipo` CHAR(5),
@@ -891,6 +1129,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_usuarios_consultas
+DROP PROCEDURE IF EXISTS `sp_admin_usuarios_consultas`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_usuarios_consultas`(
 	IN `i_tipo` CHAR(5),
@@ -949,6 +1188,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_usuarios_roles
+DROP PROCEDURE IF EXISTS `sp_admin_usuarios_roles`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_usuarios_roles`(
 	IN `i_tipo` CHAR(5),
@@ -1029,6 +1269,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin.sp_admin_usuarios_tokens
+DROP PROCEDURE IF EXISTS `sp_admin_usuarios_tokens`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_usuarios_tokens`(
 	IN `i_tipo` CHAR(5),
@@ -1119,10 +1360,12 @@ DELIMITER ;
 
 
 -- Volcando estructura de base de datos para admin_avisos
+DROP DATABASE IF EXISTS `admin_avisos`;
 CREATE DATABASE IF NOT EXISTS `admin_avisos` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `admin_avisos`;
 
 -- Volcando estructura para tabla admin_avisos.admin_avisos
+DROP TABLE IF EXISTS `admin_avisos`;
 CREATE TABLE IF NOT EXISTS `admin_avisos` (
   `aac_id` varchar(50) NOT NULL,
   `acc_config_tipo` varchar(50) NOT NULL,
@@ -1154,6 +1397,7 @@ CREATE TABLE IF NOT EXISTS `admin_avisos` (
 DELETE FROM `admin_avisos`;
 
 -- Volcando estructura para procedimiento admin_avisos.sp_admin_avisos
+DROP PROCEDURE IF EXISTS `sp_admin_avisos`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_avisos`(
 	IN `i_tipo` CHAR(5),
@@ -1277,6 +1521,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin_avisos.sp_admin_avisos_consultas
+DROP PROCEDURE IF EXISTS `sp_admin_avisos_consultas`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_avisos_consultas`(
 	IN `i_tipo` CHAR(5),
@@ -1355,10 +1600,12 @@ DELIMITER ;
 
 
 -- Volcando estructura de base de datos para admin_cargo
+DROP DATABASE IF EXISTS `admin_cargo`;
 CREATE DATABASE IF NOT EXISTS `admin_cargo` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `admin_cargo`;
 
 -- Volcando estructura para tabla admin_cargo.admin_cargo_crontabs_config
+DROP TABLE IF EXISTS `admin_cargo_crontabs_config`;
 CREATE TABLE IF NOT EXISTS `admin_cargo_crontabs_config` (
   `accc_nombre` varchar(100) DEFAULT NULL,
   `accc_estado` char(3) DEFAULT NULL,
@@ -1390,6 +1637,7 @@ CREATE TABLE IF NOT EXISTS `admin_cargo_crontabs_config` (
 DELETE FROM `admin_cargo_crontabs_config`;
 
 -- Volcando estructura para procedimiento admin_cargo.sp_admin_cargo_crontabs_config
+DROP PROCEDURE IF EXISTS `sp_admin_cargo_crontabs_config`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_cargo_crontabs_config`()
 BEGIN
@@ -1398,6 +1646,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento admin_cargo.sp_admin_cargo_crontabs_config_consultas
+DROP PROCEDURE IF EXISTS `sp_admin_cargo_crontabs_config_consultas`;
 DELIMITER //
 CREATE PROCEDURE `sp_admin_cargo_crontabs_config_consultas`()
 BEGIN
@@ -1407,10 +1656,12 @@ DELIMITER ;
 
 
 -- Volcando estructura de base de datos para auth
+DROP DATABASE IF EXISTS `auth`;
 CREATE DATABASE IF NOT EXISTS `auth` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `auth`;
 
 -- Volcando estructura para tabla auth.permiso_roles_rutas
+DROP TABLE IF EXISTS `permiso_roles_rutas`;
 CREATE TABLE IF NOT EXISTS `permiso_roles_rutas` (
   `prr_id` varchar(50) COLLATE armscii8_bin NOT NULL,
   `FK_rol` varchar(50) COLLATE armscii8_bin NOT NULL,
@@ -1423,13 +1674,14 @@ CREATE TABLE IF NOT EXISTS `permiso_roles_rutas` (
   CONSTRAINT `FK2_ruta` FOREIGN KEY (`FK_ruta`) REFERENCES `rutas_general` (`rug_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
--- Volcando datos para la tabla auth.permiso_roles_rutas: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla auth.permiso_roles_rutas: ~2 rows (aproximadamente)
 DELETE FROM `permiso_roles_rutas`;
 INSERT INTO `permiso_roles_rutas` (`prr_id`, `FK_rol`, `FK_ruta`, `prr_estado`) VALUES
 	('9d6e010e-d5af-42b6-84b2-ec9efcf9249b', '5d258050-5ee3-4954-8ec4-1b010355b817', 'ec0e9ca5-67b1-4bd9-8523-f977bf680db7', 'V'),
 	('fa7afad8-0808-4337-bdd1-9326e43797e8', '5d258050-5ee3-4954-8ec4-1b010355b817', '114629ab-0687-46c3-b55e-bc5bea34e29c', 'V');
 
 -- Volcando estructura para tabla auth.roles_usuarios
+DROP TABLE IF EXISTS `roles_usuarios`;
 CREATE TABLE IF NOT EXISTS `roles_usuarios` (
   `rol_id` varchar(50) COLLATE armscii8_bin NOT NULL,
   `rol_nombre` varchar(50) COLLATE armscii8_bin NOT NULL,
@@ -1442,6 +1694,7 @@ INSERT INTO `roles_usuarios` (`rol_id`, `rol_nombre`) VALUES
 	('5d258050-5ee3-4954-8ec4-1b010355b817', 'ADMIN');
 
 -- Volcando estructura para tabla auth.rutas_categorias
+DROP TABLE IF EXISTS `rutas_categorias`;
 CREATE TABLE IF NOT EXISTS `rutas_categorias` (
   `ru_id` varchar(50) COLLATE armscii8_bin NOT NULL,
   `ru_titulo` varchar(50) COLLATE armscii8_bin NOT NULL,
@@ -1462,6 +1715,7 @@ INSERT INTO `rutas_categorias` (`ru_id`, `ru_titulo`, `ru_ruta`, `ru_icon`, `ru_
 	('6a331351-e1a5-484a-a2db-a32b13c317ae', 'Inicio', '', 'fa-solid fa-house', '#FFFFFF', '#FFFFFF', 0);
 
 -- Volcando estructura para tabla auth.rutas_general
+DROP TABLE IF EXISTS `rutas_general`;
 CREATE TABLE IF NOT EXISTS `rutas_general` (
   `rug_id` varchar(50) COLLATE armscii8_bin NOT NULL,
   `rug_fk_categoria` varchar(50) COLLATE armscii8_bin NOT NULL,
@@ -1477,13 +1731,14 @@ CREATE TABLE IF NOT EXISTS `rutas_general` (
   CONSTRAINT `FK_categoria` FOREIGN KEY (`rug_fk_categoria`) REFERENCES `rutas_categorias` (`ru_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
--- Volcando datos para la tabla auth.rutas_general: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla auth.rutas_general: ~2 rows (aproximadamente)
 DELETE FROM `rutas_general`;
 INSERT INTO `rutas_general` (`rug_id`, `rug_fk_categoria`, `rug_componente`, `rug_titulo`, `rug_ruta`, `rug_icon`, `rug_color_1`, `rug_color_2`, `rug_order`) VALUES
 	('114629ab-0687-46c3-b55e-bc5bea34e29c', '58af8ed3-78c6-4fb7-a66d-fe5c2415bc73', 'rutas', 'Rutas', 'rutas', 'fa-solid fa-sitemap', '#FFFFFF', '#FFFFFF', 0),
 	('ec0e9ca5-67b1-4bd9-8523-f977bf680db7', '6a331351-e1a5-484a-a2db-a32b13c317ae', 'IndexComponent', 'Dashboard', '', 'dashboard', 'color_1', 'color_2', 0);
 
 -- Volcando estructura para procedimiento auth.sp_permisos_consultas
+DROP PROCEDURE IF EXISTS `sp_permisos_consultas`;
 DELIMITER //
 CREATE PROCEDURE `sp_permisos_consultas`(
 	IN `i_tipo` VARCHAR(50),
@@ -1513,6 +1768,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento auth.sp_permisos_roles_rutas
+DROP PROCEDURE IF EXISTS `sp_permisos_roles_rutas`;
 DELIMITER //
 CREATE PROCEDURE `sp_permisos_roles_rutas`(
 	IN `i_tipo` CHAR(5),
@@ -1567,6 +1823,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento auth.sp_rutas_categorias
+DROP PROCEDURE IF EXISTS `sp_rutas_categorias`;
 DELIMITER //
 CREATE PROCEDURE `sp_rutas_categorias`(
 	IN `i_tipo` CHAR(5),
@@ -1655,6 +1912,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento auth.sp_rutas_consultas
+DROP PROCEDURE IF EXISTS `sp_rutas_consultas`;
 DELIMITER //
 CREATE PROCEDURE `sp_rutas_consultas`(
 	IN `i_tipo` CHAR(5),
@@ -1683,6 +1941,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento auth.sp_rutas_general
+DROP PROCEDURE IF EXISTS `sp_rutas_general`;
 DELIMITER //
 CREATE PROCEDURE `sp_rutas_general`(
 	IN `i_tipo` CHAR(5),
@@ -1777,6 +2036,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento auth.sp_tokens
+DROP PROCEDURE IF EXISTS `sp_tokens`;
 DELIMITER //
 CREATE PROCEDURE `sp_tokens`(
 	IN `i_tipo` CHAR(5),
@@ -1881,6 +2141,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento auth.sp_usuarios
+DROP PROCEDURE IF EXISTS `sp_usuarios`;
 DELIMITER //
 CREATE PROCEDURE `sp_usuarios`(
 	IN `i_operacion` CHAR(5),
@@ -1964,6 +2225,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento auth.sp_usuarios_consultas
+DROP PROCEDURE IF EXISTS `sp_usuarios_consultas`;
 DELIMITER //
 CREATE PROCEDURE `sp_usuarios_consultas`(
 	IN `i_tipo` CHAR(5),
@@ -2008,6 +2270,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento auth.sp_usuarios_rol
+DROP PROCEDURE IF EXISTS `sp_usuarios_rol`;
 DELIMITER //
 CREATE PROCEDURE `sp_usuarios_rol`(
 	IN `i_tipo` CHAR(5),
@@ -2082,6 +2345,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para tabla auth.tokens_users
+DROP TABLE IF EXISTS `tokens_users`;
 CREATE TABLE IF NOT EXISTS `tokens_users` (
   `to_id` varchar(50) COLLATE armscii8_bin NOT NULL,
   `to_user_id` varchar(50) COLLATE armscii8_bin NOT NULL,
@@ -2093,7 +2357,7 @@ CREATE TABLE IF NOT EXISTS `tokens_users` (
   KEY `token_indice_1` (`to_date`,`to_user_id`,`to_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
--- Volcando datos para la tabla auth.tokens_users: ~52 rows (aproximadamente)
+-- Volcando datos para la tabla auth.tokens_users: ~63 rows (aproximadamente)
 DELETE FROM `tokens_users`;
 INSERT INTO `tokens_users` (`to_id`, `to_user_id`, `to_date`, `to_type`, `to_revoked`, `to_token`) VALUES
 	('044edfc3-3ff2-4817-b566-528bd0779554', 'a330e7bf-1c4d-4709-a331-6353a44621a4', '2023-04-21 14:25:24', 'BEARER', 'F', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl9pZCI6IjA0NGVkZmMzLTNmZjItNDgxNy1iNTY2LTUyOGJkMDc3OTU1NCIsImlkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwicGFzc19rZXkiOiJlNDM3ZDZjYy02YWVlLTQyNmMtYjZkYS01ZDIwMzJkNDEwMWEiLCJpYXQiOjE2ODIxMDUxMjQsImV4cCI6MTY4MjEyMzEyNH0.qGSX0akcabz3QaB8eprs0fd4pSmBP8T9AMjxjCTd1L0'),
@@ -2161,6 +2425,7 @@ INSERT INTO `tokens_users` (`to_id`, `to_user_id`, `to_date`, `to_type`, `to_rev
 	('ffc59100-1354-4d3c-87ad-035b3ce364b5', 'a330e7bf-1c4d-4709-a331-6353a44621a4', '2023-04-21 13:51:04', 'BEARER', 'F', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl9pZCI6ImZmYzU5MTAwLTEzNTQtNGQzYy04N2FkLTAzNWIzY2UzNjRiNSIsImlkIjoiYTMzMGU3YmYtMWM0ZC00NzA5LWEzMzEtNjM1M2E0NDYyMWE0IiwicGFzc19rZXkiOiJkZmFhMjVhYy0wOTQwLTRhYjAtOTkyYy0xMGRiYzQyMmZhNzEiLCJpYXQiOjE2ODIxMDMwNjQsImV4cCI6MTY4MjEyMTA2NH0.4fjacNQeY4S3PoLF7X09w357DVYi6l-qDpQ2SO_ZhN8');
 
 -- Volcando estructura para tabla auth.usuarios
+DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` varchar(50) COLLATE armscii8_bin NOT NULL DEFAULT '',
   `correo` varchar(100) COLLATE armscii8_bin NOT NULL,
@@ -2186,10 +2451,12 @@ INSERT INTO `usuarios` (`id`, `correo`, `nombre`, `password`, `correo_lower`, `p
 
 
 -- Volcando estructura de base de datos para cargo_crontab
+DROP DATABASE IF EXISTS `cargo_crontab`;
 CREATE DATABASE IF NOT EXISTS `cargo_crontab` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `cargo_crontab`;
 
 -- Volcando estructura para tabla cargo_crontab.cargo_crontab_config
+DROP TABLE IF EXISTS `cargo_crontab_config`;
 CREATE TABLE IF NOT EXISTS `cargo_crontab_config` (
   `ccc_nombre` varchar(100) DEFAULT NULL,
   `ccc_estado` char(3) DEFAULT NULL,
@@ -2221,6 +2488,7 @@ CREATE TABLE IF NOT EXISTS `cargo_crontab_config` (
 DELETE FROM `cargo_crontab_config`;
 
 -- Volcando estructura para procedimiento cargo_crontab.sp_cargo_crontab_config
+DROP PROCEDURE IF EXISTS `sp_cargo_crontab_config`;
 DELIMITER //
 CREATE PROCEDURE `sp_cargo_crontab_config`(
 	IN `i_tipo` CHAR(5),
@@ -2232,6 +2500,7 @@ END//
 DELIMITER ;
 
 -- Volcando estructura para procedimiento cargo_crontab.sp_cargo_crontab_config_consultas
+DROP PROCEDURE IF EXISTS `sp_cargo_crontab_config_consultas`;
 DELIMITER //
 CREATE PROCEDURE `sp_cargo_crontab_config_consultas`(
 	IN `i_tipo` CHAR(5),
