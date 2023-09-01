@@ -330,6 +330,48 @@ public class ServicioRutasCategoria {
         return lista;
     }
 
+    public void validarRemover(ModeloRutaCategoria ruta) throws CustomException {
+
+        try {
+
+            if (ruta.getTitulo().equalsIgnoreCase("Sin categoria")
+                    || ruta.getId().equalsIgnoreCase("8ecd72dd-f729-43c0-9642-8d30864aef44")) {
+                throw new Exception("No se puede eliminar la categoria " + ruta.getTitulo());
+
+            }
+
+            if (ruta.getTitulo().equalsIgnoreCase("Index")
+                    || ruta.getId().equalsIgnoreCase("85b96a17-6252-428c-ba9c-49df337f52f3")) {
+                throw new Exception("No se puede eliminar la categoria " + ruta.getTitulo());
+
+            }
+
+            if (ruta.getTitulo().equalsIgnoreCase("Inicio")
+                    || ruta.getId().equalsIgnoreCase("27f129f4-a5b0-4436-9ff8-0c102f180b56")) {
+                throw new Exception("No se puede eliminar la categoria " + ruta.getTitulo());
+
+            }
+
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt(e.getMessage());
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_remover);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        }
+
+    }
+
     // EXTERNOS
 
     public List<ModeloExternoRutaCategoria> obtenerListaCategorias() throws CustomException {

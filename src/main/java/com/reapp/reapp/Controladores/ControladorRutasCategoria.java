@@ -146,6 +146,7 @@ public class ControladorRutasCategoria {
             servicioAccesos.controladorEndpoint(controlador, "remover");
 
             respuesta.put("ruta_categoria", "");
+            servicioRutasCategoria.validarRemover(ruta);
             servicioRutasCategoria.remover(ruta);
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());

@@ -370,6 +370,40 @@ public class ServicioRutas {
         return ruta;
     }
 
+    public void validarRemover(ModeloRutaGeneral ruta) throws CustomException {
+
+        try {
+
+            if (ruta.getTitulo().equalsIgnoreCase("Inicio")
+                    || ruta.getId().equalsIgnoreCase("45ea42d1-5802-4c91-9944-875d1f3e3641")) {
+                throw new Exception("No se puede eliminar la ruta  " + ruta.getTitulo());
+            }
+
+            if (ruta.getTitulo().equalsIgnoreCase("Index")
+                    || ruta.getId().equalsIgnoreCase("bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb")) {
+                throw new Exception("No se puede eliminar la ruta " + ruta.getTitulo());
+            }
+
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt(e.getMessage());
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(remover);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        }
+
+    }
+
     // EXTERNOS
 
     public List<ModeloExternoRuta> externolistarRutas() throws CustomException {

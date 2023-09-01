@@ -29,6 +29,7 @@ public class ServicioUsuariosRoles {
     private final String m_lista = "listar";
     private final String m_actualizar = "actualizar";
     private final String m_remover = "remover";
+    private final String m_validarRemover = "validarRemover";
 
     public Boolean crear(ModeloRol rol, String id) throws CustomException {
 
@@ -292,6 +293,40 @@ public class ServicioUsuariosRoles {
             throw new CustomException("", errorGeneral, e);
         }
         return respuesta;
+    }
+
+    public void validarRemover(ModeloRol rol) throws CustomException {
+
+        try {
+
+            if (rol.getNombre().equalsIgnoreCase("DEFAULT")
+                    || rol.getId().equals("0066a50b-78bc-4a58-9240-d2928b4220f1")) {
+                throw new Exception("No se puede eliminar el rol " + rol.getNombre());
+            }
+
+            if (rol.getNombre().equalsIgnoreCase("ADMIN")
+                    || rol.getId().equals("5d258050-5ee3-4954-8ec4-1b010355b817")) {
+                throw new Exception("No se puede eliminar el rol " + rol.getNombre());
+            }
+
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt(e.getMessage());
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo("Servicio");
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(m_validarRemover);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        }
+
     }
 
     public List<ModeloExternoRol> listarRolesExterno() throws CustomException {

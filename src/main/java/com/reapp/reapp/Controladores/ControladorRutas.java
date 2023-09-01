@@ -28,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ControladorRutas {
 
-    private final ServicioRutas servicioRutasGeneral;
+    private final ServicioRutas servicioRutas;
     private final ServicioRutasCategoria servicioRutasCategoria;
     private final ServicioAccesos servicioAccesos;
 
@@ -49,7 +49,7 @@ public class ControladorRutas {
         Map<String, Object> respuesta = new HashMap<>();
         try {
             servicioAccesos.controladorEndpoint(controlador, "listar");
-            respuesta.put("rutas", servicioRutasGeneral.listar());
+            respuesta.put("rutas", servicioRutas.listar());
             respuesta.put("categorias", servicioRutasCategoria.obtenerListaCategorias());
 
             resp.setOk(true);
@@ -76,8 +76,8 @@ public class ControladorRutas {
 
         try {
             servicioAccesos.controladorEndpoint(controlador, "crear");
-            servicioRutasGeneral.crear(ruta, id);
-            respuesta.put("ruta", servicioRutasGeneral.obtenerPorId(id));
+            servicioRutas.crear(ruta, id);
+            respuesta.put("ruta", servicioRutas.obtenerPorId(id));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
@@ -107,8 +107,8 @@ public class ControladorRutas {
 
         try {
             servicioAccesos.controladorEndpoint(controlador, "actualizar");
-            servicioRutasGeneral.actualizar(ruta);
-            respuesta.put("ruta", servicioRutasGeneral.obtenerPorId(ruta.getId()));
+            servicioRutas.actualizar(ruta);
+            respuesta.put("ruta", servicioRutas.obtenerPorId(ruta.getId()));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
@@ -138,8 +138,10 @@ public class ControladorRutas {
 
         try {
             servicioAccesos.controladorEndpoint(controlador, "remover");
-            servicioRutasGeneral.remover(ruta);
-            respuesta.put("ruta", servicioRutasGeneral.obtenerPorId(ruta.getId()));
+            servicioRutas.validarRemover(ruta);
+
+            servicioRutas.remover(ruta);
+            respuesta.put("ruta", servicioRutas.obtenerPorId(ruta.getId()));
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);

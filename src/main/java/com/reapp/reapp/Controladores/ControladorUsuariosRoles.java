@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ControladorUsuariosRoles {
 
-    private final ServicioUsuariosRoles servicioRoles;
+    private final ServicioUsuariosRoles servicioUsuariosRoles;
     private final ServicioAccesos servicioAccesos;
     private final ServicioPermisoRolesRutas servicioPermisoRolesRutas;
 
@@ -49,7 +49,7 @@ public class ControladorUsuariosRoles {
         try {
             servicioAccesos.controladorEndpoint(controlador, "listar");
 
-            respuesta.put("roles", servicioRoles.listar());
+            respuesta.put("roles", servicioUsuariosRoles.listar());
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);
@@ -77,18 +77,22 @@ public class ControladorUsuariosRoles {
         Map<String, Object> respuesta = new HashMap<>();
         String rol_id = UUID.randomUUID().toString();
         String idEx = UUID.randomUUID().toString();
+        String idEx2 = UUID.randomUUID().toString();
 
         ModeloPermisoRolRuta rolRuta = new ModeloPermisoRolRuta();
 
         try {
             servicioAccesos.controladorEndpoint(controlador, "crear");
-            servicioRoles.crear(rol, rol_id);
+            servicioUsuariosRoles.crear(rol, rol_id);
 
             rolRuta.setRol_id(rol_id);
             rolRuta.setRuta_id("bc3f5e36-3903-4cb1-9b14-3dc264fd7fbb");
             servicioPermisoRolesRutas.crear(rolRuta, idEx);
 
-            respuesta.put("rol", servicioRoles.obtenerPorId(rol_id));
+            rolRuta.setRuta_id("45ea42d1-5802-4c91-9944-875d1f3e3641");
+            servicioPermisoRolesRutas.crear(rolRuta, idEx2);
+
+            respuesta.put("rol", servicioUsuariosRoles.obtenerPorId(rol_id));
             resp.setOk(true);
             resp.setCode(HttpStatus.CREATED.value());
             resp.setStatus(HttpStatus.CREATED);
@@ -116,8 +120,8 @@ public class ControladorUsuariosRoles {
         try {
             servicioAccesos.controladorEndpoint(controlador, "actualizar");
 
-            servicioRoles.actualizar(ruta);
-            respuesta.put("rol", servicioRoles.obtenerPorId(ruta.getId()));
+            servicioUsuariosRoles.actualizar(ruta);
+            respuesta.put("rol", servicioUsuariosRoles.obtenerPorId(ruta.getId()));
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);
@@ -145,8 +149,10 @@ public class ControladorUsuariosRoles {
         try {
             servicioAccesos.controladorEndpoint(controlador, "remover");
 
-            servicioRoles.remover(ruta);
-            respuesta.put("rol", servicioRoles.obtenerPorId(ruta.getId()));
+            servicioUsuariosRoles.validarRemover(ruta);
+            servicioUsuariosRoles.remover(ruta);
+
+            respuesta.put("rol", servicioUsuariosRoles.obtenerPorId(ruta.getId()));
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);
