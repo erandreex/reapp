@@ -14,7 +14,7 @@ public class ConexionMariaDB {
         String usuario = "root";
         String password = "taliTakumi514";
         String puerto = "3306";
-        String db = "auth";
+        String db = "admin";
 
         try {
             String url = "jdbc:mariadb://" + servidor + ":" + puerto + "/" + db;
