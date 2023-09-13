@@ -2,311 +2,176 @@ package com.reapp.reapp.Modelos;
 
 public class ModeloGraficaDatasetConfig {
 
-    private String configNombre;
-    private String configDashboard;
-    private String configTipoGrafica;
-    private int configPosicion;
-    private int configSubPosicion;
-    private String configTipoRutina;
-    private int configCantRegistros;
-    private String configTipoRegistros;
-    private String configRutina;
-    private String configTitulo;
-    private String configDatasetlabel;
-    private String configLabely;
-    private String configTipoPrincipal;
-    private String configTipoSecundario;
-    private String configColorFondo;
-    private String configColorBorde;
-    private String configTamanoBorde;
-    private String configFill;
-    private String configColorFondoPunto;
-    private String configColorHoverPunto;
-    private String configColorBordePunto;
-    private String configTamanoPunto;
-    private String configStacked;
-    private int configStack;
-    private int configSuggestedMax;
-    private int configMaxTickLimit;
-    private String configTipoConsulta;
-    private String configFechaMod;
-    private int configValorLimite;
-    private String configColorValorLimite;
-    private int configIntervaloTiempo;
-    private String configColorAleatorio;
-    private int configCantidadDecimales;
-    private float configValorMinimo;
+    private String grafica_id;
+    private String dataset_id;
+    private int dataset_posicion;
+    private String proc_nombre;
+    private String proc_tipo;
+    private String proc_operacion;
+    private String rutina;
+    private String dataset_label;
+    private String tipoPrincipal;
+    private String tipoSecundario;
+    private String fondo_color;
+    private String borde_color;
+    private String borde_tamano;
+    private String punto_color_fondo;
+    private String punto_color_hover;
+    private String punto_color_borde;
+    private String punto_tamano;
+    private int stack;
+    private String fill;
 
-    public String getConfigNombre() {
-        return configNombre;
+    public String getGrafica_id() {
+        return grafica_id;
     }
 
-    public void setConfigNombre(String configNombre) {
-        this.configNombre = configNombre;
+    public void setGrafica_id(String grafica_id) {
+        this.grafica_id = grafica_id;
     }
 
-    public String getConfigDashboard() {
-        return configDashboard;
+    public String getDataset_id() {
+        return dataset_id;
     }
 
-    public void setConfigDashboard(String configDashboard) {
-        this.configDashboard = configDashboard;
+    public void setDataset_id(String dataset_id) {
+        this.dataset_id = dataset_id;
     }
 
-    public String getConfigTipoGrafica() {
-        return configTipoGrafica;
+    public int getDataset_posicion() {
+        return dataset_posicion;
     }
 
-    public void setConfigTipoGrafica(String configTipoGrafica) {
-        this.configTipoGrafica = configTipoGrafica;
+    public void setDataset_posicion(int dataset_posicion) {
+        this.dataset_posicion = dataset_posicion;
     }
 
-    public int getConfigPosicion() {
-        return configPosicion;
+    public String getProc_nombre() {
+        return proc_nombre;
     }
 
-    public void setConfigPosicion(int configPosicion) {
-        this.configPosicion = configPosicion;
+    public void setProc_nombre(String proc_nombre) {
+        this.proc_nombre = proc_nombre;
     }
 
-    public int getConfigSubPosicion() {
-        return configSubPosicion;
+    public String getProc_tipo() {
+        return proc_tipo;
     }
 
-    public void setConfigSubPosicion(int configSubPosicion) {
-        this.configSubPosicion = configSubPosicion;
+    public void setProc_tipo(String proc_tipo) {
+        this.proc_tipo = proc_tipo;
     }
 
-    public String getConfigTipoRutina() {
-        return configTipoRutina;
+    public String getProc_operacion() {
+        return proc_operacion;
     }
 
-    public void setConfigTipoRutina(String configTipoRutina) {
-        this.configTipoRutina = configTipoRutina;
+    public void setProc_operacion(String proc_operacion) {
+        this.proc_operacion = proc_operacion;
     }
 
-    public int getConfigCantRegistros() {
-        return configCantRegistros;
+    public String getRutina() {
+        return rutina;
     }
 
-    public void setConfigCantRegistros(int configCantRegistros) {
-        this.configCantRegistros = configCantRegistros;
+    public void setRutina(String rutina) {
+        this.rutina = rutina;
     }
 
-    public String getConfigTipoRegistros() {
-        return configTipoRegistros;
+    public String getDataset_label() {
+        return dataset_label;
     }
 
-    public void setConfigTipoRegistros(String configTipoRegistros) {
-        this.configTipoRegistros = configTipoRegistros;
+    public void setDataset_label(String dataset_label) {
+        this.dataset_label = dataset_label;
     }
 
-    public String getConfigRutina() {
-        return configRutina;
+    public String getTipoPrincipal() {
+        return tipoPrincipal;
     }
 
-    public void setConfigRutina(String configRutina) {
-        this.configRutina = configRutina;
+    public void setTipoPrincipal(String tipoPrincipal) {
+        this.tipoPrincipal = tipoPrincipal;
     }
 
-    public String getConfigTitulo() {
-        return configTitulo;
+    public String getTipoSecundario() {
+        return tipoSecundario;
     }
 
-    public void setConfigTitulo(String configTitulo) {
-        this.configTitulo = configTitulo;
+    public void setTipoSecundario(String tipoSecundario) {
+        this.tipoSecundario = tipoSecundario;
     }
 
-    public String getConfigDatasetlabel() {
-        return configDatasetlabel;
+    public String getFondo_color() {
+        return fondo_color;
     }
 
-    public void setConfigDatasetlabel(String configDatasetlabel) {
-        this.configDatasetlabel = configDatasetlabel;
+    public void setFondo_color(String fondo_color) {
+        this.fondo_color = fondo_color;
     }
 
-    public String getConfigLabely() {
-        return configLabely;
+    public String getBorde_color() {
+        return borde_color;
     }
 
-    public void setConfigLabely(String configLabely) {
-        this.configLabely = configLabely;
+    public void setBorde_color(String borde_color) {
+        this.borde_color = borde_color;
     }
 
-    public String getConfigTipoPrincipal() {
-        return configTipoPrincipal;
+    public String getBorde_tamano() {
+        return borde_tamano;
     }
 
-    public void setConfigTipoPrincipal(String configTipoPrincipal) {
-        this.configTipoPrincipal = configTipoPrincipal;
+    public void setBorde_tamano(String borde_tamano) {
+        this.borde_tamano = borde_tamano;
     }
 
-    public String getConfigTipoSecundario() {
-        return configTipoSecundario;
+    public String getPunto_color_fondo() {
+        return punto_color_fondo;
     }
 
-    public void setConfigTipoSecundario(String configTipoSecundario) {
-        this.configTipoSecundario = configTipoSecundario;
+    public void setPunto_color_fondo(String punto_color_fondo) {
+        this.punto_color_fondo = punto_color_fondo;
     }
 
-    public String getConfigColorFondo() {
-        return configColorFondo;
+    public String getPunto_color_hover() {
+        return punto_color_hover;
     }
 
-    public void setConfigColorFondo(String configColorFondo) {
-        this.configColorFondo = configColorFondo;
+    public void setPunto_color_hover(String punto_color_hover) {
+        this.punto_color_hover = punto_color_hover;
     }
 
-    public String getConfigColorBorde() {
-        return configColorBorde;
+    public String getPunto_color_borde() {
+        return punto_color_borde;
     }
 
-    public void setConfigColorBorde(String configColorBorde) {
-        this.configColorBorde = configColorBorde;
+    public void setPunto_color_borde(String punto_color_borde) {
+        this.punto_color_borde = punto_color_borde;
     }
 
-    public String getConfigTamanoBorde() {
-        return configTamanoBorde;
+    public String getPunto_tamano() {
+        return punto_tamano;
     }
 
-    public void setConfigTamanoBorde(String configTamanoBorde) {
-        this.configTamanoBorde = configTamanoBorde;
+    public void setPunto_tamano(String punto_tamano) {
+        this.punto_tamano = punto_tamano;
     }
 
-    public String getConfigFill() {
-        return configFill;
+    public int getStack() {
+        return stack;
     }
 
-    public void setConfigFill(String configFill) {
-        this.configFill = configFill;
+    public void setStack(int stack) {
+        this.stack = stack;
     }
 
-    public String getConfigColorFondoPunto() {
-        return configColorFondoPunto;
+    public String getFill() {
+        return fill;
     }
 
-    public void setConfigColorFondoPunto(String configColorFondoPunto) {
-        this.configColorFondoPunto = configColorFondoPunto;
-    }
-
-    public String getConfigColorHoverPunto() {
-        return configColorHoverPunto;
-    }
-
-    public void setConfigColorHoverPunto(String configColorHoverPunto) {
-        this.configColorHoverPunto = configColorHoverPunto;
-    }
-
-    public String getConfigColorBordePunto() {
-        return configColorBordePunto;
-    }
-
-    public void setConfigColorBordePunto(String configColorBordePunto) {
-        this.configColorBordePunto = configColorBordePunto;
-    }
-
-    public String getConfigTamanoPunto() {
-        return configTamanoPunto;
-    }
-
-    public void setConfigTamanoPunto(String configTamanoPunto) {
-        this.configTamanoPunto = configTamanoPunto;
-    }
-
-    public String getConfigStacked() {
-        return configStacked;
-    }
-
-    public void setConfigStacked(String configStacked) {
-        this.configStacked = configStacked;
-    }
-
-    public int getConfigStack() {
-        return configStack;
-    }
-
-    public void setConfigStack(int configStack) {
-        this.configStack = configStack;
-    }
-
-    public int getConfigSuggestedMax() {
-        return configSuggestedMax;
-    }
-
-    public void setConfigSuggestedMax(int configSuggestedMax) {
-        this.configSuggestedMax = configSuggestedMax;
-    }
-
-    public int getConfigMaxTickLimit() {
-        return configMaxTickLimit;
-    }
-
-    public void setConfigMaxTickLimit(int configMaxTickLimit) {
-        this.configMaxTickLimit = configMaxTickLimit;
-    }
-
-    public String getConfigTipoConsulta() {
-        return configTipoConsulta;
-    }
-
-    public void setConfigTipoConsulta(String configTipoConsulta) {
-        this.configTipoConsulta = configTipoConsulta;
-    }
-
-    public String getConfigFechaMod() {
-        return configFechaMod;
-    }
-
-    public void setConfigFechaMod(String configFechaMod) {
-        this.configFechaMod = configFechaMod;
-    }
-
-    public int getConfigValorLimite() {
-        return configValorLimite;
-    }
-
-    public void setConfigValorLimite(int configValorLimite) {
-        this.configValorLimite = configValorLimite;
-    }
-
-    public String getConfigColorValorLimite() {
-        return configColorValorLimite;
-    }
-
-    public void setConfigColorValorLimite(String configColorValorLimite) {
-        this.configColorValorLimite = configColorValorLimite;
-    }
-
-    public int getConfigIntervaloTiempo() {
-        return configIntervaloTiempo;
-    }
-
-    public void setConfigIntervaloTiempo(int configIntervaloTiempo) {
-        this.configIntervaloTiempo = configIntervaloTiempo;
-    }
-
-    public String getConfigColorAleatorio() {
-        return configColorAleatorio;
-    }
-
-    public void setConfigColorAleatorio(String configColorAleatorio) {
-        this.configColorAleatorio = configColorAleatorio;
-    }
-
-    public int getConfigCantidadDecimales() {
-        return configCantidadDecimales;
-    }
-
-    public void setConfigCantidadDecimales(int configCantidadDecimales) {
-        this.configCantidadDecimales = configCantidadDecimales;
-    }
-
-    public float getConfigValorMinimo() {
-        return configValorMinimo;
-    }
-
-    public void setConfigValorMinimo(float configValorMinimo) {
-        this.configValorMinimo = configValorMinimo;
+    public void setFill(String fill) {
+        this.fill = fill;
     }
 
 }

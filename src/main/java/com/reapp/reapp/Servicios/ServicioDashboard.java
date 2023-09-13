@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.FieldPosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,6 +19,7 @@ import com.reapp.reapp.Conexiones.ConexionMariaDB;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.ModeloErrorGeneral;
 import com.reapp.reapp.Modelos.ModeloDashboardCuadricula;
+import com.reapp.reapp.Modelos.ModeloGraficaConfig;
 import com.reapp.reapp.Modelos.ModeloGraficaConsulta;
 import com.reapp.reapp.Modelos.ModeloGraficaDatasetConfig;
 import com.reapp.reapp.Modelos.ModeloGraficaDatasetData;
@@ -37,13 +37,13 @@ public class ServicioDashboard {
 
         List<ModeloDashboardCuadricula> lista = new ArrayList<>();
 
-        String query = "{CALL admin.dashboards.sp_admin_dashboards(?,?,?)}";
+        String query = "{CALL admin_dashboards.sp_admin_dashboards(?,?,?)}";
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(query);) {
 
             cst.setString(1, "Q");
-            cst.setString(2, "QPNO");
+            cst.setString(2, "QLCC");
             cst.setString(3, nombre);
 
             ResultSet rs = cst.executeQuery();
@@ -51,11 +51,12 @@ public class ServicioDashboard {
             while (rs.next()) {
 
                 ModeloDashboardCuadricula resultado = new ModeloDashboardCuadricula();
+
                 resultado.setId(rs.getString("ad_id"));
-                resultado.setDashboard(rs.getString("ad_dashboard"));
+                resultado.setNombre(rs.getString("ad_nombre"));
                 resultado.setTipo(rs.getString("ad_tipo"));
-                resultado.setIdentificador(rs.getString("ad_identificador"));
                 resultado.setTamano(rs.getString("ad_tamano"));
+                resultado.setComponente_id(rs.getString("ad_componente_id"));
 
                 lista.add(resultado);
             }
@@ -99,17 +100,84 @@ public class ServicioDashboard {
         return lista;
     }
 
-    public List<ModeloGraficaDatasetConfig> listarDatasetConfigGrafica(String idGrafica) throws CustomException {
+    public ModeloGraficaConfig listarConfigGrafica(String idGrafica) throws CustomException {
 
-        List<ModeloGraficaDatasetConfig> lista = new ArrayList<>();
+        String query = "{CALL admin_dashboards.sp_admin_graficas_consultas(?,?,?)}";
 
-        String query = "{CALL admin.dashboards.sp_admin_graficas_consultas(?,?,?)}";
+        ModeloGraficaConfig resultado = new ModeloGraficaConfig();
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(query);) {
 
             cst.setString(1, "Q");
-            cst.setString(2, "QGID");
+            cst.setString(2, "QGCID");
+            cst.setString(3, idGrafica);
+
+            ResultSet rs = cst.executeQuery();
+
+            while (rs.next()) {
+                resultado.setId(rs.getString("agc_id"));
+                resultado.setNombre(rs.getString("agc_nombre"));
+                resultado.setTitulo(rs.getString("agc_titulo"));
+                resultado.setCant_registros(rs.getInt("agc_cant_registros"));
+                resultado.setTipo_registros(rs.getString("agc_tipo_registros"));
+                resultado.setLabel_y(rs.getString("agc_label_y"));
+                resultado.setStacked(rs.getString("agc_stacked"));
+                resultado.setBackground(rs.getString("agc_background"));
+                resultado.setMax_tick_limit(rs.getInt("agc_max_tick_limit"));
+                resultado.setMax_suggested(rs.getInt("agc_max_suggested"));
+            }
+
+        } catch (SQLException e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt(
+                    "No se ha podido obtener la lista de datasets config de la grafica, favor validar con un administrador con el codigo de referencia");
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(listarDatasetGraficas);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral
+                    .setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
+            errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(listarDatasetGraficas);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        }
+        return resultado;
+    }
+
+    public List<ModeloGraficaDatasetConfig> listarDatasetConfigGrafica(String idGrafica) throws CustomException {
+
+        List<ModeloGraficaDatasetConfig> lista = new ArrayList<>();
+
+        String query = "{CALL admin_dashboards.sp_admin_graficas_consultas(?,?,?)}";
+
+        try (Connection mariaDB = ConexionMariaDB.getConexion();
+                CallableStatement cst = mariaDB.prepareCall(query);) {
+
+            cst.setString(1, "Q");
+            cst.setString(2, "QGDID");
             cst.setString(3, idGrafica);
 
             ResultSet rs = cst.executeQuery();
@@ -117,35 +185,25 @@ public class ServicioDashboard {
             while (rs.next()) {
 
                 ModeloGraficaDatasetConfig resultado = new ModeloGraficaDatasetConfig();
-                resultado.setConfigNombre(rs.getString("ag_nombre"));
-                resultado.setConfigDashboard(rs.getString("ad_dashboard"));
-                resultado.setConfigPosicion(rs.getInt("ag_posicion"));
-                resultado.setConfigSubPosicion(rs.getInt("ag_sub_posicion"));
-                resultado.setConfigTipoConsulta(rs.getString("ag_tipo_consulta"));
-                resultado.setConfigCantRegistros(rs.getInt("ag_cant_registros"));
-                resultado.setConfigTipoRegistros(rs.getString("ag_tipo_registros"));
-                resultado.setConfigTipoRutina(rs.getString("ag_tipo_rutina"));
-                resultado.setConfigRutina(rs.getString("ag_rutina"));
-                resultado.setConfigTitulo(rs.getString("ag_titulo"));
-                resultado.setConfigLabely(rs.getString("ag_label_y"));
-                resultado.setConfigTipoPrincipal(rs.getString("ag_tipo_principal"));
-                resultado.setConfigTipoSecundario(rs.getString("ag_tipo_secundario"));
-                resultado.setConfigColorFondo(rs.getString("ag_color_fondo"));
-                resultado.setConfigColorBorde(rs.getString("ag_color_borde"));
-                resultado.setConfigTamanoBorde(rs.getString("ag_tamano_borde"));
-                resultado.setConfigFill(rs.getString("ag_fill"));
-                resultado.setConfigColorFondoPunto(rs.getString("ag_color_fondo_punto"));
-                resultado.setConfigColorHoverPunto(rs.getString("ag_color_hover_punto"));
-                resultado.setConfigColorBordePunto(rs.getString("ag_color_borde_punto"));
-                resultado.setConfigTamanoPunto(rs.getString("ag_tamano_punto"));
-                resultado.setConfigStacked(rs.getString("ag_stacked"));
-                resultado.setConfigStack(rs.getInt("ag_stack"));
-                resultado.setConfigMaxTickLimit(rs.getInt("ag_maxticklimit"));
-                resultado.setConfigSuggestedMax(rs.getInt("ag_suggestedmax"));
-                resultado.setConfigValorLimite(rs.getInt("ag_valor_limite"));
-                resultado.setConfigColorValorLimite(rs.getString("ag_color_valor_limite"));
-                resultado.setConfigIntervaloTiempo(rs.getInt("ag_intervalo_tiempo"));
-                resultado.setConfigValorMinimo(rs.getFloat("ag_valor_minimo"));
+                resultado.setGrafica_id(rs.getString("agd_grafica_id"));
+                resultado.setDataset_id(rs.getString("agd_dataset_id"));
+                resultado.setDataset_posicion(rs.getInt("agd_dataset_posicion"));
+                resultado.setProc_nombre(rs.getString("agd_proc_nombre"));
+                resultado.setProc_tipo(rs.getString("agd_proc_tipo"));
+                resultado.setProc_operacion(rs.getString("agd_proc_operacion"));
+                resultado.setRutina(rs.getString("agd_rutina"));
+                resultado.setDataset_label(rs.getString("agd_dataset_label"));
+                resultado.setTipoPrincipal(rs.getString("agd_tipo_principal"));
+                resultado.setTipoSecundario(rs.getString("agd_tipo_secundario"));
+                resultado.setFondo_color(rs.getString("agd_fondo_color"));
+                resultado.setBorde_color(rs.getString("agd_borde_color"));
+                resultado.setBorde_tamano(rs.getString("agd_borde_tamano"));
+                resultado.setPunto_color_fondo(rs.getString("agd_punto_color_fondo"));
+                resultado.setPunto_color_hover(rs.getString("agd_punto_color_hover"));
+                resultado.setPunto_color_borde(rs.getString("agd_punto_color_borde"));
+                resultado.setPunto_tamano(rs.getString("agd_punto_tamano"));
+                resultado.setStack(rs.getInt("agd_stack"));
+                resultado.setFill(rs.getString("agd_fill"));
                 lista.add(resultado);
             }
 
@@ -189,10 +247,11 @@ public class ServicioDashboard {
     }
 
     public List<ModeloGraficaDatasetData> listarDatasetsDataGrafica(ModeloGraficaConsulta configConsulta,
-            List<ModeloGraficaDatasetConfig> configList)
+            ModeloGraficaConfig configGrafica,
+            List<ModeloGraficaDatasetConfig> configDatasets)
             throws CustomException {
 
-        List<ModeloGraficaDatasetData> lista = new ArrayList<>();
+        List<ModeloGraficaDatasetData> listarDatasetsDataGrafica = new ArrayList<>();
         Long timeNow = Calendar.getInstance().getTimeInMillis();
         Timestamp ts = new Timestamp(timeNow);
         Calendar cal = Calendar.getInstance();
@@ -200,46 +259,40 @@ public class ServicioDashboard {
         cal.add(Calendar.MINUTE, -1);
         SimpleDateFormat sdf;
         String fechaFinal = "";
-        StringBuffer sb = new StringBuffer("Date:");
 
-        String query = "{CALL admin_dashboards.sp_admin_graficas(?,?,?,?,?,?)}";
+        String query = "{CALL admin_dashboards.sp_admin_graficas_procedimientos(?,?,?,?,?,?)}";
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(query);) {
 
-            for (ModeloGraficaDatasetConfig datasetConfig : configList) {
+            for (ModeloGraficaDatasetConfig datasetConfig : configDatasets) {
 
                 if (configConsulta.getConsultaFecha().equals("N/A")) {
-                    sdf = devuelveFormatoFecha(datasetConfig.getConfigTipoRegistros());
-                    fechaFinal = String.valueOf(sdf.format(cal.getTime(), sb, new FieldPosition(0)));
+                    sdf = devuelveFormatoFecha(configGrafica.getTipo_registros());
+                    fechaFinal = String.valueOf(sdf.format(cal.getTime()));
                 } else {
                     fechaFinal = configConsulta.getConsultaFecha();
                 }
 
-                int cantRegistros = configConsulta.getCantRegistros();
+                cst.setString(1, datasetConfig.getProc_nombre());
+                cst.setString(2, datasetConfig.getProc_tipo());
+                cst.setString(3, datasetConfig.getProc_operacion());
+                cst.setString(4, datasetConfig.getRutina());
+                cst.setString(5, fechaFinal);
+                cst.setInt(6, configConsulta.getCantRegistros());
 
-                cst.setString(1, datasetConfig.getConfigTipoConsulta());
-                cst.setString(2, datasetConfig.getConfigTipoRutina());
-                cst.setString(3, datasetConfig.getConfigRutina());
-                cst.setString(4, fechaFinal);
-                cst.setInt(5, cantRegistros);
-                cst.setInt(6, datasetConfig.getConfigIntervaloTiempo());
+                ResultSet rs = cst.executeQuery();
 
-            }
+                while (rs.next()) {
 
-            ResultSet rs = cst.executeQuery();
+                    ModeloGraficaDatasetData resultado = new ModeloGraficaDatasetData();
+                    resultado.setDataRutina(rs.getString(1));
+                    resultado.setDataFecha(rs.getString(2));
+                    resultado.setDataCantidad(rs.getFloat(3));
+                    resultado.setDataPosicion(datasetConfig.getDataset_posicion());
+                    listarDatasetsDataGrafica.add(resultado);
+                }
 
-            while (rs.next()) {
-
-                ModeloGraficaDatasetData resultado = new ModeloGraficaDatasetData();
-                resultado.setDataTipo(rs.getString(1));
-                resultado.setDataRutina(rs.getString(2));
-                resultado.setDataFecha(rs.getString(3));
-                resultado.setDataCantidad(rs.getFloat(4));
-                resultado.setDataPosicion(rs.getInt(5));
-                resultado.setDataSubPosicion(rs.getInt(6));
-
-                lista.add(resultado);
             }
 
         } catch (SQLException e) {
@@ -278,7 +331,40 @@ public class ServicioDashboard {
 
             throw new CustomException("", errorGeneral, e);
         }
-        return lista;
+        return listarDatasetsDataGrafica;
+    }
+
+    public List<String> obtenerLabels(List<ModeloGraficaDatasetData> listaDatasetData) throws CustomException {
+
+        List<String> labels = new ArrayList<>();
+
+        try {
+            for (ModeloGraficaDatasetData data : listaDatasetData) {
+                if ((String.valueOf(data.getDataPosicion()).equals("1"))) {
+                    labels.add(data.getDataFecha());
+
+                }
+            }
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral
+                    .setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
+            errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(listarDatasetGraficas);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        }
+
+        return labels;
     }
 
     public SimpleDateFormat devuelveFormatoFecha(String configTipoRegistro) {

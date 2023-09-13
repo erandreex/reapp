@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.reapp.reapp.Excepciones.CustomException;
 import com.reapp.reapp.Excepciones.HandlerAllException;
 import com.reapp.reapp.Excepciones.ModeloErrorControlador;
+import com.reapp.reapp.Modelos.ModeloGraficaConfig;
 import com.reapp.reapp.Modelos.ModeloGraficaConsulta;
 import com.reapp.reapp.Modelos.ModeloGraficaDatasetData;
 import com.reapp.reapp.Modelos.ModeloGraficaDatasetConfig;
@@ -37,7 +38,7 @@ public class ControladorDashboard {
 
     private static final String m_listar_cuadricula = "listar_cuadricula";
 
-    @GetMapping("cuadricula/${dashboard}")
+    @GetMapping("cuadricula/{dashboard}")
     public ResponseEntity<ModeloRespuestaGeneral> config(@PathVariable("dashboard") String dashboard) {
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
@@ -58,27 +59,35 @@ public class ControladorDashboard {
             errorControlador.setClase(clase);
             errorControlador.setMetodo(m_listar_cuadricula);
 
-            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
+            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador,
+                    e);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(resp);
 
     }
 
-    @PostMapping("consulta/datagrafica")
-    public ResponseEntity<ModeloRespuestaGeneral> consultaDataGrafica(@RequestBody ModeloGraficaConsulta body) {
+    @PostMapping("consulta/grafica")
+    public ResponseEntity<ModeloRespuestaGeneral> consultaDataGrafica(@RequestBody ModeloGraficaConsulta consulta) {
         List<ModeloGraficaDatasetConfig> listaDatasetConfig = new ArrayList<>();
         List<ModeloGraficaDatasetData> listaDatasetData = new ArrayList<>();
+        ModeloGraficaConfig graficaConfig = new ModeloGraficaConfig();
+        List<String> listaLabels = new ArrayList<>();
 
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
 
         try {
-            listaDatasetConfig = servicioDashboard.listarDatasetConfigGrafica(body.getIdGrafica());
-            listaDatasetData = servicioDashboard.listarDatasetsDataGrafica(body, listaDatasetConfig);
+            listaDatasetConfig = servicioDashboard.listarDatasetConfigGrafica(consulta.getIdGrafica());
+            graficaConfig = servicioDashboard.listarConfigGrafica(consulta.getIdGrafica());
+            listaDatasetData = servicioDashboard.listarDatasetsDataGrafica(consulta,
+                    graficaConfig, listaDatasetConfig);
+            listaLabels = servicioDashboard.obtenerLabels(listaDatasetData);
 
             respuesta.put("datasetsConfig", listaDatasetConfig);
+            respuesta.put("graficaConfig", graficaConfig);
             respuesta.put("datasetsData", listaDatasetData);
+            respuesta.put("datasetsLabels", listaLabels);
 
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
@@ -94,7 +103,8 @@ public class ControladorDashboard {
             errorControlador.setClase(clase);
             errorControlador.setMetodo(m_listar_cuadricula);
 
-            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
+            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador,
+                    e);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(resp);

@@ -1,11 +1,12 @@
 package com.reapp.reapp.Modelos;
 
 public class ModeloDashboardCuadricula {
+
     private String id;
-    private String dashboard;
+    private String nombre;
     private String tipo;
-    private String identificador;
     private String tamano;
+    private String componente_id;
 
     public String getId() {
         return id;
@@ -15,12 +16,12 @@ public class ModeloDashboardCuadricula {
         this.id = id;
     }
 
-    public String getDashboard() {
-        return dashboard;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setDashboard(String dashboard) {
-        this.dashboard = dashboard;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getTipo() {
@@ -31,20 +32,20 @@ public class ModeloDashboardCuadricula {
         this.tipo = tipo;
     }
 
-    public String getIdentificador() {
-        return identificador;
-    }
-
-    public void setIdentificador(String identificador) {
-        this.identificador = identificador;
-    }
-
     public String getTamano() {
         return tamano;
     }
 
     public void setTamano(String tamano) {
         this.tamano = tamano;
+    }
+
+    public String getComponente_id() {
+        return componente_id;
+    }
+
+    public void setComponente_id(String componente_id) {
+        this.componente_id = componente_id;
     }
 
 }
