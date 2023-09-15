@@ -5,13 +5,22 @@ public class ModeloGraficaConfig {
     private String id;
     private String nombre;
     private String titulo;
+    private String tipo_principal;
     private int cant_registros;
-    private String tipo_registros;
-    private String label_y;
+    private String intervalo_operacion;
+    private String intervalo_tiempo;
+    private String intervalo_valor;
+    private String y_label;
+    private String y_color;
+    private float y_sugg_max;
+    private float y_sugg_min;
+    private String y_begintAtZero;
+    private String y_tick_limit;
+    private String x_color;
+    private String x_tick_limit;
     private String stacked;
     private String background;
-    private int max_tick_limit;
-    private int max_suggested;
+    private int observable;
 
     public String getId() {
         return id;
@@ -37,6 +46,14 @@ public class ModeloGraficaConfig {
         this.titulo = titulo;
     }
 
+    public String getTipo_principal() {
+        return tipo_principal;
+    }
+
+    public void setTipo_principal(String tipo_principal) {
+        this.tipo_principal = tipo_principal;
+    }
+
     public int getCant_registros() {
         return cant_registros;
     }
@@ -45,20 +62,92 @@ public class ModeloGraficaConfig {
         this.cant_registros = cant_registros;
     }
 
-    public String getTipo_registros() {
-        return tipo_registros;
+    public String getIntervalo_operacion() {
+        return intervalo_operacion;
     }
 
-    public void setTipo_registros(String tipo_registros) {
-        this.tipo_registros = tipo_registros;
+    public void setIntervalo_operacion(String intervalo_operacion) {
+        this.intervalo_operacion = intervalo_operacion;
     }
 
-    public String getLabel_y() {
-        return label_y;
+    public String getIntervalo_tiempo() {
+        return intervalo_tiempo;
     }
 
-    public void setLabel_y(String label_y) {
-        this.label_y = label_y;
+    public void setIntervalo_tiempo(String intervalo_tiempo) {
+        this.intervalo_tiempo = intervalo_tiempo;
+    }
+
+    public String getIntervalo_valor() {
+        return intervalo_valor;
+    }
+
+    public void setIntervalo_valor(String intervalo_valor) {
+        this.intervalo_valor = intervalo_valor;
+    }
+
+    public String getY_label() {
+        return y_label;
+    }
+
+    public void setY_label(String y_label) {
+        this.y_label = y_label;
+    }
+
+    public String getY_color() {
+        return y_color;
+    }
+
+    public void setY_color(String y_color) {
+        this.y_color = y_color;
+    }
+
+    public float getY_sugg_max() {
+        return y_sugg_max;
+    }
+
+    public void setY_sugg_max(float y_sugg_max) {
+        this.y_sugg_max = y_sugg_max;
+    }
+
+    public float getY_sugg_min() {
+        return y_sugg_min;
+    }
+
+    public void setY_sugg_min(float y_sugg_min) {
+        this.y_sugg_min = y_sugg_min;
+    }
+
+    public String getY_begintAtZero() {
+        return y_begintAtZero;
+    }
+
+    public void setY_begintAtZero(String y_begintAtZero) {
+        this.y_begintAtZero = y_begintAtZero;
+    }
+
+    public String getY_tick_limit() {
+        return y_tick_limit;
+    }
+
+    public void setY_tick_limit(String y_tick_limit) {
+        this.y_tick_limit = y_tick_limit;
+    }
+
+    public String getX_color() {
+        return x_color;
+    }
+
+    public void setX_color(String x_color) {
+        this.x_color = x_color;
+    }
+
+    public String getX_tick_limit() {
+        return x_tick_limit;
+    }
+
+    public void setX_tick_limit(String x_tick_limit) {
+        this.x_tick_limit = x_tick_limit;
     }
 
     public String getStacked() {
@@ -77,20 +166,12 @@ public class ModeloGraficaConfig {
         this.background = background;
     }
 
-    public int getMax_tick_limit() {
-        return max_tick_limit;
+    public int getObservable() {
+        return observable;
     }
 
-    public void setMax_tick_limit(int max_tick_limit) {
-        this.max_tick_limit = max_tick_limit;
-    }
-
-    public int getMax_suggested() {
-        return max_suggested;
-    }
-
-    public void setMax_suggested(int max_suggested) {
-        this.max_suggested = max_suggested;
+    public void setObservable(int observable) {
+        this.observable = observable;
     }
 
 }

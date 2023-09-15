@@ -119,13 +119,22 @@ public class ServicioDashboard {
                 resultado.setId(rs.getString("agc_id"));
                 resultado.setNombre(rs.getString("agc_nombre"));
                 resultado.setTitulo(rs.getString("agc_titulo"));
+                resultado.setTipo_principal(rs.getString("agc_tipo_principal"));
                 resultado.setCant_registros(rs.getInt("agc_cant_registros"));
-                resultado.setTipo_registros(rs.getString("agc_tipo_registros"));
-                resultado.setLabel_y(rs.getString("agc_label_y"));
+                resultado.setIntervalo_operacion(rs.getString("agc_intervalo_operacion"));
+                resultado.setIntervalo_tiempo(rs.getString("agc_intervalo_tiempo"));
+                resultado.setIntervalo_valor(rs.getString("agc_intervalo_valor"));
+                resultado.setY_label(rs.getString("agc_y_label"));
+                resultado.setY_color(rs.getString("agc_y_color"));
+                resultado.setY_sugg_max(rs.getFloat("agc_y_sugg_max"));
+                resultado.setY_sugg_min(rs.getFloat("agc_y_sugg_min"));
+                resultado.setY_begintAtZero(rs.getString("agc_y_begintAtZero"));
+                resultado.setY_tick_limit(rs.getString("agc_y_tick_limit"));
+                resultado.setX_color(rs.getString("agc_x_color"));
+                resultado.setX_tick_limit(rs.getString("agc_x_tick_limit"));
                 resultado.setStacked(rs.getString("agc_stacked"));
                 resultado.setBackground(rs.getString("agc_background"));
-                resultado.setMax_tick_limit(rs.getInt("agc_max_tick_limit"));
-                resultado.setMax_suggested(rs.getInt("agc_max_suggested"));
+                resultado.setObservable(rs.getInt("agc_observable"));
             }
 
         } catch (SQLException e) {
@@ -193,8 +202,7 @@ public class ServicioDashboard {
                 resultado.setProc_operacion(rs.getString("agd_proc_operacion"));
                 resultado.setRutina(rs.getString("agd_rutina"));
                 resultado.setDataset_label(rs.getString("agd_dataset_label"));
-                resultado.setTipoPrincipal(rs.getString("agd_tipo_principal"));
-                resultado.setTipoSecundario(rs.getString("agd_tipo_secundario"));
+                resultado.setTipo(rs.getString("agd_tipo"));
                 resultado.setFondo_color(rs.getString("agd_fondo_color"));
                 resultado.setBorde_color(rs.getString("agd_borde_color"));
                 resultado.setBorde_tamano(rs.getString("agd_borde_tamano"));
@@ -257,10 +265,10 @@ public class ServicioDashboard {
         Calendar cal = Calendar.getInstance();
         cal.setTime(ts);
         cal.add(Calendar.MINUTE, -1);
-        SimpleDateFormat sdf;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String fechaFinal = "";
 
-        String query = "{CALL admin_dashboards.sp_admin_graficas_procedimientos(?,?,?,?,?,?)}";
+        String query = "{CALL admin_dashboards.sp_admin_graficas_procedimientos(?,?,?,?,?,?,?,?,?)}";
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(query);) {
@@ -268,7 +276,6 @@ public class ServicioDashboard {
             for (ModeloGraficaDatasetConfig datasetConfig : configDatasets) {
 
                 if (configConsulta.getConsultaFecha().equals("N/A")) {
-                    sdf = devuelveFormatoFecha(configGrafica.getTipo_registros());
                     fechaFinal = String.valueOf(sdf.format(cal.getTime()));
                 } else {
                     fechaFinal = configConsulta.getConsultaFecha();
@@ -279,12 +286,14 @@ public class ServicioDashboard {
                 cst.setString(3, datasetConfig.getProc_operacion());
                 cst.setString(4, datasetConfig.getRutina());
                 cst.setString(5, fechaFinal);
-                cst.setInt(6, configConsulta.getCantRegistros());
+                cst.setInt(6, configGrafica.getCant_registros());
+                cst.setString(7, configGrafica.getIntervalo_operacion());
+                cst.setString(8, configGrafica.getIntervalo_tiempo());
+                cst.setString(9, configGrafica.getIntervalo_valor());
 
                 ResultSet rs = cst.executeQuery();
 
                 while (rs.next()) {
-
                     ModeloGraficaDatasetData resultado = new ModeloGraficaDatasetData();
                     resultado.setDataRutina(rs.getString(1));
                     resultado.setDataFecha(rs.getString(2));
@@ -292,7 +301,6 @@ public class ServicioDashboard {
                     resultado.setDataPosicion(datasetConfig.getDataset_posicion());
                     listarDatasetsDataGrafica.add(resultado);
                 }
-
             }
 
         } catch (SQLException e) {
@@ -367,35 +375,35 @@ public class ServicioDashboard {
         return labels;
     }
 
-    public SimpleDateFormat devuelveFormatoFecha(String configTipoRegistro) {
+    // public SimpleDateFormat devuelveFormatoFecha(String configTipoRegistro) {
 
-        SimpleDateFormat sdf;
-        String yearMonthDayHourMinuteSeconds = "yyyy-MM-dd HH:mm:00";
+    // SimpleDateFormat sdf;
+    // String yearMonthDayHourMinuteSeconds = "yyyy-MM-dd HH:mm:00";
 
-        switch (configTipoRegistro) {
-            case "mm":
-                sdf = new SimpleDateFormat(yearMonthDayHourMinuteSeconds);
-                break;
-            case "mme":
-                sdf = new SimpleDateFormat(yearMonthDayHourMinuteSeconds);
-                break;
+    // switch (configTipoRegistro) {
+    // case "mm":
+    // sdf = new SimpleDateFormat(yearMonthDayHourMinuteSeconds);
+    // break;
+    // case "mme":
+    // sdf = new SimpleDateFormat(yearMonthDayHourMinuteSeconds);
+    // break;
 
-            case "hh":
-                sdf = new SimpleDateFormat("yyyy-MM-dd HH:59:00");
-                break;
+    // case "hh":
+    // sdf = new SimpleDateFormat("yyyy-MM-dd HH:59:00");
+    // break;
 
-            case "hhe":
-                sdf = new SimpleDateFormat("yyyy-MM-dd HH:59:00");
-                break;
+    // case "hhe":
+    // sdf = new SimpleDateFormat("yyyy-MM-dd HH:59:00");
+    // break;
 
-            case "dd":
-                sdf = new SimpleDateFormat("yyyy-MM-dd 23:59:00");
-                break;
-            default:
-                sdf = new SimpleDateFormat(yearMonthDayHourMinuteSeconds);
-                break;
-        }
-        return sdf;
-    }
+    // case "dd":
+    // sdf = new SimpleDateFormat("yyyy-MM-dd 23:59:00");
+    // break;
+    // default:
+    // sdf = new SimpleDateFormat(yearMonthDayHourMinuteSeconds);
+    // break;
+    // }
+    // return sdf;
+    // }
 
 }

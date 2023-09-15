@@ -10,8 +10,7 @@ public class ModeloGraficaDatasetConfig {
     private String proc_operacion;
     private String rutina;
     private String dataset_label;
-    private String tipoPrincipal;
-    private String tipoSecundario;
+    private String tipo;
     private String fondo_color;
     private String borde_color;
     private String borde_tamano;
@@ -86,20 +85,12 @@ public class ModeloGraficaDatasetConfig {
         this.dataset_label = dataset_label;
     }
 
-    public String getTipoPrincipal() {
-        return tipoPrincipal;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setTipoPrincipal(String tipoPrincipal) {
-        this.tipoPrincipal = tipoPrincipal;
-    }
-
-    public String getTipoSecundario() {
-        return tipoSecundario;
-    }
-
-    public void setTipoSecundario(String tipoSecundario) {
-        this.tipoSecundario = tipoSecundario;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getFondo_color() {
