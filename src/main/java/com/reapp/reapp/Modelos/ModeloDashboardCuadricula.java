@@ -5,8 +5,12 @@ public class ModeloDashboardCuadricula {
     private String id;
     private String nombre;
     private String tipo;
-    private String tamano;
+    private int orden;
     private String componente_id;
+    private String tamano_small;
+    private String tamano_medium;
+    private String tamano_large;
+    private String tamano_xlarge;
 
     public String getId() {
         return id;
@@ -32,12 +36,12 @@ public class ModeloDashboardCuadricula {
         this.tipo = tipo;
     }
 
-    public String getTamano() {
-        return tamano;
+    public int getOrden() {
+        return orden;
     }
 
-    public void setTamano(String tamano) {
-        this.tamano = tamano;
+    public void setOrden(int orden) {
+        this.orden = orden;
     }
 
     public String getComponente_id() {
@@ -46,6 +50,38 @@ public class ModeloDashboardCuadricula {
 
     public void setComponente_id(String componente_id) {
         this.componente_id = componente_id;
+    }
+
+    public String getTamano_small() {
+        return tamano_small;
+    }
+
+    public void setTamano_small(String tamano_small) {
+        this.tamano_small = tamano_small;
+    }
+
+    public String getTamano_medium() {
+        return tamano_medium;
+    }
+
+    public void setTamano_medium(String tamano_medium) {
+        this.tamano_medium = tamano_medium;
+    }
+
+    public String getTamano_large() {
+        return tamano_large;
+    }
+
+    public void setTamano_large(String tamano_large) {
+        this.tamano_large = tamano_large;
+    }
+
+    public String getTamano_xlarge() {
+        return tamano_xlarge;
+    }
+
+    public void setTamano_xlarge(String tamano_xlarge) {
+        this.tamano_xlarge = tamano_xlarge;
     }
 
 }

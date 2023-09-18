@@ -42,9 +42,20 @@ public class ControladorDashboard {
     public ResponseEntity<ModeloRespuestaGeneral> config(@PathVariable("dashboard") String dashboard) {
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         Map<String, Object> respuesta = new HashMap<>();
+
+        List<String> parametros = new ArrayList<>();
+
         try {
 
+            parametros.add("GRAFICA_HEIGHT");
+            parametros.add("TAMANO_LARGE");
+            parametros.add("TAMANO_MEDIUN");
+            parametros.add("TAMANO_SMALL");
+            parametros.add("TAMANO_XLARGE");
+
             respuesta.put("cuadricula", servicioDashboard.listar_cuadricula(dashboard));
+            respuesta.put("parametros", servicioDashboard.listarParametros(parametros));
+
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);

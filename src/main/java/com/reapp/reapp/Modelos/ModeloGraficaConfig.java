@@ -5,7 +5,8 @@ public class ModeloGraficaConfig {
     private String id;
     private String nombre;
     private String titulo;
-    private String tipo_principal;
+    private String tipo_grafica;
+    private String tipo_escala;
     private int cant_registros;
     private String intervalo_operacion;
     private String intervalo_tiempo;
@@ -16,11 +17,22 @@ public class ModeloGraficaConfig {
     private float y_sugg_min;
     private String y_begintAtZero;
     private String y_tick_limit;
+    private int y_fontSize;
     private String x_color;
-    private String x_tick_limit;
+    private int x_fontSize;
+    private String x_source;
     private String stacked;
-    private String background;
+    private String background_tipo;
+    private String background_color;
     private int observable;
+    private int legend_boxSize;
+    private int legend_fontSize;
+    private String legend_color;
+    private int title_fontSize;
+    private String title_color;
+    private int tooltip_fontSize;
+    private String tooltip_color;
+    private int layout_padding;
 
     public String getId() {
         return id;
@@ -46,12 +58,20 @@ public class ModeloGraficaConfig {
         this.titulo = titulo;
     }
 
-    public String getTipo_principal() {
-        return tipo_principal;
+    public String getTipo_grafica() {
+        return tipo_grafica;
     }
 
-    public void setTipo_principal(String tipo_principal) {
-        this.tipo_principal = tipo_principal;
+    public void setTipo_grafica(String tipo_grafica) {
+        this.tipo_grafica = tipo_grafica;
+    }
+
+    public String getTipo_escala() {
+        return tipo_escala;
+    }
+
+    public void setTipo_escala(String tipo_escala) {
+        this.tipo_escala = tipo_escala;
     }
 
     public int getCant_registros() {
@@ -134,6 +154,14 @@ public class ModeloGraficaConfig {
         this.y_tick_limit = y_tick_limit;
     }
 
+    public int getY_fontSize() {
+        return y_fontSize;
+    }
+
+    public void setY_fontSize(int y_fontSize) {
+        this.y_fontSize = y_fontSize;
+    }
+
     public String getX_color() {
         return x_color;
     }
@@ -142,12 +170,12 @@ public class ModeloGraficaConfig {
         this.x_color = x_color;
     }
 
-    public String getX_tick_limit() {
-        return x_tick_limit;
+    public int getX_fontSize() {
+        return x_fontSize;
     }
 
-    public void setX_tick_limit(String x_tick_limit) {
-        this.x_tick_limit = x_tick_limit;
+    public void setX_fontSize(int x_fontSize) {
+        this.x_fontSize = x_fontSize;
     }
 
     public String getStacked() {
@@ -158,12 +186,20 @@ public class ModeloGraficaConfig {
         this.stacked = stacked;
     }
 
-    public String getBackground() {
-        return background;
+    public String getBackground_tipo() {
+        return background_tipo;
     }
 
-    public void setBackground(String background) {
-        this.background = background;
+    public void setBackground_tipo(String background_tipo) {
+        this.background_tipo = background_tipo;
+    }
+
+    public String getBackground_color() {
+        return background_color;
+    }
+
+    public void setBackground_color(String background_color) {
+        this.background_color = background_color;
     }
 
     public int getObservable() {
@@ -172,6 +208,78 @@ public class ModeloGraficaConfig {
 
     public void setObservable(int observable) {
         this.observable = observable;
+    }
+
+    public int getLegend_fontSize() {
+        return legend_fontSize;
+    }
+
+    public void setLegend_fontSize(int legend_fontSize) {
+        this.legend_fontSize = legend_fontSize;
+    }
+
+    public String getLegend_color() {
+        return legend_color;
+    }
+
+    public void setLegend_color(String legend_color) {
+        this.legend_color = legend_color;
+    }
+
+    public int getTitle_fontSize() {
+        return title_fontSize;
+    }
+
+    public void setTitle_fontSize(int title_fontSize) {
+        this.title_fontSize = title_fontSize;
+    }
+
+    public String getTitle_color() {
+        return title_color;
+    }
+
+    public void setTitle_color(String title_color) {
+        this.title_color = title_color;
+    }
+
+    public int getTooltip_fontSize() {
+        return tooltip_fontSize;
+    }
+
+    public void setTooltip_fontSize(int tooltip_fontSize) {
+        this.tooltip_fontSize = tooltip_fontSize;
+    }
+
+    public String getTooltip_color() {
+        return tooltip_color;
+    }
+
+    public void setTooltip_color(String tooltip_color) {
+        this.tooltip_color = tooltip_color;
+    }
+
+    public String getX_source() {
+        return x_source;
+    }
+
+    public void setX_source(String x_source) {
+        this.x_source = x_source;
+    }
+
+    public int getLayout_padding() {
+        return layout_padding;
+    }
+
+    public void setLayout_padding(int layout_padding) {
+        this.layout_padding = layout_padding;
+    }
+
+    public int getLegend_boxSize() {
+        return legend_boxSize;
+    }
+
+    public void setLegend_boxSize(int legend_boxSize) {
+        this.legend_boxSize = legend_boxSize;
     }
 
 }

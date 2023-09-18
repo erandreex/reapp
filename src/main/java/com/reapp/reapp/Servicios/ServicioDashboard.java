@@ -9,7 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -37,7 +39,7 @@ public class ServicioDashboard {
 
         List<ModeloDashboardCuadricula> lista = new ArrayList<>();
 
-        String query = "{CALL admin_dashboards.sp_admin_dashboards(?,?,?)}";
+        String query = "{CALL admin_dashboards.sp_admin_dashboards_consultas(?,?,?)}";
 
         try (Connection mariaDB = ConexionMariaDB.getConexion();
                 CallableStatement cst = mariaDB.prepareCall(query);) {
@@ -55,14 +57,17 @@ public class ServicioDashboard {
                 resultado.setId(rs.getString("ad_id"));
                 resultado.setNombre(rs.getString("ad_nombre"));
                 resultado.setTipo(rs.getString("ad_tipo"));
-                resultado.setTamano(rs.getString("ad_tamano"));
+                resultado.setOrden(rs.getInt("ad_orden"));
                 resultado.setComponente_id(rs.getString("ad_componente_id"));
-
+                resultado.setTamano_xlarge(rs.getString("ad_tamano_xlarge"));
+                resultado.setTamano_large(rs.getString("ad_tamano_large"));
+                resultado.setTamano_medium(rs.getString("ad_tamano_medium"));
+                resultado.setTamano_small(rs.getString("ad_tamano_small"));
                 lista.add(resultado);
             }
 
         } catch (SQLException e) {
-
+            System.out.println(e);
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -119,7 +124,8 @@ public class ServicioDashboard {
                 resultado.setId(rs.getString("agc_id"));
                 resultado.setNombre(rs.getString("agc_nombre"));
                 resultado.setTitulo(rs.getString("agc_titulo"));
-                resultado.setTipo_principal(rs.getString("agc_tipo_principal"));
+                resultado.setTipo_grafica(rs.getString("agc_tipo_grafica"));
+                resultado.setTipo_escala(rs.getString("agc_tipo_escala"));
                 resultado.setCant_registros(rs.getInt("agc_cant_registros"));
                 resultado.setIntervalo_operacion(rs.getString("agc_intervalo_operacion"));
                 resultado.setIntervalo_tiempo(rs.getString("agc_intervalo_tiempo"));
@@ -130,15 +136,26 @@ public class ServicioDashboard {
                 resultado.setY_sugg_min(rs.getFloat("agc_y_sugg_min"));
                 resultado.setY_begintAtZero(rs.getString("agc_y_begintAtZero"));
                 resultado.setY_tick_limit(rs.getString("agc_y_tick_limit"));
+                resultado.setY_fontSize(rs.getInt("agc_y_fontSize"));
                 resultado.setX_color(rs.getString("agc_x_color"));
-                resultado.setX_tick_limit(rs.getString("agc_x_tick_limit"));
+                resultado.setX_source(rs.getString("agc_x_source"));
+                resultado.setX_fontSize(rs.getInt("agc_x_fontSize"));
                 resultado.setStacked(rs.getString("agc_stacked"));
-                resultado.setBackground(rs.getString("agc_background"));
+                resultado.setBackground_tipo(rs.getString("agc_background_tipo"));
+                resultado.setBackground_color(rs.getString("agc_background_color"));
                 resultado.setObservable(rs.getInt("agc_observable"));
+                resultado.setLegend_boxSize(rs.getInt("agc_legend_boxSize"));
+                resultado.setLegend_fontSize(rs.getInt("agc_legend_fontSize"));
+                resultado.setLegend_color(rs.getString("agc_legend_color"));
+                resultado.setTitle_fontSize(rs.getInt("agc_title_fontSize"));
+                resultado.setTitle_color(rs.getString("agc_title_color"));
+                resultado.setTooltip_fontSize(rs.getInt("agc_tooltip_fontSize"));
+                resultado.setTooltip_color(rs.getString("agc_tooltip_color"));
+                resultado.setLayout_padding(rs.getInt("agc_layout_padding"));
             }
 
         } catch (SQLException e) {
-
+            System.out.println(e);
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
             errorGeneral.setId(UUID.randomUUID().toString());
@@ -216,6 +233,7 @@ public class ServicioDashboard {
             }
 
         } catch (SQLException e) {
+            System.out.println(e);
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
@@ -304,6 +322,7 @@ public class ServicioDashboard {
             }
 
         } catch (SQLException e) {
+            System.out.println(e);
 
             ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
 
@@ -375,35 +394,61 @@ public class ServicioDashboard {
         return labels;
     }
 
-    // public SimpleDateFormat devuelveFormatoFecha(String configTipoRegistro) {
+    public Map<String, String> listarParametros(List<String> lista) throws CustomException {
 
-    // SimpleDateFormat sdf;
-    // String yearMonthDayHourMinuteSeconds = "yyyy-MM-dd HH:mm:00";
+        String query = "{CALL admin_dashboards.sp_admin_dashboards_parametros(?,?,?)}";
+        Map<String, String> respuesta = new HashMap<>();
 
-    // switch (configTipoRegistro) {
-    // case "mm":
-    // sdf = new SimpleDateFormat(yearMonthDayHourMinuteSeconds);
-    // break;
-    // case "mme":
-    // sdf = new SimpleDateFormat(yearMonthDayHourMinuteSeconds);
-    // break;
+        try (Connection mariaDB = ConexionMariaDB.getConexion();
+                CallableStatement cst = mariaDB.prepareCall(query);) {
 
-    // case "hh":
-    // sdf = new SimpleDateFormat("yyyy-MM-dd HH:59:00");
-    // break;
+            for (String valor : lista) {
+                cst.setString(1, "Q");
+                cst.setString(2, "QDPU");
+                cst.setString(3, valor);
+                ResultSet rs = cst.executeQuery();
+                while (rs.next()) {
+                    respuesta.put(valor.toLowerCase(), rs.getString("adp_valor"));
+                }
+            }
 
-    // case "hhe":
-    // sdf = new SimpleDateFormat("yyyy-MM-dd HH:59:00");
-    // break;
+        } catch (SQLException e) {
 
-    // case "dd":
-    // sdf = new SimpleDateFormat("yyyy-MM-dd 23:59:00");
-    // break;
-    // default:
-    // sdf = new SimpleDateFormat(yearMonthDayHourMinuteSeconds);
-    // break;
-    // }
-    // return sdf;
-    // }
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral.setMessageExt(
+                    "No se ha podido obtener la lista de parametros del dashboard, favor validar con un administrador con el codigo de referencia");
+            errorGeneral.setStatus(HttpStatus.BAD_REQUEST);
+            errorGeneral.setCode(HttpStatus.BAD_REQUEST.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(listar_cuadricula);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+
+        } catch (Exception e) {
+
+            ModeloErrorGeneral errorGeneral = new ModeloErrorGeneral();
+
+            errorGeneral.setId(UUID.randomUUID().toString());
+            errorGeneral.setDate(new Date());
+            errorGeneral.setMessageInt(e.getMessage());
+            errorGeneral
+                    .setMessageExt("Error interno, favor contactar a un administrador con el codigo de referencia");
+            errorGeneral.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            errorGeneral.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+            errorGeneral.setTipo(tipo);
+            errorGeneral.setClase(clase);
+            errorGeneral.setMetodo(listar_cuadricula);
+            errorGeneral.setError(e);
+
+            throw new CustomException("", errorGeneral, e);
+        }
+        return respuesta;
+    }
 
 }
