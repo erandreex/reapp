@@ -1,5 +1,10 @@
 package com.reapp.reapp.Controladores;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +25,7 @@ import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Modelos.ModeloUsuario;
 import com.reapp.reapp.Servicios.ServicioAccesos;
 import com.reapp.reapp.Servicios.ServicioParametros;
+import com.reapp.reapp.Servicios.ServicioUsuariosPreferencias;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +40,7 @@ public class ControladorAcceso {
     private final ServicioToken servicioToken;
     private final ServicioAccesos servicioAccesos;
     private final ServicioParametros servicioParametros;
+    private final ServicioUsuariosPreferencias servicioUsuariosPreferencias;
 
     private static final String tipo = "Controlador";
     private static final String clase = "ControladorAcceso";
@@ -94,4 +101,43 @@ public class ControladorAcceso {
         return ResponseEntity.status(HttpStatus.OK).body(resp);
 
     }
+
+    @GetMapping("auth/validar")
+    public ResponseEntity<ModeloRespuestaGeneral> validar() {
+        ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
+        Map<String, Object> respuesta = new HashMap<>();
+        List<String> lista = new ArrayList<>();
+        String temaPreferencia = "default";
+
+        try {
+            ModeloUsuario user = servicioAuth.usuarioRequest();
+            lista.add("tema");
+            temaPreferencia = servicioUsuariosPreferencias.valorPreferencia(user, "tema");
+            respuesta.put("preferenciasGenerales", servicioUsuariosPreferencias.listarPreferencias(user, lista));
+            respuesta.put("tema", servicioUsuariosPreferencias.listarTema(temaPreferencia));
+
+            servicioAuth.usuarioRequest();
+            servicioAuth.claimsRequest();
+
+            resp.setOk(true);
+            resp.setCode(HttpStatus.OK.value());
+            resp.setStatus(HttpStatus.OK);
+            resp.setMensaje("Acceso permitido!");
+            resp.setRespuesta(respuesta);
+
+        } catch (CustomException e) {
+
+            ModeloErrorControlador errorControlador = new ModeloErrorControlador();
+
+            errorControlador.setTipo(tipo);
+            errorControlador.setClase(clase);
+            errorControlador.setMetodo(m_ruta);
+
+            throw new HandlerAllException("error", e.getErrorGeneral(), errorControlador, e);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(resp);
+
+    }
+
 }

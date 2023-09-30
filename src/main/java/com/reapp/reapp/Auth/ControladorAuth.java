@@ -2,11 +2,15 @@ package com.reapp.reapp.Auth;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +24,7 @@ import com.reapp.reapp.Modelos.ModeloUsuario;
 import com.reapp.reapp.Modelos.ModeloRespuestaGeneral;
 import com.reapp.reapp.Servicios.ServicioParametros;
 import com.reapp.reapp.Servicios.ServicioUsuarios;
+import com.reapp.reapp.Servicios.ServicioUsuariosPreferencias;
 
 @RestController
 @RequestMapping("/api/v1/auth/")
@@ -32,6 +37,7 @@ public class ControladorAuth {
     private final ServicioJwt jwtService;
     private final ServicioValidacionesAuth servicioValidacionesAuth;
     private final ServicioParametros servicioParametros;
+    private final ServicioUsuariosPreferencias servicioUsuariosPreferencias;
 
     private static final String clase = "ControladorAuth";
     private static final String tipo = "Controlador";
@@ -45,8 +51,13 @@ public class ControladorAuth {
         ModeloRespuestaGeneral resp = new ModeloRespuestaGeneral();
         String token_id = UUID.randomUUID().toString();
         String pass_key = UUID.randomUUID().toString();
+        List<String> lista = new ArrayList<>();
+        Map<String, Object> respuesta = new HashMap<>();
+
         String token_intervalo = "";
         String token_valor = "";
+
+        String temaPreferencia = "default";
 
         try {
 
@@ -61,13 +72,19 @@ public class ControladorAuth {
 
             servicioUsuarios.ingreso(userDB, pass_key);
             tokenService.crear(userDB.getId(), jwtToken, token_id);
-            resp.setToken(jwtToken);
+            lista.add("tema");
+
+            temaPreferencia = servicioUsuariosPreferencias.valorPreferencia(userDB, "tema");
+
+            respuesta.put("preferenciasGenerales", servicioUsuariosPreferencias.listarPreferencias(userDB, lista));
+            respuesta.put("tema", servicioUsuariosPreferencias.listarTema(temaPreferencia));
 
             resp.setOk(true);
             resp.setCode(HttpStatus.OK.value());
             resp.setStatus(HttpStatus.OK);
             resp.setMensaje("Inicio de sesion satisfactorio");
             resp.setToken(jwtToken);
+            resp.setRespuesta(respuesta);
 
         } catch (CustomException e) {
 
